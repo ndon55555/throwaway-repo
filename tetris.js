@@ -1,20 +1,40 @@
 (function (root, factory) {
   if (typeof define === 'function' && define.amd)
-    define(['exports', 'kotlin'], factory);
+    define(['exports', 'kotlin', 'kotlinx-html-js'], factory);
   else if (typeof exports === 'object')
-    factory(module.exports, require('kotlin'));
+    factory(module.exports, require('kotlin'), require('kotlinx-html-js'));
   else {
     if (typeof kotlin === 'undefined') {
       throw new Error("Error loading module 'tetris'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'tetris'.");
     }
-    root.tetris = factory(typeof tetris === 'undefined' ? {} : tetris, kotlin);
+    if (typeof this['kotlinx-html-js'] === 'undefined') {
+      throw new Error("Error loading module 'tetris'. Its dependency 'kotlinx-html-js' was not found. Please, check whether 'kotlinx-html-js' is loaded prior to 'tetris'.");
+    }
+    root.tetris = factory(typeof tetris === 'undefined' ? {} : tetris, kotlin, this['kotlinx-html-js']);
   }
-}(this, function (_, Kotlin) {
+}(this, function (_, Kotlin, $module$kotlinx_html_js) {
   'use strict';
+  var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var equals = Kotlin.equals;
   var Unit = Kotlin.kotlin.Unit;
-  var get_milliseconds = Kotlin.kotlin.time.get_milliseconds_yrwdxr$;
+  var ensureNotNull = Kotlin.ensureNotNull;
+  var set_style = $module$kotlinx_html_js.kotlinx.html.set_style_ueiko3$;
+  var set_id = $module$kotlinx_html_js.kotlinx.html.set_id_ueiko3$;
+  var append = $module$kotlinx_html_js.kotlinx.html.dom.append_k9bwru$;
+  var attributesMapOf = $module$kotlinx_html_js.kotlinx.html.attributesMapOf_jyasbz$;
+  var CANVAS_init = $module$kotlinx_html_js.kotlinx.html.CANVAS;
+  var HTMLCanvasElement_0 = HTMLCanvasElement;
   var throwCCE = Kotlin.throwCCE;
+  var visitTagAndFinalize = $module$kotlinx_html_js.kotlinx.html.visitTagAndFinalize_g9qte5$;
+  var enumEncode = $module$kotlinx_html_js.kotlinx.html.attributes.enumEncode_m4whry$;
+  var attributesMapOf_0 = $module$kotlinx_html_js.kotlinx.html.attributesMapOf_alerag$;
+  var BUTTON_init = $module$kotlinx_html_js.kotlinx.html.BUTTON;
+  var visitTag = $module$kotlinx_html_js.kotlinx.html.visitTag_xwv8ym$;
+  var DIV_init = $module$kotlinx_html_js.kotlinx.html.DIV;
+  var HTMLDivElement_0 = HTMLDivElement;
+  var SPAN_init = $module$kotlinx_html_js.kotlinx.html.SPAN;
+  var HTMLSpanElement_0 = HTMLSpanElement;
+  var get_milliseconds = Kotlin.kotlin.time.get_milliseconds_yrwdxr$;
   var clear = Kotlin.kotlin.dom.clear_asww5s$;
   var min = Kotlin.kotlin.collections.min_exjks8$;
   var max = Kotlin.kotlin.collections.max_exjks8$;
@@ -43,7 +63,6 @@
   var PropertyMetadata = Kotlin.PropertyMetadata;
   var Exception_init = Kotlin.kotlin.Exception_init_pdl1vj$;
   var get_milliseconds_0 = Kotlin.kotlin.time.get_milliseconds_s8ev3n$;
-  var ensureNotNull = Kotlin.ensureNotNull;
   var toMutableSet = Kotlin.kotlin.collections.toMutableSet_7wnvza$;
   var distinct = Kotlin.kotlin.collections.distinct_7wnvza$;
   var sorted = Kotlin.kotlin.collections.sorted_exjks8$;
@@ -82,6 +101,42 @@
   I.prototype.constructor = I;
   T.prototype = Object.create(StandardTetrimino.prototype);
   T.prototype.constructor = T;
+  function visitAndFinalize$lambda(closure$block) {
+    return function ($receiver) {
+      closure$block($receiver);
+      return Unit;
+    };
+  }
+  function canvas$lambda($receiver) {
+    return Unit;
+  }
+  function visit$lambda(closure$block) {
+    return function ($receiver) {
+      closure$block($receiver);
+      return Unit;
+    };
+  }
+  function button$lambda($receiver) {
+    return Unit;
+  }
+  function visitAndFinalize$lambda_0(closure$block) {
+    return function ($receiver) {
+      closure$block($receiver);
+      return Unit;
+    };
+  }
+  function div$lambda($receiver) {
+    return Unit;
+  }
+  function visitAndFinalize$lambda_1(closure$block) {
+    return function ($receiver) {
+      closure$block($receiver);
+      return Unit;
+    };
+  }
+  function span$lambda($receiver) {
+    return Unit;
+  }
   function main$lambda(closure$controller, closure$view) {
     return function (it) {
       var tmp$;
@@ -155,6 +210,7 @@
   }
   function main() {
     var tmp$, tmp$_0;
+    loadHTML();
     var controller = new ControllerImpl();
     var view = new TetrisWeb();
     (tmp$ = document.body) != null ? (tmp$.onkeydown = main$lambda(controller, view)) : null;
@@ -164,6 +220,74 @@
     $receiver.delayedAutoShift = 110;
     $receiver.autoRepeatRate = 5;
     controller.run_smlric$(new BaseGame(tmp$_1, $receiver), view);
+  }
+  function loadHTML$lambda$lambda$lambda$lambda($receiver) {
+    set_id($receiver, 'hold');
+    $receiver.width = '120';
+    $receiver.height = '120';
+    return Unit;
+  }
+  function loadHTML$lambda$lambda$lambda$lambda_0($receiver) {
+    set_id($receiver, 'restart');
+    set_style($receiver, 'display: block');
+    $receiver.unaryPlus_pdl1vz$('Restart');
+    return Unit;
+  }
+  function loadHTML$lambda$lambda$lambda(this$) {
+    return function ($receiver) {
+      set_style($receiver, 'display: inline-block; vertical-align: top');
+      var $receiver_0 = this$;
+      var tmp$;
+      Kotlin.isType(tmp$ = visitTagAndFinalize(new CANVAS_init(attributesMapOf('class', null), $receiver_0), $receiver_0, visitAndFinalize$lambda(loadHTML$lambda$lambda$lambda$lambda)), HTMLCanvasElement_0) ? tmp$ : throwCCE();
+      visitTag(new BUTTON_init(attributesMapOf_0(['formenctype', null != null ? enumEncode(null) : null, 'formmethod', null != null ? enumEncode(null) : null, 'name', null, 'type', null != null ? enumEncode(null) : null, 'class', null]), $receiver.consumer), visit$lambda(loadHTML$lambda$lambda$lambda$lambda_0));
+      return Unit;
+    };
+  }
+  function loadHTML$lambda$lambda$lambda$lambda_1($receiver) {
+    set_id($receiver, 'board');
+    $receiver.width = '300';
+    $receiver.height = '600';
+    return Unit;
+  }
+  function loadHTML$lambda$lambda$lambda_0(this$) {
+    return function ($receiver) {
+      set_style($receiver, 'display: inline-block; vertical-align: top');
+      var $receiver_0 = this$;
+      var tmp$;
+      Kotlin.isType(tmp$ = visitTagAndFinalize(new CANVAS_init(attributesMapOf('class', null), $receiver_0), $receiver_0, visitAndFinalize$lambda(loadHTML$lambda$lambda$lambda$lambda_1)), HTMLCanvasElement_0) ? tmp$ : throwCCE();
+      return Unit;
+    };
+  }
+  function loadHTML$lambda$lambda$lambda_1($receiver) {
+    set_id($receiver, 'upcomingPieces');
+    set_style($receiver, 'display: inline-block; vertical-align: top');
+    return Unit;
+  }
+  function loadHTML$lambda$lambda(this$) {
+    return function ($receiver) {
+      var $receiver_0 = this$;
+      var block = loadHTML$lambda$lambda$lambda(this$);
+      var tmp$;
+      Kotlin.isType(tmp$ = visitTagAndFinalize(new DIV_init(attributesMapOf('class', null), $receiver_0), $receiver_0, visitAndFinalize$lambda_0(block)), HTMLDivElement_0) ? tmp$ : throwCCE();
+      $receiver.unaryPlus_pdl1vz$(' ');
+      var $receiver_1 = this$;
+      var block_0 = loadHTML$lambda$lambda$lambda_0(this$);
+      var tmp$_0;
+      Kotlin.isType(tmp$_0 = visitTagAndFinalize(new DIV_init(attributesMapOf('class', null), $receiver_1), $receiver_1, visitAndFinalize$lambda_0(block_0)), HTMLDivElement_0) ? tmp$_0 : throwCCE();
+      $receiver.unaryPlus_pdl1vz$(' ');
+      var $receiver_2 = this$;
+      var tmp$_1;
+      Kotlin.isType(tmp$_1 = visitTagAndFinalize(new DIV_init(attributesMapOf('class', null), $receiver_2), $receiver_2, visitAndFinalize$lambda_0(loadHTML$lambda$lambda$lambda_1)), HTMLDivElement_0) ? tmp$_1 : throwCCE();
+      return Unit;
+    };
+  }
+  function loadHTML$lambda($receiver) {
+    var tmp$;
+    Kotlin.isType(tmp$ = visitTagAndFinalize(new SPAN_init(attributesMapOf('class', null), $receiver), $receiver, visitAndFinalize$lambda_1(loadHTML$lambda$lambda($receiver))), HTMLSpanElement_0) ? tmp$ : throwCCE();
+    return Unit;
+  }
+  function loadHTML() {
+    append(ensureNotNull(document.body), loadHTML$lambda);
   }
   function runAtFixedRate$step$lambda(closure$step) {
     return function (timestamp) {
@@ -1843,6 +1967,8 @@
     return new synchronizedTetrisUI$ObjectLiteral(ui);
   }
   _.main = main;
+  $$importsForInline$$['kotlinx-html-js'] = $module$kotlinx_html_js;
+  _.loadHTML = loadHTML;
   var package$controller = _.controller || (_.controller = {});
   package$controller.runAtFixedRate_ld8oi5$ = runAtFixedRate;
   var package$model = _.model || (_.model = {});
