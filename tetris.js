@@ -878,6 +878,12 @@
       var cmd = tmp$.next();
       if (this.pressedCmds_1gzr1p$_0.contains_11rb$(cmd)) {
         var delay = this.initialPress_mw33k7$_0.contains_11rb$(cmd) ? this.config.delayedAutoShift : this.config.autoRepeatRate;
+        if (delay === 0) {
+          var pieceMoved = this.perform_hansvz$_0(cmd);
+          while (pieceMoved) {
+            pieceMoved = this.perform_hansvz$_0(cmd);
+          }
+        }
         var lastPressTime = ensureNotNull(this.timeOfPrevAction_mokgl5$_0.get_11rb$(cmd));
         var delayTimePassed = curTime.minus_cgako$(lastPressTime).compareTo_11rb$(get_milliseconds_0(delay)) >= 0;
         if (delayTimePassed) {
@@ -936,6 +942,8 @@
   };
   BaseGame.prototype.forActivePiece_laby93$_0 = function (op) {
     var tmp$;
+    var prevActivePiece = this.activePiece_tptnae$_0;
+    var tmp$_0;
     var candidate = op(this.activePiece_tptnae$_0);
     var next = this.isValid_butbg3$_0(candidate) ? candidate : this.activePiece_tptnae$_0;
     var canMoveDown = this.isValid_butbg3$_0(next.moveDown());
@@ -956,11 +964,12 @@
         this.autoLockStartTime_hl1607$_0 = null;
       }
     }
-    tmp$ = this.boardChangeHandlers_kt4o4x$_0.iterator();
-    while (tmp$.hasNext()) {
-      var handler = tmp$.next();
+    tmp$_0 = this.boardChangeHandlers_kt4o4x$_0.iterator();
+    while (tmp$_0.hasNext()) {
+      var handler = tmp$_0.next();
       handler();
     }
+    return !((tmp$ = this.activePiece_tptnae$_0) != null ? tmp$.equals(prevActivePiece) : null);
   };
   BaseGame.prototype.isValid_butbg3$_0 = function ($receiver) {
     return this.board_665yfc$_0.areValidCells_xyy4xm$(copyToArray($receiver.cells()).slice());
@@ -1131,30 +1140,22 @@
   BaseGame.prototype.perform_hansvz$_0 = function (cmd) {
     switch (cmd.name) {
       case 'ROTATE_CCW':
-        this.forActivePiece_laby93$_0(BaseGame$perform$lambda(this));
-        break;
+        return this.forActivePiece_laby93$_0(BaseGame$perform$lambda(this));
       case 'ROTATE_CW':
-        this.forActivePiece_laby93$_0(BaseGame$perform$lambda_0(this));
-        break;
+        return this.forActivePiece_laby93$_0(BaseGame$perform$lambda_0(this));
       case 'LEFT':
-        this.forActivePiece_laby93$_0(BaseGame$perform$lambda_1);
-        break;
+        return this.forActivePiece_laby93$_0(BaseGame$perform$lambda_1);
       case 'RIGHT':
-        this.forActivePiece_laby93$_0(BaseGame$perform$lambda_2);
-        break;
+        return this.forActivePiece_laby93$_0(BaseGame$perform$lambda_2);
       case 'SOFT_DROP':
-        this.forActivePiece_laby93$_0(BaseGame$perform$lambda_3);
-        break;
+        return this.forActivePiece_laby93$_0(BaseGame$perform$lambda_3);
       case 'HARD_DROP':
-        this.forActivePiece_laby93$_0(BaseGame$perform$lambda_4(this));
-        break;
+        return this.forActivePiece_laby93$_0(BaseGame$perform$lambda_4(this));
       case 'HOLD':
-        this.forActivePiece_laby93$_0(BaseGame$perform$lambda_5(this));
-        break;
+        return this.forActivePiece_laby93$_0(BaseGame$perform$lambda_5(this));
       case 'DO_NOTHING':
-        break;
-      default:Kotlin.noWhenBranchMatched();
-        break;
+        return false;
+      default:return Kotlin.noWhenBranchMatched();
     }
   };
   function BaseGame$board$ObjectLiteral(closure$board, this$BaseGame) {
@@ -1297,8 +1298,8 @@
       return this.autoRepeatRate_76xv75$_0;
     },
     set: function (value) {
-      if (value <= 0) {
-        throw IllegalArgumentException_init('Auto repeat rate must be positive');
+      if (value < 0) {
+        throw IllegalArgumentException_init('Auto repeat rate must be nonnegative');
       }
       this.autoRepeatRate_76xv75$_0 = value;
     }
