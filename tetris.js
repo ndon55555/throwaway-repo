@@ -288,6 +288,9 @@
     var step = runAtFixedRate$step(shouldContinue, prevEventTime, period, event);
     window.requestAnimationFrame(runAtFixedRate$lambda(step));
   }
+  function sync(lock, f) {
+    return f();
+  }
   function timeStamp() {
     return get_milliseconds(window.performance.now());
   }
@@ -934,35 +937,41 @@
   BaseGame.prototype.onUpcomingPiecesChange_o14v8n$ = function (action) {
     this.upcomingPiecesHandlers_mk451g$_0.add_11rb$(action);
   };
+  function BaseGame$forActivePiece$lambda(closure$op, this$BaseGame) {
+    return function () {
+      var tmp$;
+      var candidate = closure$op(this$BaseGame.activePiece_tptnae$_0);
+      var next = this$BaseGame.isValid_butbg3$_0(candidate) ? candidate : this$BaseGame.activePiece_tptnae$_0;
+      var canMoveDown = this$BaseGame.isValid_butbg3$_0(next.moveDown());
+      var pieceMoved = !(next != null ? next.equals(this$BaseGame.activePiece_tptnae$_0) : null);
+      this$BaseGame.activePiece_tptnae$_0 = next;
+      if (canMoveDown || pieceMoved) {
+        this$BaseGame.autoLockStartTime_hl1607$_0 = null;
+      }
+      if (!canMoveDown) {
+        if (this$BaseGame.autoLockStartTime_hl1607$_0 == null) {
+          this$BaseGame.autoLockStartTime_hl1607$_0 = timeStamp();
+        }
+      }
+      if (this$BaseGame.autoLockStartTime_hl1607$_0 != null) {
+        var lockDelayPassed = timeStamp().minus_cgako$(ensureNotNull(this$BaseGame.autoLockStartTime_hl1607$_0)).compareTo_11rb$(get_milliseconds_0(this$BaseGame.config.lockDelay)) >= 0;
+        if (lockDelayPassed) {
+          this$BaseGame.activePiece_tptnae$_0 = this$BaseGame.hardDrop_tkg8nx$_0(this$BaseGame.activePiece_tptnae$_0);
+          this$BaseGame.autoLockStartTime_hl1607$_0 = null;
+        }
+      }
+      tmp$ = this$BaseGame.boardChangeHandlers_kt4o4x$_0.iterator();
+      while (tmp$.hasNext()) {
+        var handler = tmp$.next();
+        handler();
+      }
+      return Unit;
+    };
+  }
   BaseGame.prototype.forActivePiece_laby93$_0 = function (op) {
     var tmp$;
     var prevActivePiece = this.activePiece_tptnae$_0;
-    var tmp$_0;
-    var candidate = op(this.activePiece_tptnae$_0);
-    var next = this.isValid_butbg3$_0(candidate) ? candidate : this.activePiece_tptnae$_0;
-    var canMoveDown = this.isValid_butbg3$_0(next.moveDown());
-    var pieceMoved = !(next != null ? next.equals(this.activePiece_tptnae$_0) : null);
-    this.activePiece_tptnae$_0 = next;
-    if (canMoveDown || pieceMoved) {
-      this.autoLockStartTime_hl1607$_0 = null;
-    }
-    if (!canMoveDown) {
-      if (this.autoLockStartTime_hl1607$_0 == null) {
-        this.autoLockStartTime_hl1607$_0 = timeStamp();
-      }
-    }
-    if (this.autoLockStartTime_hl1607$_0 != null) {
-      var lockDelayPassed = timeStamp().minus_cgako$(ensureNotNull(this.autoLockStartTime_hl1607$_0)).compareTo_11rb$(get_milliseconds_0(this.config.lockDelay)) >= 0;
-      if (lockDelayPassed) {
-        this.activePiece_tptnae$_0 = this.hardDrop_tkg8nx$_0(this.activePiece_tptnae$_0);
-        this.autoLockStartTime_hl1607$_0 = null;
-      }
-    }
-    tmp$_0 = this.boardChangeHandlers_kt4o4x$_0.iterator();
-    while (tmp$_0.hasNext()) {
-      var handler = tmp$_0.next();
-      handler();
-    }
+    sync(this.activePiece_tptnae$_0, BaseGame$forActivePiece$lambda(op, this));
     return !((tmp$ = this.activePiece_tptnae$_0) != null ? tmp$.equals(prevActivePiece) : null);
   };
   BaseGame.prototype.isValid_butbg3$_0 = function ($receiver) {
@@ -1698,6 +1707,7 @@
   var package$controller = _.controller || (_.controller = {});
   package$controller.runAtFixedRate_ld8oi5$ = runAtFixedRate;
   var package$model = _.model || (_.model = {});
+  package$model.sync_eocq09$ = sync;
   var package$game = package$model.game || (package$model.game = {});
   package$game.timeStamp = timeStamp;
   var package$view = _.view || (_.view = {});
