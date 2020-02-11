@@ -15,16 +15,16 @@
 }(this, function (_, Kotlin, $module$kotlinx_html_js) {
   'use strict';
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
-  var equals = Kotlin.equals;
-  var Unit = Kotlin.kotlin.Unit;
   var ensureNotNull = Kotlin.ensureNotNull;
   var set_style = $module$kotlinx_html_js.kotlinx.html.set_style_ueiko3$;
   var set_id = $module$kotlinx_html_js.kotlinx.html.set_id_ueiko3$;
+  var Unit = Kotlin.kotlin.Unit;
   var append = $module$kotlinx_html_js.kotlinx.html.dom.append_k9bwru$;
+  var equals = Kotlin.equals;
+  var throwCCE = Kotlin.throwCCE;
   var attributesMapOf = $module$kotlinx_html_js.kotlinx.html.attributesMapOf_jyasbz$;
   var CANVAS_init = $module$kotlinx_html_js.kotlinx.html.CANVAS;
   var HTMLCanvasElement_0 = HTMLCanvasElement;
-  var throwCCE = Kotlin.throwCCE;
   var visitTagAndFinalize = $module$kotlinx_html_js.kotlinx.html.visitTagAndFinalize_g9qte5$;
   var enumEncode = $module$kotlinx_html_js.kotlinx.html.attributes.enumEncode_m4whry$;
   var attributesMapOf_0 = $module$kotlinx_html_js.kotlinx.html.attributesMapOf_alerag$;
@@ -124,92 +124,16 @@
       return Unit;
     };
   }
-  function main$lambda(closure$controller, closure$view) {
-    return function (it) {
-      var tmp$;
-      var key = it.key.toLowerCase();
-      if (equals(key, 'r')) {
-        closure$controller.stop();
-        var tmp$_0 = closure$controller;
-        var tmp$_1 = new BoardImpl();
-        var $receiver = new GameConfiguration();
-        $receiver.delayedAutoShift = 110;
-        $receiver.autoRepeatRate = 5;
-        tmp$_0.run_smlric$(new BaseGame(tmp$_1, $receiver), closure$view);
-      }
-       else {
-        switch (key) {
-          case 'arrowleft':
-            tmp$ = 'left';
-            break;
-          case 'arrowright':
-            tmp$ = 'right';
-            break;
-          case 'arrowup':
-            tmp$ = 'up';
-            break;
-          case 'arrowdown':
-            tmp$ = 'down';
-            break;
-          case ' ':
-            tmp$ = 'space';
-            break;
-          case 'shift':
-            tmp$ = 'shift';
-            break;
-          default:tmp$ = key;
-            break;
-        }
-        closure$controller.handleKeyPress_61zpoe$(tmp$);
-      }
-      return Unit;
-    };
-  }
-  function main$lambda_0(closure$controller) {
-    return function (it) {
-      var tmp$;
-      var key = it.key.toLowerCase();
-      switch (key) {
-        case 'arrowleft':
-          tmp$ = 'left';
-          break;
-        case 'arrowright':
-          tmp$ = 'right';
-          break;
-        case 'arrowup':
-          tmp$ = 'up';
-          break;
-        case 'arrowdown':
-          tmp$ = 'down';
-          break;
-        case ' ':
-          tmp$ = 'space';
-          break;
-        case 'shift':
-          tmp$ = 'shift';
-          break;
-        default:tmp$ = key;
-          break;
-      }
-      closure$controller.handleKeyRelease_61zpoe$(tmp$);
-      return Unit;
-    };
-  }
   function main() {
-    var tmp$, tmp$_0;
     loadHTML();
-    var controller = new ControllerImpl();
-    var view = new TetrisWeb();
-    (tmp$ = document.body) != null ? (tmp$.onkeydown = main$lambda(controller, view)) : null;
-    (tmp$_0 = document.body) != null ? (tmp$_0.onkeyup = main$lambda_0(controller)) : null;
-    var tmp$_1 = new BoardImpl();
-    var $receiver = new GameConfiguration();
-    $receiver.delayedAutoShift = 110;
-    $receiver.autoRepeatRate = 5;
-    controller.run_smlric$(new BaseGame(tmp$_1, $receiver), view);
+    loadGame();
   }
+  var BOARD_ID;
+  var HOLD_ID;
+  var UPCOMING_PIECES_ID;
+  var RESTART_ID;
   function loadHTML$lambda$lambda$lambda$lambda($receiver) {
-    set_id($receiver, 'hold');
+    set_id($receiver, HOLD_ID);
     $receiver.width = '120';
     $receiver.height = '120';
     return Unit;
@@ -231,7 +155,7 @@
     };
   }
   function loadHTML$lambda$lambda$lambda$lambda_1($receiver) {
-    set_id($receiver, 'board');
+    set_id($receiver, BOARD_ID);
     $receiver.width = '300';
     $receiver.height = '600';
     return Unit;
@@ -246,7 +170,7 @@
     };
   }
   function loadHTML$lambda$lambda$lambda_1($receiver) {
-    set_id($receiver, 'upcomingPieces');
+    set_id($receiver, UPCOMING_PIECES_ID);
     set_style($receiver, 'display: inline-block; vertical-align: top');
     return Unit;
   }
@@ -275,6 +199,66 @@
   }
   function loadHTML() {
     append(ensureNotNull(document.body), loadHTML$lambda);
+  }
+  function loadGame$lambda(closure$controller, closure$view) {
+    return function () {
+      closure$controller.stop();
+      closure$controller.run_smlric$(new BaseGame(new BoardImpl(), new GameConfiguration()), closure$view);
+      return Unit;
+    };
+  }
+  function loadGame$lambda_0(key) {
+    switch (key) {
+      case 'arrowleft':
+        return 'left';
+      case 'arrowright':
+        return 'right';
+      case 'arrowup':
+        return 'up';
+      case 'arrowdown':
+        return 'down';
+      case ' ':
+        return 'space';
+      case 'shift':
+        return 'shift';
+      default:return key;
+    }
+  }
+  function loadGame$lambda_1(closure$restartGame, closure$controller, closure$keysToCommand) {
+    return function (it) {
+      var key = it.key.toLowerCase();
+      if (equals(key, 'r')) {
+        closure$restartGame();
+      }
+       else {
+        closure$controller.handleKeyPress_61zpoe$(closure$keysToCommand(key));
+      }
+      return Unit;
+    };
+  }
+  function loadGame$lambda_2(closure$controller, closure$keysToCommand) {
+    return function (it) {
+      var key = it.key.toLowerCase();
+      closure$controller.handleKeyRelease_61zpoe$(closure$keysToCommand(key));
+      return Unit;
+    };
+  }
+  function loadGame$lambda_3(closure$restartGame) {
+    return function (it) {
+      closure$restartGame();
+      return Unit;
+    };
+  }
+  function loadGame() {
+    var tmp$, tmp$_0, tmp$_1;
+    var controller = new ControllerImpl();
+    var view = new TetrisWeb();
+    var restartGame = loadGame$lambda(controller, view);
+    var keysToCommand = loadGame$lambda_0;
+    (tmp$ = document.body) != null ? (tmp$.onkeydown = loadGame$lambda_1(restartGame, controller, keysToCommand)) : null;
+    (tmp$_0 = document.body) != null ? (tmp$_0.onkeyup = loadGame$lambda_2(controller, keysToCommand)) : null;
+    (Kotlin.isType(tmp$_1 = document.getElementById(RESTART_ID), HTMLButtonElement) ? tmp$_1 : throwCCE()).onclick = loadGame$lambda_3(restartGame);
+    controller.run_smlric$(new BaseGame(new BoardImpl(), new GameConfiguration()), view);
   }
   function runAtFixedRate$step$lambda(closure$step) {
     return function (timestamp) {
@@ -307,9 +291,6 @@
   function timeStamp() {
     return get_milliseconds(window.performance.now());
   }
-  var BOARD_ID;
-  var HOLD_ID;
-  var UPCOMING_PIECES_ID;
   function TetrisWeb() {
   }
   TetrisWeb.prototype.drawCells_4c630g$ = function (cells) {
@@ -1713,6 +1694,7 @@
   _.main = main;
   $$importsForInline$$['kotlinx-html-js'] = $module$kotlinx_html_js;
   _.loadHTML = loadHTML;
+  _.loadGame = loadGame;
   var package$controller = _.controller || (_.controller = {});
   package$controller.runAtFixedRate_ld8oi5$ = runAtFixedRate;
   var package$model = _.model || (_.model = {});
@@ -1782,6 +1764,7 @@
   BOARD_ID = 'board';
   HOLD_ID = 'hold';
   UPCOMING_PIECES_ID = 'upcomingPieces';
+  RESTART_ID = 'restart';
   BOARD_WIDTH = 10;
   BOARD_HEIGHT = 40;
   VISIBLE_BOARD_HEIGHT = 20;
