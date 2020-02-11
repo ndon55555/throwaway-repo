@@ -77,7 +77,6 @@
   var shuffled = Kotlin.kotlin.collections.shuffled_7wnvza$;
   var toMutableList = Kotlin.kotlin.collections.toMutableList_4c7yge$;
   var Random = Kotlin.kotlin.random.Random;
-  var random = Kotlin.kotlin.collections.random_iscd7z$;
   var hashCode = Kotlin.hashCode;
   var abs = Kotlin.kotlin.math.abs_za3lpa$;
   var getCallableRef = Kotlin.getCallableRef;
@@ -107,17 +106,11 @@
       return Unit;
     };
   }
-  function canvas$lambda($receiver) {
-    return Unit;
-  }
   function visit$lambda(closure$block) {
     return function ($receiver) {
       closure$block($receiver);
       return Unit;
     };
-  }
-  function button$lambda($receiver) {
-    return Unit;
   }
   function visitAndFinalize$lambda_0(closure$block) {
     return function ($receiver) {
@@ -125,17 +118,11 @@
       return Unit;
     };
   }
-  function div$lambda($receiver) {
-    return Unit;
-  }
   function visitAndFinalize$lambda_1(closure$block) {
     return function ($receiver) {
       closure$block($receiver);
       return Unit;
     };
-  }
-  function span$lambda($receiver) {
-    return Unit;
   }
   function main$lambda(closure$controller, closure$view) {
     return function (it) {
@@ -440,37 +427,27 @@
       default:return Kotlin.noWhenBranchMatched();
     }
   };
-  TetrisWeb.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'TetrisWeb',
-    interfaces: [TetrisUI]
-  };
+  TetrisWeb.$metadata$ = {kind: Kind_CLASS, simpleName: 'TetrisWeb', interfaces: [TetrisUI]};
   function ControllerImpl() {
     this.fps = 60;
     this.game_w3xoh4$_0 = this.game_w3xoh4$_0;
     this.view_wcbjrp$_0 = this.view_wcbjrp$_0;
     this.keyToCommand_0 = mutableMapOf([to('z', Command$ROTATE_CCW_getInstance()), to('up', Command$ROTATE_CW_getInstance()), to('left', Command$LEFT_getInstance()), to('right', Command$RIGHT_getInstance()), to('down', Command$SOFT_DROP_getInstance()), to('space', Command$HARD_DROP_getInstance()), to('shift', Command$HOLD_getInstance())]);
   }
-  Object.defineProperty(ControllerImpl.prototype, 'game', {
-    get: function () {
-      if (this.game_w3xoh4$_0 == null)
-        return throwUPAE('game');
-      return this.game_w3xoh4$_0;
-    },
-    set: function (game) {
-      this.game_w3xoh4$_0 = game;
-    }
-  });
-  Object.defineProperty(ControllerImpl.prototype, 'view', {
-    get: function () {
-      if (this.view_wcbjrp$_0 == null)
-        return throwUPAE('view');
-      return this.view_wcbjrp$_0;
-    },
-    set: function (view) {
-      this.view_wcbjrp$_0 = view;
-    }
-  });
+  Object.defineProperty(ControllerImpl.prototype, 'game', {get: function () {
+    if (this.game_w3xoh4$_0 == null)
+      return throwUPAE('game');
+    return this.game_w3xoh4$_0;
+  }, set: function (game) {
+    this.game_w3xoh4$_0 = game;
+  }});
+  Object.defineProperty(ControllerImpl.prototype, 'view', {get: function () {
+    if (this.view_wcbjrp$_0 == null)
+      return throwUPAE('view');
+    return this.view_wcbjrp$_0;
+  }, set: function (view) {
+    this.view_wcbjrp$_0 = view;
+  }});
   function ControllerImpl$run$lambda(closure$view, closure$game, this$ControllerImpl) {
     return function () {
       closure$view.drawCells_4c630g$(this$ControllerImpl.standardize_0(closure$game.allCells()));
@@ -545,56 +522,17 @@
     }
     return toSet(destination_0);
   };
-  ControllerImpl.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'ControllerImpl',
-    interfaces: [TetrisController]
-  };
+  ControllerImpl.$metadata$ = {kind: Kind_CLASS, simpleName: 'ControllerImpl', interfaces: [TetrisController]};
   function TetrisController() {
   }
-  TetrisController.$metadata$ = {
-    kind: Kind_INTERFACE,
-    simpleName: 'TetrisController',
-    interfaces: []
-  };
+  TetrisController.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'TetrisController', interfaces: []};
   function Board() {
   }
-  Board.$metadata$ = {
-    kind: Kind_INTERFACE,
-    simpleName: 'Board',
-    interfaces: []
-  };
+  Board.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'Board', interfaces: []};
   var BOARD_WIDTH;
   var BOARD_HEIGHT;
   var VISIBLE_BOARD_HEIGHT;
   var FIRST_VISIBLE_ROW;
-  function synchronizedBoard$ObjectLiteral(closure$b) {
-    this.closure$b = closure$b;
-    this.lock_0 = new Any();
-  }
-  synchronizedBoard$ObjectLiteral.prototype.areValidCells_xyy4xm$ = function (cells) {
-    this.closure$b;
-    return this.closure$b.areValidCells_xyy4xm$(cells.slice());
-  };
-  synchronizedBoard$ObjectLiteral.prototype.placeCells_xyy4xm$ = function (cells) {
-    this.closure$b;
-    this.closure$b.placeCells_xyy4xm$(cells.slice());
-  };
-  synchronizedBoard$ObjectLiteral.prototype.clearLine_za3lpa$ = function (row) {
-    this.closure$b;
-    this.closure$b.clearLine_za3lpa$(row);
-  };
-  synchronizedBoard$ObjectLiteral.prototype.getPlacedCells = function () {
-    this.closure$b;
-    return this.closure$b.getPlacedCells();
-  };
-  synchronizedBoard$ObjectLiteral.$metadata$ = {
-    kind: Kind_CLASS,
-    interfaces: [Board]
-  };
-  function synchronizedBoard(b) {
-    return new synchronizedBoard$ObjectLiteral(b);
-  }
   function BoardImpl() {
     this.placedCells_0 = LinkedHashSet_init();
   }
@@ -675,11 +613,7 @@
     removeAll_0(this.placedCells_0, toBeRemoved);
     addAll_0(this.placedCells_0, toBeAdded);
   };
-  BoardImpl.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'BoardImpl',
-    interfaces: [Board]
-  };
+  BoardImpl.$metadata$ = {kind: Kind_CLASS, simpleName: 'BoardImpl', interfaces: [Board]};
   function CellColor(name, ordinal) {
     Enum.call(this);
     this.name$ = name;
@@ -737,11 +671,7 @@
     CellColor_initFields();
     return CellColor$NULL_instance;
   }
-  CellColor.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'CellColor',
-    interfaces: [Enum]
-  };
+  CellColor.$metadata$ = {kind: Kind_CLASS, simpleName: 'CellColor', interfaces: [Enum]};
   function CellColor$values() {
     return [CellColor$GREEN_getInstance(), CellColor$RED_getInstance(), CellColor$DARK_BLUE_getInstance(), CellColor$ORANGE_getInstance(), CellColor$LIGHT_BLUE_getInstance(), CellColor$YELLOW_getInstance(), CellColor$PURPLE_getInstance(), CellColor$NULL_getInstance()];
   }
@@ -770,30 +700,20 @@
   CellColor.valueOf_61zpoe$ = CellColor$valueOf;
   function Cell() {
   }
-  Cell.$metadata$ = {
-    kind: Kind_INTERFACE,
-    simpleName: 'Cell',
-    interfaces: []
-  };
+  Cell.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'Cell', interfaces: []};
   function CellImpl(color, position) {
     this.color_8221ac$_0 = color;
     this.position_0 = position;
   }
-  Object.defineProperty(CellImpl.prototype, 'color', {
-    get: function () {
-      return this.color_8221ac$_0;
-    }
-  });
-  Object.defineProperty(CellImpl.prototype, 'row', {
-    get: function () {
-      return numberToInt(this.position_0.x);
-    }
-  });
-  Object.defineProperty(CellImpl.prototype, 'col', {
-    get: function () {
-      return numberToInt(this.position_0.y);
-    }
-  });
+  Object.defineProperty(CellImpl.prototype, 'color', {get: function () {
+    return this.color_8221ac$_0;
+  }});
+  Object.defineProperty(CellImpl.prototype, 'row', {get: function () {
+    return numberToInt(this.position_0.x);
+  }});
+  Object.defineProperty(CellImpl.prototype, 'col', {get: function () {
+    return numberToInt(this.position_0.y);
+  }});
   CellImpl.prototype.move_vux9f0$ = function (dRow, dCol) {
     return new CellImpl(this.color, this.position_0.translate_lu1900$(dRow, dCol));
   };
@@ -806,11 +726,7 @@
   CellImpl.prototype.sharesPositionWith_xttjpl$ = function (other) {
     return this.row === other.row && this.col === other.col;
   };
-  CellImpl.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'CellImpl',
-    interfaces: [Cell]
-  };
+  CellImpl.$metadata$ = {kind: Kind_CLASS, simpleName: 'CellImpl', interfaces: [Cell]};
   function CellImpl_init(color, row, col, $this) {
     $this = $this || Object.create(CellImpl.prototype);
     CellImpl.call($this, color, new Posn(row, col));
@@ -860,16 +776,7 @@
   Posn.prototype.rotate90CCWAround_xu224h$ = function (centerOfRotation) {
     return this.rotate90CCWAround_lu1900$(centerOfRotation.x, centerOfRotation.y);
   };
-  Posn.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Posn',
-    interfaces: []
-  };
-  function Posn_init(x, y, $this) {
-    $this = $this || Object.create(Posn.prototype);
-    Posn.call($this, x, y);
-    return $this;
-  }
+  Posn.$metadata$ = {kind: Kind_CLASS, simpleName: 'Posn', interfaces: []};
   Posn.prototype.component1 = function () {
     return this.x;
   };
@@ -911,64 +818,46 @@
     this.upcomingPiecesHandlers_mk451g$_0 = LinkedHashSet_init();
   }
   var BaseGame$lastAutoDrop_metadata = new PropertyMetadata('lastAutoDrop');
-  Object.defineProperty(BaseGame.prototype, 'lastAutoDrop_o9cj4i$_0', {
-    get: function () {
-      return this.lastAutoDrop_o9cj4i$_cr8bu5$_0.getValue_lrcp0p$(this, BaseGame$lastAutoDrop_metadata);
-    },
-    set: function (lastAutoDrop) {
-      this.lastAutoDrop_o9cj4i$_cr8bu5$_0.setValue_9rddgb$(this, BaseGame$lastAutoDrop_metadata, lastAutoDrop);
-    }
-  });
-  Object.defineProperty(BaseGame.prototype, 'pressedCmds_1gzr1p$_0', {
-    get: function () {
-      if (this.pressedCmds_1gzr1p$_20rs5h$_0 == null)
-        return throwUPAE('pressedCmds');
-      return this.pressedCmds_1gzr1p$_20rs5h$_0;
-    },
-    set: function (pressedCmds) {
-      this.pressedCmds_1gzr1p$_20rs5h$_0 = pressedCmds;
-    }
-  });
-  Object.defineProperty(BaseGame.prototype, 'initialPress_mw33k7$_0', {
-    get: function () {
-      if (this.initialPress_mw33k7$_w39pe0$_0 == null)
-        return throwUPAE('initialPress');
-      return this.initialPress_mw33k7$_w39pe0$_0;
-    },
-    set: function (initialPress) {
-      this.initialPress_mw33k7$_w39pe0$_0 = initialPress;
-    }
-  });
-  Object.defineProperty(BaseGame.prototype, 'timeOfPrevAction_mokgl5$_0', {
-    get: function () {
-      if (this.timeOfPrevAction_mokgl5$_g1xyz$_0 == null)
-        return throwUPAE('timeOfPrevAction');
-      return this.timeOfPrevAction_mokgl5$_g1xyz$_0;
-    },
-    set: function (timeOfPrevAction) {
-      this.timeOfPrevAction_mokgl5$_g1xyz$_0 = timeOfPrevAction;
-    }
-  });
-  Object.defineProperty(BaseGame.prototype, 'upcomingPiecesQueue_8uxv1e$_0', {
-    get: function () {
-      if (this.upcomingPiecesQueue_8uxv1e$_ryi04o$_0 == null)
-        return throwUPAE('upcomingPiecesQueue');
-      return this.upcomingPiecesQueue_8uxv1e$_ryi04o$_0;
-    },
-    set: function (upcomingPiecesQueue) {
-      this.upcomingPiecesQueue_8uxv1e$_ryi04o$_0 = upcomingPiecesQueue;
-    }
-  });
-  Object.defineProperty(BaseGame.prototype, 'activePiece_tptnae$_0', {
-    get: function () {
-      if (this.activePiece_tptnae$_43zuh1$_0 == null)
-        return throwUPAE('activePiece');
-      return this.activePiece_tptnae$_43zuh1$_0;
-    },
-    set: function (activePiece) {
-      this.activePiece_tptnae$_43zuh1$_0 = activePiece;
-    }
-  });
+  Object.defineProperty(BaseGame.prototype, 'lastAutoDrop_o9cj4i$_0', {get: function () {
+    return this.lastAutoDrop_o9cj4i$_cr8bu5$_0.getValue_lrcp0p$(this, BaseGame$lastAutoDrop_metadata);
+  }, set: function (lastAutoDrop) {
+    this.lastAutoDrop_o9cj4i$_cr8bu5$_0.setValue_9rddgb$(this, BaseGame$lastAutoDrop_metadata, lastAutoDrop);
+  }});
+  Object.defineProperty(BaseGame.prototype, 'pressedCmds_1gzr1p$_0', {get: function () {
+    if (this.pressedCmds_1gzr1p$_20rs5h$_0 == null)
+      return throwUPAE('pressedCmds');
+    return this.pressedCmds_1gzr1p$_20rs5h$_0;
+  }, set: function (pressedCmds) {
+    this.pressedCmds_1gzr1p$_20rs5h$_0 = pressedCmds;
+  }});
+  Object.defineProperty(BaseGame.prototype, 'initialPress_mw33k7$_0', {get: function () {
+    if (this.initialPress_mw33k7$_w39pe0$_0 == null)
+      return throwUPAE('initialPress');
+    return this.initialPress_mw33k7$_w39pe0$_0;
+  }, set: function (initialPress) {
+    this.initialPress_mw33k7$_w39pe0$_0 = initialPress;
+  }});
+  Object.defineProperty(BaseGame.prototype, 'timeOfPrevAction_mokgl5$_0', {get: function () {
+    if (this.timeOfPrevAction_mokgl5$_g1xyz$_0 == null)
+      return throwUPAE('timeOfPrevAction');
+    return this.timeOfPrevAction_mokgl5$_g1xyz$_0;
+  }, set: function (timeOfPrevAction) {
+    this.timeOfPrevAction_mokgl5$_g1xyz$_0 = timeOfPrevAction;
+  }});
+  Object.defineProperty(BaseGame.prototype, 'upcomingPiecesQueue_8uxv1e$_0', {get: function () {
+    if (this.upcomingPiecesQueue_8uxv1e$_ryi04o$_0 == null)
+      return throwUPAE('upcomingPiecesQueue');
+    return this.upcomingPiecesQueue_8uxv1e$_ryi04o$_0;
+  }, set: function (upcomingPiecesQueue) {
+    this.upcomingPiecesQueue_8uxv1e$_ryi04o$_0 = upcomingPiecesQueue;
+  }});
+  Object.defineProperty(BaseGame.prototype, 'activePiece_tptnae$_0', {get: function () {
+    if (this.activePiece_tptnae$_43zuh1$_0 == null)
+      return throwUPAE('activePiece');
+    return this.activePiece_tptnae$_43zuh1$_0;
+  }, set: function (activePiece) {
+    this.activePiece_tptnae$_43zuh1$_0 = activePiece;
+  }});
   BaseGame.prototype.start = function () {
     if (this.alreadyStarted_szcpy5$_0)
       throw Exception_init('game had already been started');
@@ -1310,15 +1199,8 @@
   BaseGame$board$ObjectLiteral.prototype.getPlacedCells = function () {
     return this.closure$board.getPlacedCells();
   };
-  BaseGame$board$ObjectLiteral.$metadata$ = {
-    kind: Kind_CLASS,
-    interfaces: [Board]
-  };
-  BaseGame.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'BaseGame',
-    interfaces: []
-  };
+  BaseGame$board$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Board]};
+  BaseGame.$metadata$ = {kind: Kind_CLASS, simpleName: 'BaseGame', interfaces: []};
   function Command(name, ordinal) {
     Enum.call(this);
     this.name$ = name;
@@ -1376,11 +1258,7 @@
     Command_initFields();
     return Command$DO_NOTHING_instance;
   }
-  Command.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Command',
-    interfaces: [Enum]
-  };
+  Command.$metadata$ = {kind: Kind_CLASS, simpleName: 'Command', interfaces: [Enum]};
   function Command$values() {
     return [Command$ROTATE_CCW_getInstance(), Command$ROTATE_CW_getInstance(), Command$LEFT_getInstance(), Command$RIGHT_getInstance(), Command$SOFT_DROP_getInstance(), Command$HARD_DROP_getInstance(), Command$HOLD_getInstance(), Command$DO_NOTHING_getInstance()];
   }
@@ -1417,73 +1295,50 @@
     this.rotationSystem = new SuperRotation();
     this.generator = new RandomBagOf7();
   }
-  Object.defineProperty(GameConfiguration.prototype, 'autoRepeatRate', {
-    get: function () {
-      return this.autoRepeatRate_76xv75$_0;
-    },
-    set: function (value) {
-      if (value < 0) {
-        throw IllegalArgumentException_init('Auto repeat rate must be nonnegative');
-      }
-      this.autoRepeatRate_76xv75$_0 = value;
+  Object.defineProperty(GameConfiguration.prototype, 'autoRepeatRate', {get: function () {
+    return this.autoRepeatRate_76xv75$_0;
+  }, set: function (value) {
+    if (value < 0) {
+      throw IllegalArgumentException_init('Auto repeat rate must be nonnegative');
     }
-  });
-  Object.defineProperty(GameConfiguration.prototype, 'delayedAutoShift', {
-    get: function () {
-      return this.delayedAutoShift_yeibsa$_0;
-    },
-    set: function (value) {
-      if (value < 0) {
-        throw IllegalArgumentException_init('Delayed auto shift must be nonnegative');
-      }
-      this.delayedAutoShift_yeibsa$_0 = value;
+    this.autoRepeatRate_76xv75$_0 = value;
+  }});
+  Object.defineProperty(GameConfiguration.prototype, 'delayedAutoShift', {get: function () {
+    return this.delayedAutoShift_yeibsa$_0;
+  }, set: function (value) {
+    if (value < 0) {
+      throw IllegalArgumentException_init('Delayed auto shift must be nonnegative');
     }
-  });
-  Object.defineProperty(GameConfiguration.prototype, 'autoDropDelay', {
-    get: function () {
-      return this.autoDropDelay_4ya9kk$_0;
-    },
-    set: function (value) {
-      if (value <= 0) {
-        throw IllegalArgumentException_init('Auto drop delay must be positive');
-      }
-      this.autoDropDelay_4ya9kk$_0 = value;
+    this.delayedAutoShift_yeibsa$_0 = value;
+  }});
+  Object.defineProperty(GameConfiguration.prototype, 'autoDropDelay', {get: function () {
+    return this.autoDropDelay_4ya9kk$_0;
+  }, set: function (value) {
+    if (value <= 0) {
+      throw IllegalArgumentException_init('Auto drop delay must be positive');
     }
-  });
-  Object.defineProperty(GameConfiguration.prototype, 'previewPieces', {
-    get: function () {
-      return this.previewPieces_f2ntqs$_0;
-    },
-    set: function (value) {
-      if (!(0 <= value && value <= 6)) {
-        throw IllegalArgumentException_init('Number of preview pieces should be between 0 and 6, inclusive.');
-      }
-      this.previewPieces_f2ntqs$_0 = value;
+    this.autoDropDelay_4ya9kk$_0 = value;
+  }});
+  Object.defineProperty(GameConfiguration.prototype, 'previewPieces', {get: function () {
+    return this.previewPieces_f2ntqs$_0;
+  }, set: function (value) {
+    if (!(0 <= value && value <= 6)) {
+      throw IllegalArgumentException_init('Number of preview pieces should be between 0 and 6, inclusive.');
     }
-  });
-  Object.defineProperty(GameConfiguration.prototype, 'lockDelay', {
-    get: function () {
-      return this.lockDelay_ybxztt$_0;
-    },
-    set: function (value) {
-      if (value < 0) {
-        throw IllegalArgumentException_init('Lock delay must be nonnegative.');
-      }
-      this.lockDelay_ybxztt$_0 = value;
+    this.previewPieces_f2ntqs$_0 = value;
+  }});
+  Object.defineProperty(GameConfiguration.prototype, 'lockDelay', {get: function () {
+    return this.lockDelay_ybxztt$_0;
+  }, set: function (value) {
+    if (value < 0) {
+      throw IllegalArgumentException_init('Lock delay must be nonnegative.');
     }
-  });
-  GameConfiguration.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'GameConfiguration',
-    interfaces: []
-  };
+    this.lockDelay_ybxztt$_0 = value;
+  }});
+  GameConfiguration.$metadata$ = {kind: Kind_CLASS, simpleName: 'GameConfiguration', interfaces: []};
   function RotationSystem() {
   }
-  RotationSystem.$metadata$ = {
-    kind: Kind_INTERFACE,
-    simpleName: 'RotationSystem',
-    interfaces: []
-  };
+  RotationSystem.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'RotationSystem', interfaces: []};
   function SuperRotation() {
     this.jlstzoData_0 = mapOf([to(Orientation$UP_getInstance(), mapOf([to(Orientation$LEFT_getInstance(), listOf([new Pair(1, 0), new Pair(1, 1), new Pair(0, -2), new Pair(1, -2)])), to(Orientation$RIGHT_getInstance(), listOf([new Pair(-1, 0), new Pair(-1, 1), new Pair(0, -2), new Pair(-1, -2)]))])), to(Orientation$RIGHT_getInstance(), mapOf([to(Orientation$UP_getInstance(), listOf([new Pair(1, 0), new Pair(1, -1), new Pair(0, 2), new Pair(1, 2)])), to(Orientation$DOWN_getInstance(), listOf([new Pair(1, 0), new Pair(1, -1), new Pair(0, 2), new Pair(1, 2)]))])), to(Orientation$DOWN_getInstance(), mapOf([to(Orientation$RIGHT_getInstance(), listOf([new Pair(-1, 0), new Pair(-1, 1), new Pair(0, -2), new Pair(-1, -2)])), to(Orientation$LEFT_getInstance(), listOf([new Pair(1, 0), new Pair(1, 1), new Pair(0, -2), new Pair(1, -2)]))])), to(Orientation$LEFT_getInstance(), mapOf([to(Orientation$DOWN_getInstance(), listOf([new Pair(-1, 0), new Pair(-1, -1), new Pair(0, 2), new Pair(-1, 2)])), to(Orientation$UP_getInstance(), listOf([new Pair(-1, 0), new Pair(-1, -1), new Pair(0, 2), new Pair(-1, 2)]))]))]);
     this.iData_0 = mapOf([to(Orientation$UP_getInstance(), mapOf([to(Orientation$LEFT_getInstance(), listOf([new Pair(-1, 0), new Pair(2, 0), new Pair(-1, 2), new Pair(2, -1)])), to(Orientation$RIGHT_getInstance(), listOf([new Pair(-2, 0), new Pair(1, 0), new Pair(-2, -1), new Pair(1, 2)]))])), to(Orientation$RIGHT_getInstance(), mapOf([to(Orientation$UP_getInstance(), listOf([new Pair(2, 0), new Pair(-1, 0), new Pair(2, 1), new Pair(-1, -2)])), to(Orientation$DOWN_getInstance(), listOf([new Pair(-1, 0), new Pair(2, 0), new Pair(-1, 2), new Pair(2, -1)]))])), to(Orientation$DOWN_getInstance(), mapOf([to(Orientation$RIGHT_getInstance(), listOf([new Pair(1, 0), new Pair(-2, 0), new Pair(1, -2), new Pair(-2, 1)])), to(Orientation$LEFT_getInstance(), listOf([new Pair(2, 0), new Pair(-1, 0), new Pair(2, 1), new Pair(-1, -2)]))])), to(Orientation$LEFT_getInstance(), mapOf([to(Orientation$DOWN_getInstance(), listOf([new Pair(-2, 0), new Pair(1, 0), new Pair(-2, -1), new Pair(1, 2)])), to(Orientation$UP_getInstance(), listOf([new Pair(1, 0), new Pair(-2, 0), new Pair(1, -2), new Pair(-2, 1)]))]))]);
@@ -1511,8 +1366,7 @@
     tmp$ = testDeltas.iterator();
     while (tmp$.hasNext()) {
       var tmp$_0 = tmp$.next();
-      var dCol = tmp$_0.component1()
-      , dRow = tmp$_0.component2();
+      var dCol = tmp$_0.component1(), dRow = tmp$_0.component2();
       var candidate = rotated;
       candidate = candidate.move_vux9f0$(dRow, dCol);
       if (board.areValidCells_xyy4xm$(copyToArray(candidate.cells()).slice()))
@@ -1520,31 +1374,10 @@
     }
     return t;
   };
-  SuperRotation.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'SuperRotation',
-    interfaces: [RotationSystem]
-  };
-  function BasicRotation() {
-  }
-  BasicRotation.prototype.rotate90CW_zgkodn$ = function (t, board) {
-    return t.rotate90CW();
-  };
-  BasicRotation.prototype.rotate90CCW_zgkodn$ = function (t, board) {
-    return t.rotate90CCW();
-  };
-  BasicRotation.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'BasicRotation',
-    interfaces: [RotationSystem]
-  };
+  SuperRotation.$metadata$ = {kind: Kind_CLASS, simpleName: 'SuperRotation', interfaces: [RotationSystem]};
   function StandardTetriminoGenerator() {
   }
-  StandardTetriminoGenerator.$metadata$ = {
-    kind: Kind_INTERFACE,
-    simpleName: 'StandardTetriminoGenerator',
-    interfaces: []
-  };
+  StandardTetriminoGenerator.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'StandardTetriminoGenerator', interfaces: []};
   var allStandardPieces;
   function RandomBagOf7() {
     this.currentBag_0 = this.newBag_0();
@@ -1560,30 +1393,10 @@
   RandomBagOf7.prototype.reset = function () {
     this.currentBag_0 = this.newBag_0();
   };
-  RandomBagOf7.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'RandomBagOf7',
-    interfaces: [StandardTetriminoGenerator]
-  };
-  function PurelyRandom() {
-  }
-  PurelyRandom.prototype.generate = function () {
-    return random(allStandardPieces, Random.Default);
-  };
-  PurelyRandom.prototype.reset = function () {
-  };
-  PurelyRandom.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'PurelyRandom',
-    interfaces: [StandardTetriminoGenerator]
-  };
+  RandomBagOf7.$metadata$ = {kind: Kind_CLASS, simpleName: 'RandomBagOf7', interfaces: [StandardTetriminoGenerator]};
   function Tetrimino() {
   }
-  Tetrimino.$metadata$ = {
-    kind: Kind_INTERFACE,
-    simpleName: 'Tetrimino',
-    interfaces: []
-  };
+  Tetrimino.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'Tetrimino', interfaces: []};
   function Orientation(name, ordinal) {
     Enum.call(this);
     this.name$ = name;
@@ -1617,11 +1430,7 @@
     Orientation_initFields();
     return Orientation$RIGHT_instance;
   }
-  Orientation.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Orientation',
-    interfaces: [Enum]
-  };
+  Orientation.$metadata$ = {kind: Kind_CLASS, simpleName: 'Orientation', interfaces: [Enum]};
   function Orientation$values() {
     return [Orientation$UP_getInstance(), Orientation$DOWN_getInstance(), Orientation$LEFT_getInstance(), Orientation$RIGHT_getInstance()];
   }
@@ -1678,22 +1487,14 @@
   StandardTetrimino.prototype.hashCode = function () {
     return 37 * hashCode(this.t_9jkhsm$_0) | 0;
   };
-  StandardTetrimino.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'StandardTetrimino',
-    interfaces: [Tetrimino]
-  };
+  StandardTetrimino.$metadata$ = {kind: Kind_CLASS, simpleName: 'StandardTetrimino', interfaces: [Tetrimino]};
   function S(t) {
     StandardTetrimino.call(this, t);
   }
   S.prototype.newPiece_kfscpn$ = function (t) {
     return new S(t);
   };
-  S.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'S',
-    interfaces: [StandardTetrimino]
-  };
+  S.$metadata$ = {kind: Kind_CLASS, simpleName: 'S', interfaces: [StandardTetrimino]};
   function S_init($this) {
     $this = $this || Object.create(S.prototype);
     S.call($this, new TetriminoImpl(new Posn(20 - 1.0, 4), setOf([CellImpl_init(CellColor$GREEN_getInstance(), 18, 5), CellImpl_init(CellColor$GREEN_getInstance(), 18, 4), CellImpl_init(CellColor$GREEN_getInstance(), 19, 4), CellImpl_init(CellColor$GREEN_getInstance(), 19, 3)]), Orientation$UP_getInstance()));
@@ -1705,11 +1506,7 @@
   Z.prototype.newPiece_kfscpn$ = function (t) {
     return new Z(t);
   };
-  Z.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Z',
-    interfaces: [StandardTetrimino]
-  };
+  Z.$metadata$ = {kind: Kind_CLASS, simpleName: 'Z', interfaces: [StandardTetrimino]};
   function Z_init($this) {
     $this = $this || Object.create(Z.prototype);
     Z.call($this, new TetriminoImpl(new Posn(20 - 1.0, 4), setOf([CellImpl_init(CellColor$RED_getInstance(), 18, 3), CellImpl_init(CellColor$RED_getInstance(), 18, 4), CellImpl_init(CellColor$RED_getInstance(), 19, 4), CellImpl_init(CellColor$RED_getInstance(), 19, 5)]), Orientation$UP_getInstance()));
@@ -1721,11 +1518,7 @@
   J.prototype.newPiece_kfscpn$ = function (t) {
     return new J(t);
   };
-  J.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'J',
-    interfaces: [StandardTetrimino]
-  };
+  J.$metadata$ = {kind: Kind_CLASS, simpleName: 'J', interfaces: [StandardTetrimino]};
   function J_init($this) {
     $this = $this || Object.create(J.prototype);
     J.call($this, new TetriminoImpl(new Posn(20 - 1.0, 4), setOf([CellImpl_init(CellColor$DARK_BLUE_getInstance(), 18, 3), CellImpl_init(CellColor$DARK_BLUE_getInstance(), 19, 3), CellImpl_init(CellColor$DARK_BLUE_getInstance(), 19, 4), CellImpl_init(CellColor$DARK_BLUE_getInstance(), 19, 5)]), Orientation$UP_getInstance()));
@@ -1737,11 +1530,7 @@
   L.prototype.newPiece_kfscpn$ = function (t) {
     return new L(t);
   };
-  L.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'L',
-    interfaces: [StandardTetrimino]
-  };
+  L.$metadata$ = {kind: Kind_CLASS, simpleName: 'L', interfaces: [StandardTetrimino]};
   function L_init($this) {
     $this = $this || Object.create(L.prototype);
     L.call($this, new TetriminoImpl(new Posn(20 - 1.0, 4), setOf([CellImpl_init(CellColor$ORANGE_getInstance(), 18, 5), CellImpl_init(CellColor$ORANGE_getInstance(), 19, 5), CellImpl_init(CellColor$ORANGE_getInstance(), 19, 4), CellImpl_init(CellColor$ORANGE_getInstance(), 19, 3)]), Orientation$UP_getInstance()));
@@ -1753,11 +1542,7 @@
   O.prototype.newPiece_kfscpn$ = function (t) {
     return new O(t);
   };
-  O.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'O',
-    interfaces: [StandardTetrimino]
-  };
+  O.$metadata$ = {kind: Kind_CLASS, simpleName: 'O', interfaces: [StandardTetrimino]};
   function O_init($this) {
     $this = $this || Object.create(O.prototype);
     O.call($this, new TetriminoImpl(new Posn(20 - 1.5, 9 / 2.0), setOf([CellImpl_init(CellColor$YELLOW_getInstance(), 18, 4), CellImpl_init(CellColor$YELLOW_getInstance(), 18, 5), CellImpl_init(CellColor$YELLOW_getInstance(), 19, 4), CellImpl_init(CellColor$YELLOW_getInstance(), 19, 5)]), Orientation$UP_getInstance()));
@@ -1769,11 +1554,7 @@
   I.prototype.newPiece_kfscpn$ = function (t) {
     return new I(t);
   };
-  I.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'I',
-    interfaces: [StandardTetrimino]
-  };
+  I.$metadata$ = {kind: Kind_CLASS, simpleName: 'I', interfaces: [StandardTetrimino]};
   function I_init($this) {
     $this = $this || Object.create(I.prototype);
     I.call($this, new TetriminoImpl(new Posn(20 - 0.5, 9 / 2.0), setOf([CellImpl_init(CellColor$LIGHT_BLUE_getInstance(), 19, 3), CellImpl_init(CellColor$LIGHT_BLUE_getInstance(), 19, 4), CellImpl_init(CellColor$LIGHT_BLUE_getInstance(), 19, 5), CellImpl_init(CellColor$LIGHT_BLUE_getInstance(), 19, 6)]), Orientation$UP_getInstance()));
@@ -1785,11 +1566,7 @@
   T.prototype.newPiece_kfscpn$ = function (t) {
     return new T(t);
   };
-  T.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'T',
-    interfaces: [StandardTetrimino]
-  };
+  T.$metadata$ = {kind: Kind_CLASS, simpleName: 'T', interfaces: [StandardTetrimino]};
   function T_init($this) {
     $this = $this || Object.create(T.prototype);
     T.call($this, new TetriminoImpl(new Posn(20 - 1.0, 4), setOf([CellImpl_init(CellColor$PURPLE_getInstance(), 18, 4), CellImpl_init(CellColor$PURPLE_getInstance(), 19, 3), CellImpl_init(CellColor$PURPLE_getInstance(), 19, 4), CellImpl_init(CellColor$PURPLE_getInstance(), 19, 5)]), Orientation$UP_getInstance()));
@@ -1928,44 +1705,11 @@
     hash.v = hash.v + this.orientation_f6c61v$_0.hashCode() | 0;
     return hash.v;
   };
-  TetriminoImpl.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'TetriminoImpl',
-    interfaces: [Tetrimino]
-  };
+  TetriminoImpl.$metadata$ = {kind: Kind_CLASS, simpleName: 'TetriminoImpl', interfaces: [Tetrimino]};
   var orientationWheel;
   function TetrisUI() {
   }
-  TetrisUI.$metadata$ = {
-    kind: Kind_INTERFACE,
-    simpleName: 'TetrisUI',
-    interfaces: []
-  };
-  function synchronizedTetrisUI$ObjectLiteral(closure$ui) {
-    this.closure$ui = closure$ui;
-    this.cellsLock = new Any();
-    this.heldCellsLock = new Any();
-    this.upcomingCellsLock = new Any();
-  }
-  synchronizedTetrisUI$ObjectLiteral.prototype.drawCells_4c630g$ = function (cells) {
-    this.closure$ui;
-    this.closure$ui.drawCells_4c630g$(cells);
-  };
-  synchronizedTetrisUI$ObjectLiteral.prototype.drawHeldCells_4c630g$ = function (cells) {
-    this.closure$ui;
-    this.closure$ui.drawHeldCells_4c630g$(cells);
-  };
-  synchronizedTetrisUI$ObjectLiteral.prototype.drawUpcomingCells_pqtkx7$ = function (cellsQueue) {
-    this.closure$ui;
-    this.closure$ui.drawUpcomingCells_pqtkx7$(cellsQueue);
-  };
-  synchronizedTetrisUI$ObjectLiteral.$metadata$ = {
-    kind: Kind_CLASS,
-    interfaces: [TetrisUI]
-  };
-  function synchronizedTetrisUI(ui) {
-    return new synchronizedTetrisUI$ObjectLiteral(ui);
-  }
+  TetrisUI.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'TetrisUI', interfaces: []};
   _.main = main;
   $$importsForInline$$['kotlinx-html-js'] = $module$kotlinx_html_js;
   _.loadHTML = loadHTML;
@@ -1975,127 +1719,48 @@
   var package$game = package$model.game || (package$model.game = {});
   package$game.timeStamp = timeStamp;
   var package$view = _.view || (_.view = {});
-  Object.defineProperty(package$view, 'BOARD_ID', {
-    get: function () {
-      return BOARD_ID;
-    }
-  });
-  Object.defineProperty(package$view, 'HOLD_ID', {
-    get: function () {
-      return HOLD_ID;
-    }
-  });
-  Object.defineProperty(package$view, 'UPCOMING_PIECES_ID', {
-    get: function () {
-      return UPCOMING_PIECES_ID;
-    }
-  });
   package$view.TetrisWeb = TetrisWeb;
   package$controller.ControllerImpl = ControllerImpl;
   package$controller.TetrisController = TetrisController;
   var package$board = package$model.board || (package$model.board = {});
   package$board.Board = Board;
-  Object.defineProperty(package$board, 'BOARD_WIDTH', {
-    get: function () {
-      return BOARD_WIDTH;
-    }
-  });
-  Object.defineProperty(package$board, 'BOARD_HEIGHT', {
-    get: function () {
-      return BOARD_HEIGHT;
-    }
-  });
-  Object.defineProperty(package$board, 'VISIBLE_BOARD_HEIGHT', {
-    get: function () {
-      return VISIBLE_BOARD_HEIGHT;
-    }
-  });
-  Object.defineProperty(package$board, 'FIRST_VISIBLE_ROW', {
-    get: function () {
-      return FIRST_VISIBLE_ROW;
-    }
-  });
-  package$board.synchronizedBoard_871czg$ = synchronizedBoard;
   package$board.BoardImpl = BoardImpl;
-  Object.defineProperty(CellColor, 'GREEN', {
-    get: CellColor$GREEN_getInstance
-  });
-  Object.defineProperty(CellColor, 'RED', {
-    get: CellColor$RED_getInstance
-  });
-  Object.defineProperty(CellColor, 'DARK_BLUE', {
-    get: CellColor$DARK_BLUE_getInstance
-  });
-  Object.defineProperty(CellColor, 'ORANGE', {
-    get: CellColor$ORANGE_getInstance
-  });
-  Object.defineProperty(CellColor, 'LIGHT_BLUE', {
-    get: CellColor$LIGHT_BLUE_getInstance
-  });
-  Object.defineProperty(CellColor, 'YELLOW', {
-    get: CellColor$YELLOW_getInstance
-  });
-  Object.defineProperty(CellColor, 'PURPLE', {
-    get: CellColor$PURPLE_getInstance
-  });
-  Object.defineProperty(CellColor, 'NULL', {
-    get: CellColor$NULL_getInstance
-  });
+  Object.defineProperty(CellColor, 'GREEN', {get: CellColor$GREEN_getInstance});
+  Object.defineProperty(CellColor, 'RED', {get: CellColor$RED_getInstance});
+  Object.defineProperty(CellColor, 'DARK_BLUE', {get: CellColor$DARK_BLUE_getInstance});
+  Object.defineProperty(CellColor, 'ORANGE', {get: CellColor$ORANGE_getInstance});
+  Object.defineProperty(CellColor, 'LIGHT_BLUE', {get: CellColor$LIGHT_BLUE_getInstance});
+  Object.defineProperty(CellColor, 'YELLOW', {get: CellColor$YELLOW_getInstance});
+  Object.defineProperty(CellColor, 'PURPLE', {get: CellColor$PURPLE_getInstance});
+  Object.defineProperty(CellColor, 'NULL', {get: CellColor$NULL_getInstance});
   var package$cell = package$model.cell || (package$model.cell = {});
   package$cell.CellColor = CellColor;
   package$cell.Cell = Cell;
   package$cell.CellImpl_init_9fmg7u$ = CellImpl_init;
   package$cell.CellImpl = CellImpl;
-  package$cell.Posn_init_vux9f0$ = Posn_init;
   package$cell.Posn = Posn;
   package$game.BaseGame = BaseGame;
-  Object.defineProperty(Command, 'ROTATE_CCW', {
-    get: Command$ROTATE_CCW_getInstance
-  });
-  Object.defineProperty(Command, 'ROTATE_CW', {
-    get: Command$ROTATE_CW_getInstance
-  });
-  Object.defineProperty(Command, 'LEFT', {
-    get: Command$LEFT_getInstance
-  });
-  Object.defineProperty(Command, 'RIGHT', {
-    get: Command$RIGHT_getInstance
-  });
-  Object.defineProperty(Command, 'SOFT_DROP', {
-    get: Command$SOFT_DROP_getInstance
-  });
-  Object.defineProperty(Command, 'HARD_DROP', {
-    get: Command$HARD_DROP_getInstance
-  });
-  Object.defineProperty(Command, 'HOLD', {
-    get: Command$HOLD_getInstance
-  });
-  Object.defineProperty(Command, 'DO_NOTHING', {
-    get: Command$DO_NOTHING_getInstance
-  });
+  Object.defineProperty(Command, 'ROTATE_CCW', {get: Command$ROTATE_CCW_getInstance});
+  Object.defineProperty(Command, 'ROTATE_CW', {get: Command$ROTATE_CW_getInstance});
+  Object.defineProperty(Command, 'LEFT', {get: Command$LEFT_getInstance});
+  Object.defineProperty(Command, 'RIGHT', {get: Command$RIGHT_getInstance});
+  Object.defineProperty(Command, 'SOFT_DROP', {get: Command$SOFT_DROP_getInstance});
+  Object.defineProperty(Command, 'HARD_DROP', {get: Command$HARD_DROP_getInstance});
+  Object.defineProperty(Command, 'HOLD', {get: Command$HOLD_getInstance});
+  Object.defineProperty(Command, 'DO_NOTHING', {get: Command$DO_NOTHING_getInstance});
   package$game.Command = Command;
   var package$config = package$game.config || (package$game.config = {});
   package$config.GameConfiguration = GameConfiguration;
   package$config.RotationSystem = RotationSystem;
   package$config.SuperRotation = SuperRotation;
-  package$config.BasicRotation = BasicRotation;
   package$config.StandardTetriminoGenerator = StandardTetriminoGenerator;
   package$config.RandomBagOf7 = RandomBagOf7;
-  package$config.PurelyRandom = PurelyRandom;
   var package$tetrimino = package$model.tetrimino || (package$model.tetrimino = {});
   package$tetrimino.Tetrimino = Tetrimino;
-  Object.defineProperty(Orientation, 'UP', {
-    get: Orientation$UP_getInstance
-  });
-  Object.defineProperty(Orientation, 'DOWN', {
-    get: Orientation$DOWN_getInstance
-  });
-  Object.defineProperty(Orientation, 'LEFT', {
-    get: Orientation$LEFT_getInstance
-  });
-  Object.defineProperty(Orientation, 'RIGHT', {
-    get: Orientation$RIGHT_getInstance
-  });
+  Object.defineProperty(Orientation, 'UP', {get: Orientation$UP_getInstance});
+  Object.defineProperty(Orientation, 'DOWN', {get: Orientation$DOWN_getInstance});
+  Object.defineProperty(Orientation, 'LEFT', {get: Orientation$LEFT_getInstance});
+  Object.defineProperty(Orientation, 'RIGHT', {get: Orientation$RIGHT_getInstance});
   package$tetrimino.Orientation = Orientation;
   package$tetrimino.StandardTetrimino = StandardTetrimino;
   package$tetrimino.S_init = S_init;
@@ -2114,7 +1779,6 @@
   package$tetrimino.T = T;
   package$tetrimino.TetriminoImpl = TetriminoImpl;
   package$view.TetrisUI = TetrisUI;
-  package$view.synchronizedTetrisUI_eyubm2$ = synchronizedTetrisUI;
   BOARD_ID = 'board';
   HOLD_ID = 'hold';
   UPCOMING_PIECES_ID = 'upcomingPieces';
@@ -2125,7 +1789,6 @@
   allStandardPieces = setOf([Z_init(), S_init(), L_init(), J_init(), T_init(), I_init(), O_init()]);
   orientationWheel = listOf([Orientation$UP_getInstance(), Orientation$RIGHT_getInstance(), Orientation$DOWN_getInstance(), Orientation$LEFT_getInstance()]);
   main();
-  Kotlin.defineModule('tetris', _);
   return _;
 }));
 
