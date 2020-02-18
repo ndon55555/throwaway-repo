@@ -16,9 +16,9 @@
   'use strict';
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var ensureNotNull = Kotlin.ensureNotNull;
+  var Unit = Kotlin.kotlin.Unit;
   var set_style = $module$kotlinx_html_js.kotlinx.html.set_style_ueiko3$;
   var set_id = $module$kotlinx_html_js.kotlinx.html.set_id_ueiko3$;
-  var Unit = Kotlin.kotlin.Unit;
   var append = $module$kotlinx_html_js.kotlinx.html.dom.append_k9bwru$;
   var equals = Kotlin.equals;
   var throwCCE = Kotlin.throwCCE;
@@ -176,6 +176,7 @@
   }
   function loadHTML$lambda$lambda(this$) {
     return function ($receiver) {
+      set_style($receiver, 'position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%)');
       var $receiver_0 = this$;
       var block = loadHTML$lambda$lambda$lambda(this$);
       var tmp$;
@@ -198,6 +199,10 @@
     return Unit;
   }
   function loadHTML() {
+    var $receiver = ensureNotNull(document.body).style;
+    $receiver.backgroundSize = 'cover';
+    $receiver.backgroundRepeat = 'no-repeat';
+    $receiver.backgroundImage = "url('https://media.giphy.com/media/5PjafLZFxMWc/giphy.gif')";
     append(ensureNotNull(document.body), loadHTML$lambda);
   }
   function loadGame$lambda(closure$controller, closure$view) {
