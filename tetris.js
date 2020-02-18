@@ -859,7 +859,7 @@
     this.alreadyHolding_1bbr1h$_0 = false;
     this.upcomingPiecesQueue_8uxv1e$_0 = ArrayList_init_0();
     this.autoLockStartTime_hl1607$_0 = null;
-    this.activePiece_tptnae$_0 = this.config.generator.generate();
+    this.activePiece_tptnae$_0 = this.config.generator.generate().moveDown();
     var times = this.config.previewPieces;
     for (var index = 0; index < times; index++) {
       this.upcomingPiecesQueue_8uxv1e$_0.add_11rb$(this.config.generator.generate());
