@@ -42,7 +42,6 @@
   var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
   var throwUPAE = Kotlin.throwUPAE;
-  var emptySet = Kotlin.kotlin.collections.emptySet_287e2$;
   var L1000 = Kotlin.Long.fromInt(1000);
   var toSet = Kotlin.kotlin.collections.toSet_7wnvza$;
   var to = Kotlin.kotlin.to_ujzrz7$;
@@ -64,6 +63,7 @@
   var Exception_init = Kotlin.kotlin.Exception_init_pdl1vj$;
   var get_milliseconds_0 = Kotlin.kotlin.time.get_milliseconds_s8ev3n$;
   var toMutableSet = Kotlin.kotlin.collections.toMutableSet_7wnvza$;
+  var emptySet = Kotlin.kotlin.collections.emptySet_287e2$;
   var distinct = Kotlin.kotlin.collections.distinct_7wnvza$;
   var sorted = Kotlin.kotlin.collections.sorted_exjks8$;
   var setOf = Kotlin.kotlin.collections.setOf_i5x0yv$;
@@ -473,8 +473,8 @@
     game.onHeldPieceChange_o14v8n$(ControllerImpl$run$lambda_0(view, game));
     game.onUpcomingPiecesChange_o14v8n$(ControllerImpl$run$lambda_1(view, game));
     game.start();
-    view.drawCells_4c630g$(emptySet());
-    view.drawHeldCells_4c630g$(emptySet());
+    view.drawCells_4c630g$(this.standardize_0(game.allCells()));
+    view.drawHeldCells_4c630g$(game.heldCells());
     view.drawUpcomingCells_pqtkx7$(game.upcomingCells());
     runAtFixedRate(L1000.div(Kotlin.Long.fromInt(this.fps)), ControllerImpl$run$lambda_2(game), ControllerImpl$run$lambda_3(game));
   };
