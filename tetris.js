@@ -982,10 +982,35 @@
     while (this.isValid_butbg3$_0(t.moveDown()))
       t = t.moveDown();
     this.placeOnBoard_ewg1uf$_0(t);
+    var $receiver_0 = t.cells();
+    var all$result;
+    all$break: do {
+      var tmp$;
+      if (Kotlin.isType($receiver_0, Collection) && $receiver_0.isEmpty()) {
+        all$result = true;
+        break all$break;
+      }
+      tmp$ = $receiver_0.iterator();
+      while (tmp$.hasNext()) {
+        var element = tmp$.next();
+        if (!(element.row < 20)) {
+          all$result = false;
+          break all$break;
+        }
+      }
+      all$result = true;
+    }
+     while (false);
+    if (all$result) {
+      this.finished = true;
+    }
     this.clearCompletedLines_k96xj2$_0(t);
     var newPiece = this.nextPiece_3tkztf$_0();
     if (!this.isValid_butbg3$_0(newPiece)) {
       this.finished = true;
+    }
+    if (this.isValid_butbg3$_0(newPiece.moveDown())) {
+      newPiece = newPiece.moveDown();
     }
     this.alreadyHolding_1bbr1h$_0 = false;
     return newPiece;
