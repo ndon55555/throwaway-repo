@@ -265,33 +265,27 @@
     (Kotlin.isType(tmp$_1 = document.getElementById(RESTART_ID), HTMLButtonElement) ? tmp$_1 : throwCCE()).onclick = loadGame$lambda_3(restartGame);
     controller.run_smlric$(new BaseGame(new BoardImpl(), new GameConfiguration()), view);
   }
-  function runAtFixedRate$step$lambda(closure$step) {
-    return function (timestamp) {
-      closure$step(timestamp);
-      return Unit;
-    };
-  }
-  function runAtFixedRate$step(closure$shouldContinue, closure$prevEventTime, closure$period, closure$event) {
-    return function closure$step(curTime) {
+  function runAtFixedRate$lambda(closure$shouldContinue, closure$event, closure$intervalId) {
+    return function () {
+      var tmp$;
       if (closure$shouldContinue()) {
-        if (curTime - closure$prevEventTime.v >= closure$period.toNumber()) {
-          closure$event();
-          closure$prevEventTime.v = curTime;
+        return closure$event();
+      }
+       else {
+        var tmp$_0;
+        if ((tmp$ = closure$intervalId.v) != null) {
+          window.clearInterval(tmp$);
+          tmp$_0 = Unit;
         }
-        window.requestAnimationFrame(runAtFixedRate$step$lambda(closure$step));
+         else
+          tmp$_0 = null;
+        return tmp$_0;
       }
     };
   }
-  function runAtFixedRate$lambda(closure$step) {
-    return function (timestamp) {
-      closure$step(timestamp);
-      return Unit;
-    };
-  }
   function runAtFixedRate(period, shouldContinue, event) {
-    var prevEventTime = {v: window.performance.now()};
-    var step = runAtFixedRate$step(shouldContinue, prevEventTime, period, event);
-    window.requestAnimationFrame(runAtFixedRate$lambda(step));
+    var intervalId = {v: null};
+    intervalId.v = window.setInterval(runAtFixedRate$lambda(shouldContinue, event, intervalId), period.toInt());
   }
   function sync(lock, f) {
     return f();
