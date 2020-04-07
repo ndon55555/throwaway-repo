@@ -7,14 +7,11 @@
   else {
     if (typeof kotlin === 'undefined') {
       throw new Error("Error loading module 'browser'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'browser'.");
-    }
-    if (typeof this['kotlinx-html-js'] === 'undefined') {
+    }if (typeof this['kotlinx-html-js'] === 'undefined') {
       throw new Error("Error loading module 'browser'. Its dependency 'kotlinx-html-js' was not found. Please, check whether 'kotlinx-html-js' is loaded prior to 'browser'.");
-    }
-    if (typeof core === 'undefined') {
+    }if (typeof core === 'undefined') {
       throw new Error("Error loading module 'browser'. Its dependency 'core' was not found. Please, check whether 'core' is loaded prior to 'browser'.");
-    }
-    root.browser = factory(typeof browser === 'undefined' ? {} : browser, kotlin, this['kotlinx-html-js'], core);
+    }root.browser = factory(typeof browser === 'undefined' ? {} : browser, kotlin, this['kotlinx-html-js'], core);
   }
 }(this, function (_, Kotlin, $module$kotlinx_html_js, $module$core) {
   'use strict';
@@ -183,8 +180,7 @@
       var key = it.key.toLowerCase();
       if (equals(key, 'r')) {
         closure$restartGame();
-      }
-       else {
+      } else {
         closure$controller.handleKeyPress_61zpoe$(closure$keysToCommand(key));
       }
       return Unit;

@@ -7,8 +7,7 @@
   else {
     if (typeof kotlin === 'undefined') {
       throw new Error("Error loading module 'core'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'core'.");
-    }
-    root.core = factory(typeof core === 'undefined' ? {} : core, kotlin);
+    }root.core = factory(typeof core === 'undefined' ? {} : core, kotlin);
   }
 }(this, function (_, Kotlin) {
   'use strict';
@@ -200,8 +199,7 @@
         if (0 <= tmp$_0 && tmp$_0 < 40) {
           tmp$_1 = element.col;
           tmp$_2 = (0 <= tmp$_1 && tmp$_1 < 10);
-        }
-         else
+        } else
           tmp$_2 = false;
         var tmp$_3 = tmp$_2;
         if (tmp$_3) {
@@ -212,25 +210,21 @@
             if (Kotlin.isType($receiver, Collection) && $receiver.isEmpty()) {
               all$result_0 = true;
               break all$break_0;
-            }
-            tmp$_4 = $receiver.iterator();
+            }tmp$_4 = $receiver.iterator();
             while (tmp$_4.hasNext()) {
               var element_0 = tmp$_4.next();
               if (!(element !== element_0 && !element_0.sharesPositionWith_xttjpl$(element))) {
                 all$result_0 = false;
                 break all$break_0;
-              }
-            }
+              }}
             all$result_0 = true;
           }
            while (false);
           tmp$_3 = all$result_0;
-        }
-        if (!tmp$_3) {
+        }if (!tmp$_3) {
           all$result = false;
           break all$break;
-        }
-      }
+        }}
       all$result = true;
     }
      while (false);
@@ -258,8 +252,7 @@
         toBeRemoved.add_11rb$(element);
         var element_0 = element.move_vux9f0$(1, 0);
         toBeAdded.add_11rb$(element_0);
-      }
-    }
+      }}
     removeAll_0(this.placedCells_0, toBeRemoved);
     addAll_0(this.placedCells_0, toBeAdded);
   };
@@ -533,10 +526,8 @@
     if (autoDropTimePassed) {
       if (!this.pressedCmds_1gzr1p$_0.contains_11rb$(Command$SOFT_DROP_getInstance())) {
         this.perform_hansvz$_0(Command$SOFT_DROP_getInstance());
-      }
-      this.lastAutoDrop_o9cj4i$_0 = curTime;
-    }
-    tmp$ = this.repeatableCmds_awwpko$_0.iterator();
+      }this.lastAutoDrop_o9cj4i$_0 = curTime;
+    }tmp$ = this.repeatableCmds_awwpko$_0.iterator();
     while (tmp$.hasNext()) {
       var cmd = tmp$.next();
       if (this.pressedCmds_1gzr1p$_0.contains_11rb$(cmd)) {
@@ -546,16 +537,13 @@
           while (pieceMoved) {
             pieceMoved = this.perform_hansvz$_0(cmd);
           }
-        }
-        var lastPressTime = ensureNotNull(this.timeOfPrevAction_mokgl5$_0.get_11rb$(cmd));
+        }var lastPressTime = ensureNotNull(this.timeOfPrevAction_mokgl5$_0.get_11rb$(cmd));
         var delayTimePassed = curTime.minus_cgako$(lastPressTime).compareTo_11rb$(get_milliseconds(delay)) >= 0;
         if (delayTimePassed) {
           this.perform_hansvz$_0(cmd);
           this.initialPress_mw33k7$_0.remove_11rb$(cmd);
           this.timeOfPrevAction_mokgl5$_0.put_xwzc9p$(cmd, curTime);
-        }
-      }
-    }
+        }}}
   };
   BaseGame.prototype.allCells = function () {
     var $receiver = toMutableSet(this.board_665yfc$_0.getPlacedCells());
@@ -587,8 +575,7 @@
       var $receiver = this.timeOfPrevAction_mokgl5$_0;
       var value = timeStamp();
       $receiver.put_xwzc9p$(cmd, value);
-    }
-  };
+    }};
   BaseGame.prototype.commandStopped_mzjd4c$ = function (cmd) {
     this.pressedCmds_1gzr1p$_0.remove_11rb$(cmd);
     this.initialPress_mw33k7$_0.remove_11rb$(cmd);
@@ -613,20 +600,15 @@
       this$BaseGame.activePiece_tptnae$_0 = next;
       if (canMoveDown || pieceMoved) {
         this$BaseGame.autoLockStartTime_hl1607$_0 = null;
-      }
-      if (!canMoveDown) {
+      }if (!canMoveDown) {
         if (this$BaseGame.autoLockStartTime_hl1607$_0 == null) {
           this$BaseGame.autoLockStartTime_hl1607$_0 = timeStamp();
-        }
-      }
-      if (this$BaseGame.autoLockStartTime_hl1607$_0 != null) {
+        }}if (this$BaseGame.autoLockStartTime_hl1607$_0 != null) {
         var lockDelayPassed = timeStamp().minus_cgako$(ensureNotNull(this$BaseGame.autoLockStartTime_hl1607$_0)).compareTo_11rb$(get_milliseconds(this$BaseGame.config.lockDelay)) >= 0;
         if (lockDelayPassed) {
           this$BaseGame.activePiece_tptnae$_0 = this$BaseGame.hardDrop_tkg8nx$_0(this$BaseGame.activePiece_tptnae$_0);
           this$BaseGame.autoLockStartTime_hl1607$_0 = null;
-        }
-      }
-      tmp$ = this$BaseGame.boardChangeHandlers_kt4o4x$_0.iterator();
+        }}tmp$ = this$BaseGame.boardChangeHandlers_kt4o4x$_0.iterator();
       while (tmp$.hasNext()) {
         var handler = tmp$.next();
         handler();
@@ -655,30 +637,25 @@
       if (Kotlin.isType($receiver_0, Collection) && $receiver_0.isEmpty()) {
         all$result = true;
         break all$break;
-      }
-      tmp$ = $receiver_0.iterator();
+      }tmp$ = $receiver_0.iterator();
       while (tmp$.hasNext()) {
         var element = tmp$.next();
         if (!(element.row < 20)) {
           all$result = false;
           break all$break;
-        }
-      }
+        }}
       all$result = true;
     }
      while (false);
     if (all$result) {
       this.finished = true;
-    }
-    this.clearCompletedLines_k96xj2$_0(t);
+    }this.clearCompletedLines_k96xj2$_0(t);
     var newPiece = this.nextPiece_3tkztf$_0();
     if (!this.isValid_butbg3$_0(newPiece)) {
       this.finished = true;
-    }
-    if (this.isValid_butbg3$_0(newPiece.moveDown())) {
+    }if (this.isValid_butbg3$_0(newPiece.moveDown())) {
       newPiece = newPiece.moveDown();
-    }
-    this.alreadyHolding_1bbr1h$_0 = false;
+    }this.alreadyHolding_1bbr1h$_0 = false;
     return newPiece;
   };
   BaseGame.prototype.placeOnBoard_ewg1uf$_0 = function ($receiver) {
@@ -749,8 +726,7 @@
     if (this.heldPiece_aun02d$_0 == null) {
       this.heldPiece_aun02d$_0 = toHold;
       newPiece = this.nextPiece_3tkztf$_0();
-    }
-     else {
+    } else {
       newPiece = ensureNotNull(this.heldPiece_aun02d$_0);
       this.heldPiece_aun02d$_0 = toHold;
     }
@@ -771,15 +747,13 @@
         if (Kotlin.isType($receiver, Collection) && $receiver.isEmpty()) {
           any$result = false;
           break any$break;
-        }
-        tmp$ = $receiver.iterator();
+        }tmp$ = $receiver.iterator();
         while (tmp$.hasNext()) {
           var element = tmp$.next();
           if (ghostCell.sharesPositionWith_xttjpl$(element)) {
             any$result = true;
             break any$break;
-          }
-        }
+          }}
         any$result = false;
       }
        while (false);
@@ -981,40 +955,35 @@
   }, set: function (value) {
     if (value < 0) {
       throw IllegalArgumentException_init('Auto repeat rate must be nonnegative');
-    }
-    this.autoRepeatRate_76xv75$_0 = value;
+    }this.autoRepeatRate_76xv75$_0 = value;
   }});
   Object.defineProperty(GameConfiguration.prototype, 'delayedAutoShift', {get: function () {
     return this.delayedAutoShift_yeibsa$_0;
   }, set: function (value) {
     if (value < 0) {
       throw IllegalArgumentException_init('Delayed auto shift must be nonnegative');
-    }
-    this.delayedAutoShift_yeibsa$_0 = value;
+    }this.delayedAutoShift_yeibsa$_0 = value;
   }});
   Object.defineProperty(GameConfiguration.prototype, 'autoDropDelay', {get: function () {
     return this.autoDropDelay_4ya9kk$_0;
   }, set: function (value) {
     if (value <= 0) {
       throw IllegalArgumentException_init('Auto drop delay must be positive');
-    }
-    this.autoDropDelay_4ya9kk$_0 = value;
+    }this.autoDropDelay_4ya9kk$_0 = value;
   }});
   Object.defineProperty(GameConfiguration.prototype, 'previewPieces', {get: function () {
     return this.previewPieces_f2ntqs$_0;
   }, set: function (value) {
     if (!(0 <= value && value <= 6)) {
       throw IllegalArgumentException_init('Number of preview pieces should be between 0 and 6, inclusive.');
-    }
-    this.previewPieces_f2ntqs$_0 = value;
+    }this.previewPieces_f2ntqs$_0 = value;
   }});
   Object.defineProperty(GameConfiguration.prototype, 'lockDelay', {get: function () {
     return this.lockDelay_ybxztt$_0;
   }, set: function (value) {
     if (value < 0) {
       throw IllegalArgumentException_init('Lock delay must be nonnegative.');
-    }
-    this.lockDelay_ybxztt$_0 = value;
+    }this.lockDelay_ybxztt$_0 = value;
   }});
   GameConfiguration.$metadata$ = {kind: Kind_CLASS, simpleName: 'GameConfiguration', interfaces: []};
   function RotationSystem() {
@@ -1259,11 +1228,9 @@
     this.orientation_f6c61v$_0 = orientation;
     if (this.blocks_bg29gf$_0.size !== 4) {
       throw IllegalArgumentException_init('Tetrimino should have exactly 4 cells');
-    }
-    if (!this.allAdjacent_fxfaud$_0(this.blocks_bg29gf$_0)) {
+    }if (!this.allAdjacent_fxfaud$_0(this.blocks_bg29gf$_0)) {
       throw IllegalArgumentException_init('Each cell should be adjacent with at least 1 other cell');
-    }
-  }
+    }}
   TetriminoImpl.prototype.allAdjacent_fxfaud$_0 = function ($receiver) {
     var all$result;
     all$break: do {
@@ -1271,8 +1238,7 @@
       if (Kotlin.isType($receiver, Collection) && $receiver.isEmpty()) {
         all$result = true;
         break all$break;
-      }
-      tmp$ = $receiver.iterator();
+      }tmp$ = $receiver.iterator();
       loop_label: while (tmp$.hasNext()) {
         var element = tmp$.next();
         var any$result;
@@ -1281,8 +1247,7 @@
           if (Kotlin.isType($receiver, Collection) && $receiver.isEmpty()) {
             any$result = false;
             break any$break;
-          }
-          tmp$_0 = $receiver.iterator();
+          }tmp$_0 = $receiver.iterator();
           while (tmp$_0.hasNext()) {
             var element_0 = tmp$_0.next();
             var dx = abs(element_0.col - element.col | 0);
@@ -1291,16 +1256,14 @@
             if (manhattanDist === 1) {
               any$result = true;
               break any$break;
-            }
-          }
+            }}
           any$result = false;
         }
          while (false);
         if (!any$result) {
           all$result = false;
           break all$break;
-        }
-      }
+        }}
       all$result = true;
     }
      while (false);
@@ -1396,14 +1359,12 @@
       var tmp$;
       if (closure$shouldContinue()) {
         return closure$event();
-      }
-       else {
+      } else {
         var tmp$_0;
         if ((tmp$ = closure$intervalId.v) != null) {
           window.clearInterval(tmp$);
           tmp$_0 = Unit;
-        }
-         else
+        } else
           tmp$_0 = null;
         return tmp$_0;
       }

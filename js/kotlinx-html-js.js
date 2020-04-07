@@ -7,8 +7,7 @@
   else {
     if (typeof kotlin === 'undefined') {
       throw new Error("Error loading module 'kotlinx-html-js'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'kotlinx-html-js'.");
-    }
-    root['kotlinx-html-js'] = factory(typeof this['kotlinx-html-js'] === 'undefined' ? {} : this['kotlinx-html-js'], kotlin);
+    }root['kotlinx-html-js'] = factory(typeof this['kotlinx-html-js'] === 'undefined' ? {} : this['kotlinx-html-js'], kotlin);
   }
 }(this, function (_, Kotlin) {
   'use strict';
@@ -176,10 +175,8 @@
       if (k != null && v != null) {
         if (result == null) {
           result = LinkedHashMap_init();
-        }
-        result.put_xwzc9p$(k, v);
-      }
-    }
+        }result.put_xwzc9p$(k, v);
+      }}
     return result != null ? result : emptyMap_0;
   }
   function singletonMapOf(key, value) {
@@ -283,8 +280,7 @@
   function StringEncoder_getInstance() {
     if (StringEncoder_instance === null) {
       new StringEncoder();
-    }
-    return StringEncoder_instance;
+    }return StringEncoder_instance;
   }
   function StringAttribute() {
     Attribute.call(this, StringEncoder_getInstance());
@@ -335,8 +331,7 @@
   function TickerEncoder_getInstance() {
     if (TickerEncoder_instance === null) {
       new TickerEncoder();
-    }
-    return TickerEncoder_instance;
+    }return TickerEncoder_instance;
   }
   function TickerAttribute() {
     Attribute.call(this, TickerEncoder_getInstance());
@@ -344,8 +339,7 @@
   TickerAttribute.prototype.set_fid0sb$ = function (thisRef, attributeName, value) {
     if (value) {
       thisRef.attributes.put_xwzc9p$(attributeName, attributeName);
-    }
-     else {
+    } else {
       thisRef.attributes.remove_11rb$(attributeName);
     }
   };
@@ -361,8 +355,7 @@
     tmp$ = this.valuesMap.get_11rb$(value);
     if (tmp$ == null) {
       throw IllegalArgumentException_init('Unknown value ' + value + ' for ' + attributeName);
-    }
-    return tmp$;
+    }return tmp$;
   };
   EnumEncoder.$metadata$ = {kind: Kind_CLASS, simpleName: 'EnumEncoder', interfaces: [AttributeEncoder]};
   function enumEncode($receiver) {
@@ -386,8 +379,7 @@
           destination.add_11rb$(element);
       }
       tmp$_1 = destination;
-    }
-     else
+    } else
       tmp$_1 = null;
     return (tmp$_0 = tmp$_1) != null ? toSet(tmp$_0) : null;
   }
@@ -408,8 +400,7 @@
   function StringSetEncoder_getInstance() {
     if (StringSetEncoder_instance === null) {
       new StringSetEncoder();
-    }
-    return StringSetEncoder_instance;
+    }return StringSetEncoder_instance;
   }
   function StringSetAttribute() {
     Attribute.call(this, StringSetEncoder_getInstance());
@@ -441,8 +432,7 @@
     var old = mutable.put_xwzc9p$(key, value);
     if (!equals(old, value)) {
       this.consumer_0().onTagAttributeChange_5n2z71$(this.tag_0, key, value);
-    }
-    return old;
+    }return old;
   };
   DelegatingMap.prototype.remove_11rb$ = function (key) {
     var tmp$;
@@ -451,8 +441,7 @@
     if ((tmp$ = mutable.remove_11rb$(key)) != null) {
       this.consumer_0().onTagAttributeChange_5n2z71$(this.tag_0, key, null);
       tmp$_0 = tmp$;
-    }
-     else
+    } else
       tmp$_0 = null;
     return tmp$_0;
   };
@@ -467,8 +456,7 @@
       var element = tmp$.next();
       if (!equals(mutable.put_xwzc9p$(element.key, element.value), element.value)) {
         consumer.onTagAttributeChange_5n2z71$(this.tag_0, element.key, element.value);
-      }
-    }
+      }}
   };
   DelegatingMap.prototype.clear = function () {
     var tmp$;
@@ -487,8 +475,7 @@
     var tmp$, tmp$_0;
     if (this.backingMutable_0) {
       tmp$ = this.backing_0;
-    }
-     else {
+    } else {
       this.backingMutable_0 = true;
       this.backing_0 = LinkedHashMap_init_0(this.backing_0);
       tmp$ = this.backing_0;
@@ -1962,8 +1949,7 @@
     }
     if (!this.path_0.isEmpty()) {
       last(this.path_0).appendChild(element);
-    }
-    this.path_0.add_11rb$(element);
+    }this.path_0.add_11rb$(element);
   };
   JSDOMBuilder.prototype.onTagAttributeChange_5n2z71$ = function (tag, attribute, value) {
     if (this.path_0.isEmpty())
@@ -1975,8 +1961,7 @@
         var node = last(this.path_0);
         if (value == null) {
           node.removeAttribute(attribute);
-        }
-         else {
+        } else {
           node.setAttribute(attribute, value);
         }
       }
@@ -1997,24 +1982,20 @@
     var tmp$ = this.path_0.isEmpty();
     if (!tmp$) {
       tmp$ = !equals(last(this.path_0).tagName.toLowerCase(), tag.tagName.toLowerCase());
-    }
-    if (tmp$) {
+    }if (tmp$) {
       throw IllegalStateException_init("We haven't entered tag " + tag.tagName + ' but trying to leave');
-    }
-    this.lastLeaved_0 = this.path_0.removeAt_za3lpa$(get_lastIndex(this.path_0));
+    }this.lastLeaved_0 = this.path_0.removeAt_za3lpa$(get_lastIndex(this.path_0));
   };
   JSDOMBuilder.prototype.onTagContent_6bul2c$ = function (content) {
     if (this.path_0.isEmpty()) {
       throw IllegalStateException_init('No current DOM node');
-    }
-    last(this.path_0).appendChild(this.document.createTextNode(content.toString()));
+    }last(this.path_0).appendChild(this.document.createTextNode(content.toString()));
   };
   JSDOMBuilder.prototype.onTagContentEntity_ws8or7$ = function (entity) {
     var tmp$;
     if (this.path_0.isEmpty()) {
       throw IllegalStateException_init('No current DOM node');
-    }
-    var s = Kotlin.isType(tmp$ = this.document.createElement('span'), HTMLElement) ? tmp$ : throwCCE();
+    }var s = Kotlin.isType(tmp$ = this.document.createElement('span'), HTMLElement) ? tmp$ : throwCCE();
     s.innerHTML = entity.text;
     var tmp$_0 = last(this.path_0);
     var $receiver = asList(s.childNodes);
@@ -2036,16 +2017,14 @@
   JSDOMBuilder.prototype.onTagComment_6bul2c$ = function (content) {
     if (this.path_0.isEmpty()) {
       throw IllegalStateException_init('No current DOM node');
-    }
-    last(this.path_0).appendChild(this.document.createComment(content.toString()));
+    }last(this.path_0).appendChild(this.document.createComment(content.toString()));
   };
   JSDOMBuilder.prototype.finalize = function () {
     var tmp$, tmp$_0;
     tmp$_0 = (tmp$ = this.lastLeaved_0) != null ? this.asR_0(tmp$) : null;
     if (tmp$_0 == null) {
       throw IllegalStateException_init("We can't finalize as there was no tags");
-    }
-    return tmp$_0;
+    }return tmp$_0;
   };
   JSDOMBuilder.prototype.asR_0 = function ($receiver) {
     return $receiver;
@@ -2059,8 +2038,7 @@
       if (!partial) {
         closure$result.add_11rb$(it);
         this$append.appendChild(it);
-      }
-      return Unit;
+      }return Unit;
     };
   }
   function append($receiver, block) {
@@ -2076,8 +2054,7 @@
       tmp$ = $receiver.ownerDocument;
       if (tmp$ == null) {
         throw IllegalStateException_init('Node has no ownerDocument');
-      }
-      return tmp$;
+      }return tmp$;
     }
   }
   var InjectRoot_instance = null;
@@ -2085,12 +2062,10 @@
     $receiver.consumer.onTagStart_tkgjla$($receiver);
     try {
       block($receiver);
-    }
-     catch (err) {
+    } catch (err) {
       if (Kotlin.isType(err, Throwable)) {
         $receiver.consumer.onTagError_cjwpn3$($receiver, err);
-      }
-       else
+      } else
         throw err;
     }
     finally {
@@ -2100,8 +2075,7 @@
   function visitTagAndFinalize($receiver, consumer, block) {
     if ($receiver.consumer !== consumer) {
       throw IllegalArgumentException_init('Wrong exception');
-    }
-    visitTag($receiver, block);
+    }visitTag($receiver, block);
     return consumer.finalize();
   }
   var package$kotlinx = _.kotlinx || (_.kotlinx = {});

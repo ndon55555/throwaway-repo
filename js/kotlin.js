@@ -2,11 +2,9 @@
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     define('kotlin', ['exports'], factory);
-  }
-   else if (typeof exports === 'object') {
+  } else if (typeof exports === 'object') {
     factory(module.exports);
-  }
-   else {
+  } else {
     root.kotlin = {};
     factory(root.kotlin);
   }
@@ -92,49 +90,37 @@
   Kotlin.equals = function (obj1, obj2) {
     if (obj1 == null) {
       return obj2 == null;
-    }
-    if (obj2 == null) {
+    }if (obj2 == null) {
       return false;
-    }
-    if (obj1 !== obj1) {
+    }if (obj1 !== obj1) {
       return obj2 !== obj2;
-    }
-    if (typeof obj1 === 'object' && typeof obj1.equals === 'function') {
+    }if (typeof obj1 === 'object' && typeof obj1.equals === 'function') {
       return obj1.equals(obj2);
-    }
-    if (typeof obj1 === 'number' && typeof obj2 === 'number') {
+    }if (typeof obj1 === 'number' && typeof obj2 === 'number') {
       return obj1 === obj2 && (obj1 !== 0 || 1 / obj1 === 1 / obj2);
-    }
-    return obj1 === obj2;
+    }return obj1 === obj2;
   };
   Kotlin.hashCode = function (obj) {
     if (obj == null) {
       return 0;
-    }
-    var objType = typeof obj;
+    }var objType = typeof obj;
     if ('object' === objType) {
       return 'function' === typeof obj.hashCode ? obj.hashCode() : getObjectHashCode(obj);
-    }
-    if ('function' === objType) {
+    }if ('function' === objType) {
       return getObjectHashCode(obj);
-    }
-    if ('number' === objType) {
+    }if ('number' === objType) {
       return Kotlin.numberHashCode(obj);
-    }
-    if ('boolean' === objType) {
+    }if ('boolean' === objType) {
       return Number(obj);
-    }
-    var str = String(obj);
+    }var str = String(obj);
     return getStringHashCode(str);
   };
   Kotlin.toString = function (o) {
     if (o == null) {
       return 'null';
-    }
-     else if (Kotlin.isArrayish(o)) {
+    } else if (Kotlin.isArrayish(o)) {
       return '[...]';
-    }
-     else {
+    } else {
       return o.toString();
     }
   };
@@ -144,8 +130,7 @@
     if (!(OBJECT_HASH_CODE_PROPERTY_NAME in obj)) {
       var hash = Math.random() * POW_2_32 | 0;
       Object.defineProperty(obj, OBJECT_HASH_CODE_PROPERTY_NAME, {value: hash, enumerable: false});
-    }
-    return obj[OBJECT_HASH_CODE_PROPERTY_NAME];
+    }return obj[OBJECT_HASH_CODE_PROPERTY_NAME];
   }
   function getStringHashCode(str) {
     var hash = 0;
@@ -167,28 +152,21 @@
       var cachedObj = Kotlin.Long.IntCache_[value];
       if (cachedObj) {
         return cachedObj;
-      }
-    }
-    var obj = new Kotlin.Long(value | 0, value < 0 ? -1 : 0);
+      }}var obj = new Kotlin.Long(value | 0, value < 0 ? -1 : 0);
     if (-128 <= value && value < 128) {
       Kotlin.Long.IntCache_[value] = obj;
-    }
-    return obj;
+    }return obj;
   };
   Kotlin.Long.fromNumber = function (value) {
     if (isNaN(value)) {
       return Kotlin.Long.ZERO;
-    }
-     else if (value <= -Kotlin.Long.TWO_PWR_63_DBL_) {
+    } else if (value <= -Kotlin.Long.TWO_PWR_63_DBL_) {
       return Kotlin.Long.MIN_VALUE;
-    }
-     else if (value + 1 >= Kotlin.Long.TWO_PWR_63_DBL_) {
+    } else if (value + 1 >= Kotlin.Long.TWO_PWR_63_DBL_) {
       return Kotlin.Long.MAX_VALUE;
-    }
-     else if (value < 0) {
+    } else if (value < 0) {
       return Kotlin.Long.fromNumber(-value).negate();
-    }
-     else {
+    } else {
       return new Kotlin.Long(value % Kotlin.Long.TWO_PWR_32_DBL_ | 0, value / Kotlin.Long.TWO_PWR_32_DBL_ | 0);
     }
   };
@@ -198,18 +176,14 @@
   Kotlin.Long.fromString = function (str, opt_radix) {
     if (str.length == 0) {
       throw Error('number format error: empty string');
-    }
-    var radix = opt_radix || 10;
+    }var radix = opt_radix || 10;
     if (radix < 2 || 36 < radix) {
       throw Error('radix out of range: ' + radix);
-    }
-    if (str.charAt(0) == '-') {
+    }if (str.charAt(0) == '-') {
       return Kotlin.Long.fromString(str.substring(1), radix).negate();
-    }
-     else if (str.indexOf('-') >= 0) {
+    } else if (str.indexOf('-') >= 0) {
       throw Error('number format error: interior "-" character: ' + str);
-    }
-    var radixToPower = Kotlin.Long.fromNumber(Math.pow(radix, 8));
+    }var radixToPower = Kotlin.Long.fromNumber(Math.pow(radix, 8));
     var result = Kotlin.Long.ZERO;
     for (var i = 0; i < str.length; i += 8) {
       var size = Math.min(8, str.length - i);
@@ -217,8 +191,7 @@
       if (size < 8) {
         var power = Kotlin.Long.fromNumber(Math.pow(radix, size));
         result = result.multiply(power).add(Kotlin.Long.fromNumber(value));
-      }
-       else {
+      } else {
         result = result.multiply(radixToPower);
         result = result.add(Kotlin.Long.fromNumber(value));
       }
@@ -251,22 +224,18 @@
     var radix = opt_radix || 10;
     if (radix < 2 || 36 < radix) {
       throw Error('radix out of range: ' + radix);
-    }
-    if (this.isZero()) {
+    }if (this.isZero()) {
       return '0';
-    }
-    if (this.isNegative()) {
+    }if (this.isNegative()) {
       if (this.equalsLong(Kotlin.Long.MIN_VALUE)) {
         var radixLong = Kotlin.Long.fromNumber(radix);
         var div = this.div(radixLong);
         var rem = div.multiply(radixLong).subtract(this);
         return div.toString(radix) + rem.toInt().toString(radix);
-      }
-       else {
+      } else {
         return '-' + this.negate().toString(radix);
       }
-    }
-    var radixToPower = Kotlin.Long.fromNumber(Math.pow(radix, 6));
+    }var radixToPower = Kotlin.Long.fromNumber(Math.pow(radix, 6));
     var rem = this;
     var result = '';
     while (true) {
@@ -276,8 +245,7 @@
       rem = remDiv;
       if (rem.isZero()) {
         return digits + result;
-      }
-       else {
+      } else {
         while (digits.length < 6) {
           digits = '0' + digits;
         }
@@ -298,18 +266,15 @@
     if (this.isNegative()) {
       if (this.equalsLong(Kotlin.Long.MIN_VALUE)) {
         return 64;
-      }
-       else {
+      } else {
         return this.negate().getNumBitsAbs();
       }
-    }
-     else {
+    } else {
       var val = this.high_ != 0 ? this.high_ : this.low_;
       for (var bit = 31; bit > 0; bit--) {
         if ((val & 1 << bit) != 0) {
           break;
-        }
-      }
+        }}
       return this.high_ != 0 ? bit + 33 : bit + 1;
     }
   };
@@ -343,27 +308,22 @@
   Kotlin.Long.prototype.compare = function (other) {
     if (this.equalsLong(other)) {
       return 0;
-    }
-    var thisNeg = this.isNegative();
+    }var thisNeg = this.isNegative();
     var otherNeg = other.isNegative();
     if (thisNeg && !otherNeg) {
       return -1;
-    }
-    if (!thisNeg && otherNeg) {
+    }if (!thisNeg && otherNeg) {
       return 1;
-    }
-    if (this.subtract(other).isNegative()) {
+    }if (this.subtract(other).isNegative()) {
       return -1;
-    }
-     else {
+    } else {
       return 1;
     }
   };
   Kotlin.Long.prototype.negate = function () {
     if (this.equalsLong(Kotlin.Long.MIN_VALUE)) {
       return Kotlin.Long.MIN_VALUE;
-    }
-     else {
+    } else {
       return this.not().add(Kotlin.Long.ONE);
     }
   };
@@ -396,31 +356,23 @@
   Kotlin.Long.prototype.multiply = function (other) {
     if (this.isZero()) {
       return Kotlin.Long.ZERO;
-    }
-     else if (other.isZero()) {
+    } else if (other.isZero()) {
       return Kotlin.Long.ZERO;
-    }
-    if (this.equalsLong(Kotlin.Long.MIN_VALUE)) {
+    }if (this.equalsLong(Kotlin.Long.MIN_VALUE)) {
       return other.isOdd() ? Kotlin.Long.MIN_VALUE : Kotlin.Long.ZERO;
-    }
-     else if (other.equalsLong(Kotlin.Long.MIN_VALUE)) {
+    } else if (other.equalsLong(Kotlin.Long.MIN_VALUE)) {
       return this.isOdd() ? Kotlin.Long.MIN_VALUE : Kotlin.Long.ZERO;
-    }
-    if (this.isNegative()) {
+    }if (this.isNegative()) {
       if (other.isNegative()) {
         return this.negate().multiply(other.negate());
-      }
-       else {
+      } else {
         return this.negate().multiply(other).negate();
       }
-    }
-     else if (other.isNegative()) {
+    } else if (other.isNegative()) {
       return this.multiply(other.negate()).negate();
-    }
-    if (this.lessThan(Kotlin.Long.TWO_PWR_24_) && other.lessThan(Kotlin.Long.TWO_PWR_24_)) {
+    }if (this.lessThan(Kotlin.Long.TWO_PWR_24_) && other.lessThan(Kotlin.Long.TWO_PWR_24_)) {
       return Kotlin.Long.fromNumber(this.toNumber() * other.toNumber());
-    }
-    var a48 = this.high_ >>> 16;
+    }var a48 = this.high_ >>> 16;
     var a32 = this.high_ & 65535;
     var a16 = this.low_ >>> 16;
     var a00 = this.low_ & 65535;
@@ -454,45 +406,35 @@
   Kotlin.Long.prototype.div = function (other) {
     if (other.isZero()) {
       throw Error('division by zero');
-    }
-     else if (this.isZero()) {
+    } else if (this.isZero()) {
       return Kotlin.Long.ZERO;
-    }
-    if (this.equalsLong(Kotlin.Long.MIN_VALUE)) {
+    }if (this.equalsLong(Kotlin.Long.MIN_VALUE)) {
       if (other.equalsLong(Kotlin.Long.ONE) || other.equalsLong(Kotlin.Long.NEG_ONE)) {
         return Kotlin.Long.MIN_VALUE;
-      }
-       else if (other.equalsLong(Kotlin.Long.MIN_VALUE)) {
+      } else if (other.equalsLong(Kotlin.Long.MIN_VALUE)) {
         return Kotlin.Long.ONE;
-      }
-       else {
+      } else {
         var halfThis = this.shiftRight(1);
         var approx = halfThis.div(other).shiftLeft(1);
         if (approx.equalsLong(Kotlin.Long.ZERO)) {
           return other.isNegative() ? Kotlin.Long.ONE : Kotlin.Long.NEG_ONE;
-        }
-         else {
+        } else {
           var rem = this.subtract(other.multiply(approx));
           var result = approx.add(rem.div(other));
           return result;
         }
       }
-    }
-     else if (other.equalsLong(Kotlin.Long.MIN_VALUE)) {
+    } else if (other.equalsLong(Kotlin.Long.MIN_VALUE)) {
       return Kotlin.Long.ZERO;
-    }
-    if (this.isNegative()) {
+    }if (this.isNegative()) {
       if (other.isNegative()) {
         return this.negate().div(other.negate());
-      }
-       else {
+      } else {
         return this.negate().div(other).negate();
       }
-    }
-     else if (other.isNegative()) {
+    } else if (other.isNegative()) {
       return this.div(other.negate()).negate();
-    }
-    var res = Kotlin.Long.ZERO;
+    }var res = Kotlin.Long.ZERO;
     var rem = this;
     while (rem.greaterThanOrEqual(other)) {
       var approx = Math.max(1, Math.floor(rem.toNumber() / other.toNumber()));
@@ -507,8 +449,7 @@
       }
       if (approxRes.isZero()) {
         approxRes = Kotlin.Long.ONE;
-      }
-      res = res.add(approxRes);
+      }res = res.add(approxRes);
       rem = rem.subtract(approxRem);
     }
     return res;
@@ -532,14 +473,12 @@
     numBits &= 63;
     if (numBits == 0) {
       return this;
-    }
-     else {
+    } else {
       var low = this.low_;
       if (numBits < 32) {
         var high = this.high_;
         return Kotlin.Long.fromBits(low << numBits, high << numBits | low >>> 32 - numBits);
-      }
-       else {
+      } else {
         return Kotlin.Long.fromBits(0, low << numBits - 32);
       }
     }
@@ -548,14 +487,12 @@
     numBits &= 63;
     if (numBits == 0) {
       return this;
-    }
-     else {
+    } else {
       var high = this.high_;
       if (numBits < 32) {
         var low = this.low_;
         return Kotlin.Long.fromBits(low >>> numBits | high << 32 - numBits, high >> numBits);
-      }
-       else {
+      } else {
         return Kotlin.Long.fromBits(high >> numBits - 32, high >= 0 ? 0 : -1);
       }
     }
@@ -564,17 +501,14 @@
     numBits &= 63;
     if (numBits == 0) {
       return this;
-    }
-     else {
+    } else {
       var high = this.high_;
       if (numBits < 32) {
         var low = this.low_;
         return Kotlin.Long.fromBits(low >>> numBits | high << 32 - numBits, high >>> numBits);
-      }
-       else if (numBits == 32) {
+      } else if (numBits == 32) {
         return Kotlin.Long.fromBits(high, 0);
-      }
-       else {
+      } else {
         return Kotlin.Long.fromBits(high >>> numBits - 32, 0);
       }
     }
@@ -629,13 +563,10 @@
     if (typeA === 'number') {
       if (typeof b === 'number') {
         return Kotlin.doubleCompareTo(a, b);
-      }
+      }return Kotlin.primitiveCompareTo(a, b);
+    }if (typeA === 'string' || typeA === 'boolean') {
       return Kotlin.primitiveCompareTo(a, b);
-    }
-    if (typeA === 'string' || typeA === 'boolean') {
-      return Kotlin.primitiveCompareTo(a, b);
-    }
-    return a.compareTo_11rb$(b);
+    }return a.compareTo_11rb$(b);
   };
   Kotlin.primitiveCompareTo = function (a, b) {
     return a < b ? -1 : a > b ? 1 : 0;
@@ -650,8 +581,7 @@
         return 0;
       var ia = 1 / a;
       return ia === 1 / b ? 0 : ia < 0 ? -1 : 1;
-    }
-    return a !== a ? b !== b ? 0 : 1 : -1;
+    }return a !== a ? b !== b ? 0 : 1 : -1;
   };
   Kotlin.imul = Math.imul || imul;
   Kotlin.imulEmulated = imul;
@@ -669,8 +599,7 @@
     if (bufInt32[lowIndex] !== 0) {
       lowIndex = 1;
       highIndex = 0;
-    }
-    Kotlin.doubleToRawBits = function (value) {
+    }Kotlin.doubleToRawBits = function (value) {
       bufFloat64[0] = value;
       return Kotlin.Long.fromBits(bufInt32[lowIndex], bufInt32[highIndex]);
     };
@@ -682,8 +611,7 @@
     Kotlin.numberHashCode = function (obj) {
       if ((obj | 0) === obj) {
         return obj | 0;
-      }
-       else {
+      } else {
         bufFloat64[0] = obj;
         return (bufInt32[highIndex] * 31 | 0) + bufInt32[lowIndex] | 0;
       }
@@ -697,39 +625,31 @@
       position = position || 0;
       return this.lastIndexOf(searchString, position) === position;
     };
-  }
-  if (typeof String.prototype.endsWith === 'undefined') {
+  }if (typeof String.prototype.endsWith === 'undefined') {
     String.prototype.endsWith = function (searchString, position) {
       var subjectString = this.toString();
       if (position === undefined || position > subjectString.length) {
         position = subjectString.length;
-      }
-      position -= searchString.length;
+      }position -= searchString.length;
       var lastIndex = subjectString.indexOf(searchString, position);
       return lastIndex !== -1 && lastIndex === position;
     };
-  }
-  if (typeof Math.sign === 'undefined') {
+  }if (typeof Math.sign === 'undefined') {
     Math.sign = function (x) {
       x = +x;
       if (x === 0 || isNaN(x)) {
         return Number(x);
-      }
-      return x > 0 ? 1 : -1;
+      }return x > 0 ? 1 : -1;
     };
-  }
-  if (typeof Math.trunc === 'undefined') {
+  }if (typeof Math.trunc === 'undefined') {
     Math.trunc = function (x) {
       if (isNaN(x)) {
         return NaN;
-      }
-      if (x > 0) {
+      }if (x > 0) {
         return Math.floor(x);
-      }
-      return Math.ceil(x);
+      }return Math.ceil(x);
     };
-  }
-  (function () {
+  }(function () {
     var epsilon = 2.220446049250313E-16;
     var taylor_2_bound = Math.sqrt(epsilon);
     var taylor_n_bound = Math.sqrt(taylor_2_bound);
@@ -741,10 +661,8 @@
           var result = x;
           if (Math.abs(x) > taylor_2_bound) {
             result += x * x * x / 6;
-          }
-          return result;
-        }
-         else {
+          }return result;
+        } else {
           var y = Math.exp(x);
           var y1 = 1 / y;
           if (!isFinite(y))
@@ -754,8 +672,7 @@
           return (y - y1) / 2;
         }
       };
-    }
-    if (typeof Math.cosh === 'undefined') {
+    }if (typeof Math.cosh === 'undefined') {
       Math.cosh = function (x) {
         var y = Math.exp(x);
         var y1 = 1 / y;
@@ -763,110 +680,88 @@
           return Math.exp(Math.abs(x) - Math.LN2);
         return (y + y1) / 2;
       };
-    }
-    if (typeof Math.tanh === 'undefined') {
+    }if (typeof Math.tanh === 'undefined') {
       Math.tanh = function (x) {
         if (Math.abs(x) < taylor_n_bound) {
           var result = x;
           if (Math.abs(x) > taylor_2_bound) {
             result -= x * x * x / 3;
-          }
-          return result;
-        }
-         else {
+          }return result;
+        } else {
           var a = Math.exp(+x), b = Math.exp(-x);
           return a === Infinity ? 1 : b === Infinity ? -1 : (a - b) / (a + b);
         }
       };
-    }
-    if (typeof Math.asinh === 'undefined') {
+    }if (typeof Math.asinh === 'undefined') {
       var asinh = function (x) {
         if (x >= +taylor_n_bound) {
           if (x > upper_taylor_n_bound) {
             if (x > upper_taylor_2_bound) {
               return Math.log(x) + Math.LN2;
-            }
-             else {
+            } else {
               return Math.log(x * 2 + 1 / (x * 2));
             }
-          }
-           else {
+          } else {
             return Math.log(x + Math.sqrt(x * x + 1));
           }
-        }
-         else if (x <= -taylor_n_bound) {
+        } else if (x <= -taylor_n_bound) {
           return -asinh(-x);
-        }
-         else {
+        } else {
           var result = x;
           if (Math.abs(x) >= taylor_2_bound) {
             var x3 = x * x * x;
             result -= x3 / 6;
-          }
-          return result;
+          }return result;
         }
       };
       Math.asinh = asinh;
-    }
-    if (typeof Math.acosh === 'undefined') {
+    }if (typeof Math.acosh === 'undefined') {
       Math.acosh = function (x) {
         if (x < 1) {
           return NaN;
-        }
-         else if (x - 1 >= taylor_n_bound) {
+        } else if (x - 1 >= taylor_n_bound) {
           if (x > upper_taylor_2_bound) {
             return Math.log(x) + Math.LN2;
-          }
-           else {
+          } else {
             return Math.log(x + Math.sqrt(x * x - 1));
           }
-        }
-         else {
+        } else {
           var y = Math.sqrt(x - 1);
           var result = y;
           if (y >= taylor_2_bound) {
             var y3 = y * y * y;
             result -= y3 / 12;
-          }
-          return Math.sqrt(2) * result;
+          }return Math.sqrt(2) * result;
         }
       };
-    }
-    if (typeof Math.atanh === 'undefined') {
+    }if (typeof Math.atanh === 'undefined') {
       Math.atanh = function (x) {
         if (Math.abs(x) < taylor_n_bound) {
           var result = x;
           if (Math.abs(x) > taylor_2_bound) {
             result += x * x * x / 3;
-          }
-          return result;
-        }
-        return Math.log((1 + x) / (1 - x)) / 2;
+          }return result;
+        }return Math.log((1 + x) / (1 - x)) / 2;
       };
-    }
-    if (typeof Math.log1p === 'undefined') {
+    }if (typeof Math.log1p === 'undefined') {
       Math.log1p = function (x) {
         if (Math.abs(x) < taylor_n_bound) {
           var x2 = x * x;
           var x3 = x2 * x;
           var x4 = x3 * x;
           return -x4 / 4 + x3 / 3 - x2 / 2 + x;
-        }
-        return Math.log(x + 1);
+        }return Math.log(x + 1);
       };
-    }
-    if (typeof Math.expm1 === 'undefined') {
+    }if (typeof Math.expm1 === 'undefined') {
       Math.expm1 = function (x) {
         if (Math.abs(x) < taylor_n_bound) {
           var x2 = x * x;
           var x3 = x2 * x;
           var x4 = x3 * x;
           return x4 / 24 + x3 / 6 + x2 / 2 + x;
-        }
-        return Math.exp(x) - 1;
+        }return Math.exp(x) - 1;
       };
-    }
-  }());
+    }}());
   if (typeof Math.hypot === 'undefined') {
     Math.hypot = function () {
       var y = 0;
@@ -874,44 +769,36 @@
       for (var i = 0; i < length; i++) {
         if (arguments[i] === Infinity || arguments[i] === -Infinity) {
           return Infinity;
-        }
-        y += arguments[i] * arguments[i];
+        }y += arguments[i] * arguments[i];
       }
       return Math.sqrt(y);
     };
-  }
-  if (typeof Math.log10 === 'undefined') {
+  }if (typeof Math.log10 === 'undefined') {
     Math.log10 = function (x) {
       return Math.log(x) * Math.LOG10E;
     };
-  }
-  if (typeof Math.log2 === 'undefined') {
+  }if (typeof Math.log2 === 'undefined') {
     Math.log2 = function (x) {
       return Math.log(x) * Math.LOG2E;
     };
-  }
-  if (typeof Math.clz32 === 'undefined') {
+  }if (typeof Math.clz32 === 'undefined') {
     Math.clz32 = function (log, LN2) {
       return function (x) {
         var asUint = x >>> 0;
         if (asUint === 0) {
           return 32;
-        }
-        return 31 - (log(asUint) / LN2 | 0) | 0;
+        }return 31 - (log(asUint) / LN2 | 0) | 0;
       };
     }(Math.log, Math.LN2);
-  }
-  if (typeof ArrayBuffer.isView === 'undefined') {
+  }if (typeof ArrayBuffer.isView === 'undefined') {
     ArrayBuffer.isView = function (a) {
       return a != null && a.__proto__ != null && a.__proto__.__proto__ === Int8Array.prototype.__proto__;
     };
-  }
-  if (typeof Array.prototype.fill === 'undefined') {
+  }if (typeof Array.prototype.fill === 'undefined') {
     Array.prototype.fill = function () {
       if (this == null) {
         throw new TypeError('this is null or not defined');
-      }
-      var O = Object(this);
+      }var O = Object(this);
       var len = O.length >>> 0;
       var start = arguments[1];
       var relativeStart = start >> 0;
@@ -925,8 +812,7 @@
       }
       return O;
     };
-  }
-  (function () {
+  }(function () {
     function normalizeOffset(offset, length) {
       if (offset < 0)
         return Math.max(0, offset + length);
@@ -935,8 +821,7 @@
     function typedArraySlice(begin, end) {
       if (typeof end === 'undefined') {
         end = this.length;
-      }
-      begin = normalizeOffset(begin || 0, this.length);
+      }begin = normalizeOffset(begin || 0, this.length);
       end = Math.max(begin, normalizeOffset(end, this.length));
       return new this.constructor(this.subarray(begin, end));
     }
@@ -945,16 +830,13 @@
       var TypedArray = arrays[i];
       if (typeof TypedArray.prototype.fill === 'undefined') {
         TypedArray.prototype.fill = Array.prototype.fill;
-      }
-      if (typeof TypedArray.prototype.slice === 'undefined') {
+      }if (typeof TypedArray.prototype.slice === 'undefined') {
         Object.defineProperty(TypedArray.prototype, 'slice', {value: typedArraySlice});
-      }
-    }
+      }}
     try {
       (function () {
       }.apply(null, new Int32Array(0)));
-    }
-     catch (e) {
+    } catch (e) {
       var apply = Function.prototype.apply;
       Object.defineProperty(Function.prototype, 'apply', {value: function (self, array) {
         return apply.call(this, self, [].slice.call(array));
@@ -966,8 +848,7 @@
         Object.defineProperty(TypedArray.prototype, 'map', {value: function (callback, self) {
           return [].slice.call(this).map(callback, self);
         }});
-      }
-    }
+      }}
     var totalOrderComparator = function (a, b) {
       if (a < b)
         return -1;
@@ -978,8 +859,7 @@
           return 0;
         var ia = 1 / a;
         return ia === 1 / b ? 0 : ia < 0 ? -1 : 1;
-      }
-      return a !== a ? b !== b ? 0 : 1 : -1;
+      }return a !== a ? b !== b ? 0 : 1 : -1;
     };
     for (var i = 0; i < arrays.length; ++i) {
       var TypedArray = arrays[i];
@@ -987,8 +867,7 @@
         Object.defineProperty(TypedArray.prototype, 'sort', {value: function (compareFunction) {
           return Array.prototype.sort.call(this, compareFunction || totalOrderComparator);
         }});
-      }
-    }
+      }}
   }());
   Kotlin.Kind = {CLASS: 'class', INTERFACE: 'interface', OBJECT: 'object'};
   function isInheritanceFromInterface(ctor, iface) {
@@ -1000,10 +879,8 @@
       for (var i = 0; i < interfaces.length; i++) {
         if (isInheritanceFromInterface(interfaces[i], iface)) {
           return true;
-        }
-      }
-    }
-    var superPrototype = ctor.prototype != null ? Object.getPrototypeOf(ctor.prototype) : null;
+        }}
+    }var superPrototype = ctor.prototype != null ? Object.getPrototypeOf(ctor.prototype) : null;
     var superConstructor = superPrototype != null ? superPrototype.constructor : null;
     return superConstructor != null && isInheritanceFromInterface(superConstructor, iface);
   }
@@ -1017,29 +894,22 @@
           return true;
         default:return object instanceof Object;
       }
-    }
-    if (object == null || klass == null || (typeof object !== 'object' && typeof object !== 'function')) {
+    }if (object == null || klass == null || (typeof object !== 'object' && typeof object !== 'function')) {
       return false;
-    }
-    if (typeof klass === 'function' && object instanceof klass) {
+    }if (typeof klass === 'function' && object instanceof klass) {
       return true;
-    }
-    var proto = Object.getPrototypeOf(klass);
+    }var proto = Object.getPrototypeOf(klass);
     var constructor = proto != null ? proto.constructor : null;
     if (constructor != null && '$metadata$' in constructor) {
       var metadata = constructor.$metadata$;
       if (metadata.kind === Kotlin.Kind.OBJECT) {
         return object === klass;
-      }
-    }
-    var klassMetadata = klass.$metadata$;
+      }}var klassMetadata = klass.$metadata$;
     if (klassMetadata == null) {
       return object instanceof klass;
-    }
-    if (klassMetadata.kind === Kotlin.Kind.INTERFACE && object.constructor != null) {
+    }if (klassMetadata.kind === Kotlin.Kind.INTERFACE && object.constructor != null) {
       return isInheritanceFromInterface(object.constructor, klass);
-    }
-    return false;
+    }return false;
   };
   Kotlin.isNumber = function (a) {
     return typeof a == 'number' || a instanceof Kotlin.Long;
@@ -1093,8 +963,7 @@
     function Enum$Companion_getInstance() {
       if (Enum$Companion_instance === null) {
         new Enum$Companion();
-      }
-      return Enum$Companion_instance;
+      }return Enum$Companion_instance;
     }
     Enum.$metadata$ = {kind: Kind_CLASS, simpleName: 'Enum', interfaces: [Comparable]};
     function newArray(size, initValue) {
@@ -1121,15 +990,33 @@
     function DoubleCompanionObject_getInstance() {
       if (DoubleCompanionObject_instance === null) {
         new DoubleCompanionObject();
-      }
-      return DoubleCompanionObject_instance;
+      }return DoubleCompanionObject_instance;
     }
     var FloatCompanionObject_instance = null;
     var IntCompanionObject_instance = null;
     var LongCompanionObject_instance = null;
     var ShortCompanionObject_instance = null;
     var ByteCompanionObject_instance = null;
+    function CharCompanionObject() {
+      CharCompanionObject_instance = this;
+      this.MIN_VALUE = 0;
+      this.MAX_VALUE = 65535;
+      this.MIN_HIGH_SURROGATE = 55296;
+      this.MAX_HIGH_SURROGATE = 56319;
+      this.MIN_LOW_SURROGATE = 56320;
+      this.MAX_LOW_SURROGATE = 57343;
+      this.MIN_SURROGATE = this.MIN_HIGH_SURROGATE;
+      this.MAX_SURROGATE = this.MAX_LOW_SURROGATE;
+      this.SIZE_BYTES = 2;
+      this.SIZE_BITS = 16;
+    }
+    CharCompanionObject.$metadata$ = {kind: Kind_OBJECT, simpleName: 'CharCompanionObject', interfaces: []};
     var CharCompanionObject_instance = null;
+    function CharCompanionObject_getInstance() {
+      if (CharCompanionObject_instance === null) {
+        new CharCompanionObject();
+      }return CharCompanionObject_instance;
+    }
     var StringCompanionObject_instance = null;
     var BooleanCompanionObject_instance = null;
     var package$kotlin = _.kotlin || (_.kotlin = {});
@@ -1140,6 +1027,7 @@
     var package$js = package$kotlin.js || (package$kotlin.js = {});
     var package$internal = package$js.internal || (package$js.internal = {});
     Object.defineProperty(package$internal, 'DoubleCompanionObject', {get: DoubleCompanionObject_getInstance});
+    Object.defineProperty(package$internal, 'CharCompanionObject', {get: CharCompanionObject_getInstance});
   }());
   (function () {
     'use strict';
@@ -1180,6 +1068,7 @@
     var hashCode = Kotlin.hashCode;
     var Throwable = Error;
     var toRawBits = Kotlin.doubleToRawBits;
+    var kotlin_js_internal_CharCompanionObject = Kotlin.kotlin.js.internal.CharCompanionObject;
     var L_7390468764508069838 = new Kotlin.Long(-1478467534, -1720727600);
     var L8246714829545688274 = new Kotlin.Long(-888910638, 1920087921);
     var L3406603774387020532 = new Kotlin.Long(1993859828, 793161749);
@@ -1323,15 +1212,12 @@
         for (var index = 0; index !== $receiver.length; ++index) {
           if ($receiver[index] == null) {
             return index;
-          }
-        }
-      }
-       else {
+          }}
+      } else {
         for (var index_0 = 0; index_0 !== $receiver.length; ++index_0) {
           if (equals(element, $receiver[index_0])) {
             return index_0;
-          }
-        }
+          }}
       }
       return -1;
     }
@@ -1339,8 +1225,7 @@
       for (var index = 0; index !== $receiver.length; ++index) {
         if (element === $receiver[index]) {
           return index;
-        }
-      }
+        }}
       return -1;
     }
     function lastIndexOf($receiver, element) {
@@ -1351,31 +1236,16 @@
           var index = tmp$.next();
           if ($receiver[index] == null) {
             return index;
-          }
-        }
-      }
-       else {
+          }}
+      } else {
         tmp$_0 = reversed_9(get_indices($receiver)).iterator();
         while (tmp$_0.hasNext()) {
           var index_0 = tmp$_0.next();
           if (equals(element, $receiver[index_0])) {
             return index_0;
-          }
-        }
+          }}
       }
       return -1;
-    }
-    function single_7($receiver) {
-      var tmp$;
-      switch ($receiver.length) {
-        case 0:
-          throw new NoSuchElementException('Array is empty.');
-        case 1:
-          tmp$ = $receiver[0];
-          break;
-        default:throw IllegalArgumentException_init_0('Array has more than one element.');
-      }
-      return tmp$;
     }
     function get_indices($receiver) {
       return new IntRange(0, get_lastIndex($receiver));
@@ -1430,8 +1300,7 @@
         var $receiver_0 = Kotlin.isArray(tmp$ = copyToArray($receiver)) ? tmp$ : throwCCE_0();
         sort_5($receiver_0);
         return asList($receiver_0);
-      }
-      var $receiver_1 = toMutableList_8($receiver);
+      }var $receiver_1 = toMutableList_8($receiver);
       sort_14($receiver_1);
       return $receiver_1;
     }
@@ -1461,8 +1330,7 @@
             break;
         }
         return tmp$;
-      }
-      return optimizeReadOnlyList(toMutableList_8($receiver));
+      }return optimizeReadOnlyList(toMutableList_8($receiver));
     }
     function toMutableList_8($receiver) {
       if (Kotlin.isType($receiver, Collection))
@@ -1486,8 +1354,7 @@
             break;
         }
         return tmp$;
-      }
-      return optimizeReadOnlySet(toCollection_8($receiver, LinkedHashSet_init_0()));
+      }return optimizeReadOnlySet(toCollection_8($receiver, LinkedHashSet_init_0()));
     }
     function distinct_8($receiver) {
       return toList_8(toMutableSet_8($receiver));
@@ -1547,8 +1414,7 @@
           buffer.append_gw00v9$(separator);
         if (limit < 0 || count <= limit) {
           appendElement_0(buffer, element, transform);
-        }
-         else
+        } else
           break;
       }
       if (limit >= 0 && count > limit)
@@ -1593,8 +1459,7 @@
       if (!(n >= 0)) {
         var message = 'Requested element count ' + n + ' is less than zero.';
         throw IllegalArgumentException_init_0(message.toString());
-      }
-      if (n === 0)
+      }if (n === 0)
         tmp$ = emptySequence();
       else if (Kotlin.isType($receiver, DropTakeSequence))
         tmp$ = $receiver.take_za3lpa$(n);
@@ -1732,8 +1597,7 @@
         if (!this.hasNext_0)
           throw NoSuchElementException_init();
         this.hasNext_0 = false;
-      }
-       else {
+      } else {
         this.next_0 = this.next_0 + this.step | 0;
       }
       return toChar(value);
@@ -1755,8 +1619,7 @@
         if (!this.hasNext_0)
           throw NoSuchElementException_init();
         this.hasNext_0 = false;
-      }
-       else {
+      } else {
         this.next_0 = this.next_0 + this.step | 0;
       }
       return value;
@@ -1778,8 +1641,7 @@
         if (!this.hasNext_0)
           throw NoSuchElementException_init();
         this.hasNext_0 = false;
-      }
-       else {
+      } else {
         this.next_0 = this.next_0.add(this.step);
       }
       return value;
@@ -1821,8 +1683,7 @@
     function CharProgression$Companion_getInstance() {
       if (CharProgression$Companion_instance === null) {
         new CharProgression$Companion();
-      }
-      return CharProgression$Companion_instance;
+      }return CharProgression$Companion_instance;
     }
     CharProgression.$metadata$ = {kind: Kind_CLASS, simpleName: 'CharProgression', interfaces: [Iterable]};
     function IntProgression(start, endInclusive, step) {
@@ -1861,8 +1722,7 @@
     function IntProgression$Companion_getInstance() {
       if (IntProgression$Companion_instance === null) {
         new IntProgression$Companion();
-      }
-      return IntProgression$Companion_instance;
+      }return IntProgression$Companion_instance;
     }
     IntProgression.$metadata$ = {kind: Kind_CLASS, simpleName: 'IntProgression', interfaces: [Iterable]};
     function LongProgression(start, endInclusive, step) {
@@ -1901,8 +1761,7 @@
     function LongProgression$Companion_getInstance() {
       if (LongProgression$Companion_instance === null) {
         new LongProgression$Companion();
-      }
-      return LongProgression$Companion_instance;
+      }return LongProgression$Companion_instance;
     }
     LongProgression.$metadata$ = {kind: Kind_CLASS, simpleName: 'LongProgression', interfaces: [Iterable]};
     function ClosedRange() {
@@ -1948,8 +1807,7 @@
     function CharRange$Companion_getInstance() {
       if (CharRange$Companion_instance === null) {
         new CharRange$Companion();
-      }
-      return CharRange$Companion_instance;
+      }return CharRange$Companion_instance;
     }
     CharRange.$metadata$ = {kind: Kind_CLASS, simpleName: 'CharRange', interfaces: [ClosedRange, CharProgression]};
     function IntRange(start, endInclusive) {
@@ -1986,8 +1844,7 @@
     function IntRange$Companion_getInstance() {
       if (IntRange$Companion_instance === null) {
         new IntRange$Companion();
-      }
-      return IntRange$Companion_instance;
+      }return IntRange$Companion_instance;
     }
     IntRange.$metadata$ = {kind: Kind_CLASS, simpleName: 'IntRange', interfaces: [ClosedRange, IntProgression]};
     function LongRange(start, endInclusive) {
@@ -2024,8 +1881,7 @@
     function LongRange$Companion_getInstance() {
       if (LongRange$Companion_instance === null) {
         new LongRange$Companion();
-      }
-      return LongRange$Companion_instance;
+      }return LongRange$Companion_instance;
     }
     LongRange.$metadata$ = {kind: Kind_CLASS, simpleName: 'LongRange', interfaces: [ClosedRange, LongProgression]};
     function Unit() {
@@ -2039,8 +1895,7 @@
     function Unit_getInstance() {
       if (Unit_instance === null) {
         new Unit();
-      }
-      return Unit_instance;
+      }return Unit_instance;
     }
     var AnnotationTarget$CLASS_instance;
     var AnnotationTarget$ANNOTATION_CLASS_instance;
@@ -2169,8 +2024,7 @@
       var tmp$;
       if (this.index < this.closure$arr.length) {
         return this.closure$arr[tmp$ = this.index, this.index = tmp$ + 1 | 0, tmp$];
-      }
-       else
+      } else
         throw new NoSuchElementException(this.index.toString());
     };
     arrayIterator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Iterator]};
@@ -2178,8 +2032,7 @@
       if (type == null) {
         var arr = array;
         return new arrayIterator$ObjectLiteral(arr);
-      }
-       else
+      } else
         switch (type) {
           case 'BooleanArray':
             return booleanArrayIterator(array);
@@ -2212,8 +2065,7 @@
       var tmp$;
       if (this.index < this.closure$array.length) {
         return this.closure$array[tmp$ = this.index, this.index = tmp$ + 1 | 0, tmp$];
-      }
-       else
+      } else
         throw new NoSuchElementException(this.index.toString());
     };
     booleanArrayIterator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [BooleanIterator]};
@@ -2232,8 +2084,7 @@
       var tmp$;
       if (this.index < this.closure$array.length) {
         return this.closure$array[tmp$ = this.index, this.index = tmp$ + 1 | 0, tmp$];
-      }
-       else
+      } else
         throw new NoSuchElementException(this.index.toString());
     };
     byteArrayIterator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [ByteIterator]};
@@ -2252,8 +2103,7 @@
       var tmp$;
       if (this.index < this.closure$array.length) {
         return this.closure$array[tmp$ = this.index, this.index = tmp$ + 1 | 0, tmp$];
-      }
-       else
+      } else
         throw new NoSuchElementException(this.index.toString());
     };
     shortArrayIterator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [ShortIterator]};
@@ -2272,8 +2122,7 @@
       var tmp$;
       if (this.index < this.closure$array.length) {
         return this.closure$array[tmp$ = this.index, this.index = tmp$ + 1 | 0, tmp$];
-      }
-       else
+      } else
         throw new NoSuchElementException(this.index.toString());
     };
     charArrayIterator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [CharIterator]};
@@ -2292,8 +2141,7 @@
       var tmp$;
       if (this.index < this.closure$array.length) {
         return this.closure$array[tmp$ = this.index, this.index = tmp$ + 1 | 0, tmp$];
-      }
-       else
+      } else
         throw new NoSuchElementException(this.index.toString());
     };
     intArrayIterator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [IntIterator]};
@@ -2312,8 +2160,7 @@
       var tmp$;
       if (this.index < this.closure$array.length) {
         return this.closure$array[tmp$ = this.index, this.index = tmp$ + 1 | 0, tmp$];
-      }
-       else
+      } else
         throw new NoSuchElementException(this.index.toString());
     };
     floatArrayIterator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [FloatIterator]};
@@ -2332,8 +2179,7 @@
       var tmp$;
       if (this.index < this.closure$array.length) {
         return this.closure$array[tmp$ = this.index, this.index = tmp$ + 1 | 0, tmp$];
-      }
-       else
+      } else
         throw new NoSuchElementException(this.index.toString());
     };
     doubleArrayIterator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [DoubleIterator]};
@@ -2352,8 +2198,7 @@
       var tmp$;
       if (this.index < this.closure$array.length) {
         return this.closure$array[tmp$ = this.index, this.index = tmp$ + 1 | 0, tmp$];
-      }
-       else
+      } else
         throw new NoSuchElementException(this.index.toString());
     };
     longArrayIterator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [LongIterator]};
@@ -2370,16 +2215,14 @@
     function subSequence(c, startIndex, endIndex) {
       if (typeof c === 'string') {
         return c.substring(startIndex, endIndex);
-      }
-       else {
+      } else {
         return c.subSequence_vux9f0$(startIndex, endIndex);
       }
     }
     function captureStack(baseClass, instance) {
       if (Error.captureStackTrace) {
         Error.captureStackTrace(instance, get_js(Kotlin.getKClassFromExpression(instance)));
-      }
-       else {
+      } else {
         instance.stack = (new Error()).stack;
       }
     }
@@ -2439,8 +2282,7 @@
       var tmp$;
       if (result.isFailure) {
         getOrNull$result = null;
-      }
-       else {
+      } else {
         getOrNull$result = (tmp$ = result.value) == null || Kotlin.isType(tmp$, Any) ? tmp$ : throwCCE();
       }
       var currentResult = {v: getOrNull$result};
@@ -2451,8 +2293,7 @@
         var completion = $receiver.resultContinuation_0;
         if (currentException.v == null) {
           $receiver.result_0 = currentResult.v;
-        }
-         else {
+        } else {
           $receiver.state_0 = $receiver.exceptionState_0;
           $receiver.exception_0 = currentException.v;
         }
@@ -2462,27 +2303,23 @@
             return;
           currentResult.v = outcome;
           currentException.v = null;
-        }
-         catch (exception) {
+        } catch (exception) {
           currentResult.v = null;
           currentException.v = exception;
         }
         $receiver.releaseIntercepted_0();
         if (Kotlin.isType(completion, CoroutineImpl)) {
           current.v = completion;
-        }
-         else {
+        } else {
           var tmp$_1;
           if ((tmp$_0 = currentException.v) != null) {
             completion.resumeWith_tl1gpc$(new Result(createFailure(tmp$_0)));
             tmp$_1 = Unit;
-          }
-           else
+          } else
             tmp$_1 = null;
           if (tmp$_1 == null) {
             completion.resumeWith_tl1gpc$(new Result(currentResult.v));
-          }
-          return;
+          }return;
         }
       }
     };
@@ -2490,8 +2327,7 @@
       var intercepted = this.intercepted__0;
       if (intercepted != null && intercepted !== this) {
         ensureNotNull(this.context.get_j3r2sn$(ContinuationInterceptor$Key_getInstance())).releaseInterceptedContinuation_k98bjh$(intercepted);
-      }
-      this.intercepted__0 = CompletedContinuation_getInstance();
+      }this.intercepted__0 = CompletedContinuation_getInstance();
     };
     CoroutineImpl.$metadata$ = {kind: Kind_CLASS, simpleName: 'CoroutineImpl', interfaces: [Continuation]};
     function CompletedContinuation() {
@@ -2511,8 +2347,7 @@
     function CompletedContinuation_getInstance() {
       if (CompletedContinuation_instance === null) {
         new CompletedContinuation();
-      }
-      return CompletedContinuation_instance;
+      }return CompletedContinuation_instance;
     }
     function intercepted($receiver) {
       var tmp$, tmp$_0, tmp$_1;
@@ -2546,16 +2381,14 @@
       var tmp$;
       if (array.length < collection.size) {
         return copyToArrayImpl(collection);
-      }
-      var iterator = collection.iterator();
+      }var iterator = collection.iterator();
       var index = 0;
       while (iterator.hasNext()) {
         array[tmp$ = index, index = tmp$ + 1 | 0, tmp$] = iterator.next();
       }
       if (index < array.length) {
         array[index] = null;
-      }
-      return array;
+      }return array;
     }
     function listOf(element) {
       return arrayListOf_0([element]);
@@ -2583,6 +2416,9 @@
         list.set_wxm5ur$(i, array[i]);
       }
     }
+    function mapCapacity(expectedSize) {
+      return expectedSize;
+    }
     function AbstractMutableCollection() {
       AbstractCollection.call(this);
     }
@@ -2592,8 +2428,7 @@
         if (equals(iterator.next(), element)) {
           iterator.remove();
           return true;
-        }
-      }
+        }}
       return false;
     };
     AbstractMutableCollection.prototype.addAll_brywnq$ = function (elements) {
@@ -2614,7 +2449,7 @@
     }
     AbstractMutableCollection.prototype.removeAll_brywnq$ = function (elements) {
       var tmp$;
-      return removeAll_0(Kotlin.isType(tmp$ = this, MutableIterable) ? tmp$ : throwCCE_0(), AbstractMutableCollection$removeAll$lambda(elements));
+      return removeAll_3(Kotlin.isType(tmp$ = this, MutableIterable) ? tmp$ : throwCCE_0(), AbstractMutableCollection$removeAll$lambda(elements));
     };
     function AbstractMutableCollection$retainAll$lambda(closure$elements) {
       return function (it) {
@@ -2623,7 +2458,7 @@
     }
     AbstractMutableCollection.prototype.retainAll_brywnq$ = function (elements) {
       var tmp$;
-      return removeAll_0(Kotlin.isType(tmp$ = this, MutableIterable) ? tmp$ : throwCCE_0(), AbstractMutableCollection$retainAll$lambda(elements));
+      return removeAll_3(Kotlin.isType(tmp$ = this, MutableIterable) ? tmp$ : throwCCE_0(), AbstractMutableCollection$retainAll$lambda(elements));
     };
     AbstractMutableCollection.prototype.clear = function () {
       var iterator = this.iterator();
@@ -2665,7 +2500,7 @@
       };
     }
     AbstractMutableList.prototype.removeAll_brywnq$ = function (elements) {
-      return removeAll_1(this, AbstractMutableList$removeAll$lambda(elements));
+      return removeAll_4(this, AbstractMutableList$removeAll$lambda(elements));
     };
     function AbstractMutableList$retainAll$lambda(closure$elements) {
       return function (it) {
@@ -2673,7 +2508,7 @@
       };
     }
     AbstractMutableList.prototype.retainAll_brywnq$ = function (elements) {
-      return removeAll_1(this, AbstractMutableList$retainAll$lambda(elements));
+      return removeAll_4(this, AbstractMutableList$retainAll$lambda(elements));
     };
     AbstractMutableList.prototype.iterator = function () {
       return new AbstractMutableList$IteratorImpl(this);
@@ -2687,16 +2522,14 @@
       for (var index = 0; index <= tmp$; index++) {
         if (equals(this.get_za3lpa$(index), element)) {
           return index;
-        }
-      }
+        }}
       return -1;
     };
     AbstractMutableList.prototype.lastIndexOf_11rb$ = function (element) {
       for (var index = get_lastIndex_12(this); index >= 0; index--) {
         if (equals(this.get_za3lpa$(index), element)) {
           return index;
-        }
-      }
+        }}
       return -1;
     };
     AbstractMutableList.prototype.listIterator = function () {
@@ -2745,8 +2578,7 @@
       if (!(this.last_0 !== -1)) {
         var message = 'Call next() or previous() before removing element from the iterator.';
         throw IllegalStateException_init_0(message.toString());
-      }
-      this.$outer.removeAt_za3lpa$(this.last_0);
+      }this.$outer.removeAt_za3lpa$(this.last_0);
       this.index_0 = this.last_0;
       this.last_0 = -1;
     };
@@ -2781,8 +2613,7 @@
       if (!(this.last_0 !== -1)) {
         var message = 'Call next() or previous() before updating element value with the iterator.';
         throw IllegalStateException_init_0(message.toString());
-      }
-      this.$outer.set_wxm5ur$(this.last_0, element);
+      }this.$outer.set_wxm5ur$(this.last_0, element);
     };
     AbstractMutableList$ListIteratorImpl.$metadata$ = {kind: Kind_CLASS, simpleName: 'ListIteratorImpl', interfaces: [MutableListIterator, AbstractMutableList$IteratorImpl]};
     function AbstractMutableList$SubList(list, fromIndex, toIndex) {
@@ -2889,8 +2720,7 @@
       if (this.this$AbstractMutableMap.containsKey_11rb$(element)) {
         this.this$AbstractMutableMap.remove_11rb$(element);
         return true;
-      }
-      return false;
+      }return false;
     };
     Object.defineProperty(AbstractMutableMap$get_AbstractMutableMap$keys$ObjectLiteral.prototype, 'size', {get: function () {
       return this.this$AbstractMutableMap.size;
@@ -2899,8 +2729,7 @@
     Object.defineProperty(AbstractMutableMap.prototype, 'keys', {get: function () {
       if (this._keys_qe2m0n$_0 == null) {
         this._keys_qe2m0n$_0 = new AbstractMutableMap$get_AbstractMutableMap$keys$ObjectLiteral(this);
-      }
-      return ensureNotNull(this._keys_qe2m0n$_0);
+      }return ensureNotNull(this._keys_qe2m0n$_0);
     }});
     AbstractMutableMap.prototype.putAll_a2k3zr$ = function (from) {
       var tmp$;
@@ -2959,8 +2788,7 @@
     Object.defineProperty(AbstractMutableMap.prototype, 'values', {get: function () {
       if (this._values_kxdlqh$_0 == null) {
         this._values_kxdlqh$_0 = new AbstractMutableMap$get_AbstractMutableMap$values$ObjectLiteral(this);
-      }
-      return ensureNotNull(this._values_kxdlqh$_0);
+      }return ensureNotNull(this._values_kxdlqh$_0);
     }});
     AbstractMutableMap.prototype.remove_11rb$ = function (key) {
       var iter = this.entries.iterator();
@@ -2971,8 +2799,7 @@
           var value = entry.value;
           iter.remove();
           return value;
-        }
-      }
+        }}
       return null;
     };
     AbstractMutableMap.$metadata$ = {kind: Kind_CLASS, simpleName: 'AbstractMutableMap', interfaces: [MutableMap, AbstractMap]};
@@ -3038,8 +2865,7 @@
         return this.addAll_brywnq$(elements);
       else if (index === 0) {
         this.array_hd7ov6$_0 = copyToArray(elements).concat(this.array_hd7ov6$_0);
-      }
-       else {
+      } else {
         this.array_hd7ov6$_0 = copyOfRange_3(this.array_hd7ov6$_0, 0, index).concat(copyToArray(elements), copyOfRange_3(this.array_hd7ov6$_0, index, this.size));
       }
       this.modCount = this.modCount + 1 | 0;
@@ -3058,8 +2884,7 @@
           this.array_hd7ov6$_0.splice(index, 1);
           this.modCount = this.modCount + 1 | 0;
           return true;
-        }
-      }
+        }}
       return false;
     };
     ArrayList.prototype.removeRange_vux9f0$ = function (fromIndex, toIndex) {
@@ -3117,8 +2942,7 @@
       if (getStableSortingIsSupported()) {
         var comparison = sortArrayWith$lambda(comparator);
         array.sort(comparison);
-      }
-       else {
+      } else {
         mergeSort(array, 0, get_lastIndex(array), comparator);
       }
     }
@@ -3129,8 +2953,7 @@
       if (getStableSortingIsSupported()) {
         var comparison = sortArray$lambda;
         array.sort(comparison);
-      }
-       else {
+      } else {
         mergeSort(array, 0, get_lastIndex(array), naturalOrder());
       }
     }
@@ -3141,8 +2964,7 @@
     function getStableSortingIsSupported() {
       if (_stableSortingIsSupported != null) {
         return _stableSortingIsSupported;
-      }
-      _stableSortingIsSupported = false;
+      }_stableSortingIsSupported = false;
       var array = [];
       for (var index = 0; index < 600; index++)
         array.push(index);
@@ -3167,13 +2989,11 @@
           var item = result[tmp$];
           array[tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0] = item;
         }
-      }
-    }
+      }}
     function mergeSort_0(array, buffer, start, end, comparator) {
       if (start === end) {
         return array;
-      }
-      var median = (start + end | 0) / 2 | 0;
+      }var median = (start + end | 0) / 2 | 0;
       var left = mergeSort_0(array, buffer, start, median, comparator);
       var right = mergeSort_0(array, buffer, median + 1 | 0, end, comparator);
       var target = left === buffer ? array : buffer;
@@ -3186,17 +3006,14 @@
           if (comparator.compare(leftValue, rightValue) <= 0) {
             target[i] = leftValue;
             leftIndex = leftIndex + 1 | 0;
-          }
-           else {
+          } else {
             target[i] = rightValue;
             rightIndex = rightIndex + 1 | 0;
           }
-        }
-         else if (leftIndex <= median) {
+        } else if (leftIndex <= median) {
           target[i] = left[leftIndex];
           leftIndex = leftIndex + 1 | 0;
-        }
-         else {
+        } else {
           target[i] = right[rightIndex];
           rightIndex = rightIndex + 1 | 0;
         }
@@ -3220,8 +3037,7 @@
     function EqualityComparator$HashCode_getInstance() {
       if (EqualityComparator$HashCode_instance === null) {
         new EqualityComparator$HashCode();
-      }
-      return EqualityComparator$HashCode_instance;
+      }return EqualityComparator$HashCode_instance;
     }
     EqualityComparator.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'EqualityComparator', interfaces: []};
     function HashMap() {
@@ -3249,8 +3065,7 @@
       if (this.contains_11rb$(element)) {
         this.$outer.remove_11rb$(element.key);
         return true;
-      }
-      return false;
+      }return false;
     };
     Object.defineProperty(HashMap$EntrySet.prototype, 'size', {get: function () {
       return this.$outer.size;
@@ -3270,15 +3085,13 @@
         if (Kotlin.isType($receiver, Collection) && $receiver.isEmpty()) {
           any$result = false;
           break any$break;
-        }
-        tmp$ = $receiver.iterator();
+        }tmp$ = $receiver.iterator();
         while (tmp$.hasNext()) {
           var element = tmp$.next();
           if (this.equality_vgh6cm$_0.equals_oaftn8$(element.value, value)) {
             any$result = true;
             break any$break;
-          }
-        }
+          }}
         any$result = false;
       }
        while (false);
@@ -3287,8 +3100,7 @@
     Object.defineProperty(HashMap.prototype, 'entries', {get: function () {
       if (this._entries_7ih87x$_0 == null) {
         this._entries_7ih87x$_0 = this.createEntrySet();
-      }
-      return ensureNotNull(this._entries_7ih87x$_0);
+      }return ensureNotNull(this._entries_7ih87x$_0);
     }});
     HashMap.prototype.createEntrySet = function () {
       return new HashMap$EntrySet(this);
@@ -3327,12 +3139,10 @@
       if (!(initialCapacity >= 0)) {
         var message = 'Negative initial capacity: ' + initialCapacity;
         throw IllegalArgumentException_init_0(message.toString());
-      }
-      if (!(loadFactor >= 0)) {
+      }if (!(loadFactor >= 0)) {
         var message_0 = 'Non-positive load factor: ' + loadFactor;
         throw IllegalArgumentException_init_0(message_0.toString());
-      }
-      return $this;
+      }return $this;
     }
     function HashSet() {
       this.map_eot64i$_0 = null;
@@ -3399,26 +3209,22 @@
       var chainOrEntry = this.getChainOrEntryOrNull_0(hashCode);
       if (chainOrEntry == null) {
         this.backingMap_0[hashCode] = new AbstractMutableMap$SimpleEntry(key, value);
-      }
-       else {
+      } else {
         if (!Kotlin.isArray(chainOrEntry)) {
           var entry = chainOrEntry;
           if (this.equality.equals_oaftn8$(entry.key, key)) {
             return entry.setValue_11rc$(value);
-          }
-           else {
+          } else {
             this.backingMap_0[hashCode] = [entry, new AbstractMutableMap$SimpleEntry(key, value)];
             this.size = this.size + 1 | 0;
             return null;
           }
-        }
-         else {
+        } else {
           var chain = chainOrEntry;
           var entry_0 = this.findEntryInChain_0(chain, key);
           if (entry_0 != null) {
             return entry_0.setValue_11rc$(value);
-          }
-          chain.push(new AbstractMutableMap$SimpleEntry(key, value));
+          }chain.push(new AbstractMutableMap$SimpleEntry(key, value));
         }
       }
       this.size = this.size + 1 | 0;
@@ -3430,20 +3236,17 @@
       tmp$ = this.getChainOrEntryOrNull_0(hashCode);
       if (tmp$ == null) {
         return null;
-      }
-      var chainOrEntry = tmp$;
+      }var chainOrEntry = tmp$;
       if (!Kotlin.isArray(chainOrEntry)) {
         var entry = chainOrEntry;
         if (this.equality.equals_oaftn8$(entry.key, key)) {
           delete this.backingMap_0[hashCode];
           this.size = this.size - 1 | 0;
           return entry.value;
-        }
-         else {
+        } else {
           return null;
         }
-      }
-       else {
+      } else {
         var chain = chainOrEntry;
         for (var index = 0; index !== chain.length; ++index) {
           var entry_0 = chain[index];
@@ -3451,14 +3254,12 @@
             if (chain.length === 1) {
               chain.length = 0;
               delete this.backingMap_0[hashCode];
-            }
-             else {
+            } else {
               chain.splice(index, 1);
             }
             this.size = this.size - 1 | 0;
             return entry_0.value;
-          }
-        }
+          }}
       }
       return null;
     };
@@ -3478,18 +3279,15 @@
       tmp$ = this.getChainOrEntryOrNull_0(this.equality.getHashCode_s8jyv4$(key));
       if (tmp$ == null) {
         return null;
-      }
-      var chainOrEntry = tmp$;
+      }var chainOrEntry = tmp$;
       if (!Kotlin.isArray(chainOrEntry)) {
         var entry = chainOrEntry;
         if (this.equality.equals_oaftn8$(entry.key, key)) {
           return entry;
-        }
-         else {
+        } else {
           return null;
         }
-      }
-       else {
+      } else {
         var chain = chainOrEntry;
         return this.findEntryInChain_0(chain, key);
       }
@@ -3503,8 +3301,7 @@
           if (this.equality.equals_oaftn8$(element.key, key)) {
             firstOrNull$result = element;
             break firstOrNull$break;
-          }
-        }
+          }}
         firstOrNull$result = null;
       }
        while (false);
@@ -3525,14 +3322,12 @@
         var chainSize = this.chainOrEntry.length;
         if ((this.itemIndex = this.itemIndex + 1 | 0, this.itemIndex) < chainSize)
           return 0;
-      }
-      if ((this.keyIndex = this.keyIndex + 1 | 0, this.keyIndex) < this.keys.length) {
+      }if ((this.keyIndex = this.keyIndex + 1 | 0, this.keyIndex) < this.keys.length) {
         this.chainOrEntry = this.this$InternalHashCodeMap.backingMap_0[this.keys[this.keyIndex]];
         this.isChain = Kotlin.isArray(this.chainOrEntry);
         this.itemIndex = 0;
         return 0;
-      }
-       else {
+      } else {
         this.chainOrEntry = null;
         return 1;
       }
@@ -3548,8 +3343,7 @@
         throw NoSuchElementException_init();
       if (this.isChain) {
         tmp$ = this.chainOrEntry[this.itemIndex];
-      }
-       else {
+      } else {
         tmp$ = this.chainOrEntry;
       }
       var lastEntry = tmp$;
@@ -3561,8 +3355,7 @@
       if (this.lastEntry == null) {
         var message = 'Required value was null.';
         throw IllegalStateException_init_0(message.toString());
-      }
-      this.this$InternalHashCodeMap.remove_11rb$(ensureNotNull(this.lastEntry).key);
+      }this.this$InternalHashCodeMap.remove_11rb$(ensureNotNull(this.lastEntry).key);
       this.lastEntry = null;
       this.itemIndex = this.itemIndex - 1 | 0;
     };
@@ -3626,8 +3419,7 @@
       if (!(this.last_0 != null)) {
         var message = 'Check failed.';
         throw IllegalStateException_init_0(message.toString());
-      }
-      this.$outer.$outer.remove_aul5td$_0(ensureNotNull(this.last_0));
+      }this.$outer.$outer.remove_aul5td$_0(ensureNotNull(this.last_0));
       this.$outer.$outer.map_97q5dv$_0.remove_11rb$(ensureNotNull(this.last_0).key);
       this.last_0 = null;
     };
@@ -3648,8 +3440,7 @@
       if (this.contains_11rb$(element)) {
         this.$outer.remove_11rb$(element.key);
         return true;
-      }
-      return false;
+      }return false;
     };
     Object.defineProperty(LinkedHashMap$EntrySet.prototype, 'size', {get: function () {
       return this.$outer.size;
@@ -3659,21 +3450,18 @@
       if (!($receiver.next_8be2vx$ == null && $receiver.prev_8be2vx$ == null)) {
         var message = 'Check failed.';
         throw IllegalStateException_init_0(message.toString());
-      }
-      var _head = this.head_1lr44l$_0;
+      }var _head = this.head_1lr44l$_0;
       if (_head == null) {
         this.head_1lr44l$_0 = $receiver;
         $receiver.next_8be2vx$ = $receiver;
         $receiver.prev_8be2vx$ = $receiver;
-      }
-       else {
+      } else {
         var value = _head.prev_8be2vx$;
         var checkNotNull$result;
         if (value == null) {
           var message_0 = 'Required value was null.';
           throw IllegalStateException_init_0(message_0.toString());
-        }
-         else {
+        } else {
           checkNotNull$result = value;
         }
         var _tail = checkNotNull$result;
@@ -3686,12 +3474,10 @@
     LinkedHashMap.prototype.remove_aul5td$_0 = function ($receiver) {
       if ($receiver.next_8be2vx$ === $receiver) {
         this.head_1lr44l$_0 = null;
-      }
-       else {
+      } else {
         if (this.head_1lr44l$_0 === $receiver) {
           this.head_1lr44l$_0 = $receiver.next_8be2vx$;
-        }
-        ensureNotNull($receiver.next_8be2vx$).prev_8be2vx$ = $receiver.prev_8be2vx$;
+        }ensureNotNull($receiver.next_8be2vx$).prev_8be2vx$ = $receiver.prev_8be2vx$;
         ensureNotNull($receiver.prev_8be2vx$).next_8be2vx$ = $receiver.next_8be2vx$;
       }
       $receiver.next_8be2vx$ = null;
@@ -3709,13 +3495,11 @@
       tmp$ = this.head_1lr44l$_0;
       if (tmp$ == null) {
         return false;
-      }
-      var node = tmp$;
+      }var node = tmp$;
       do {
         if (equals(node.value, value)) {
           return true;
-        }
-        node = ensureNotNull(node.next_8be2vx$);
+        }node = ensureNotNull(node.next_8be2vx$);
       }
        while (node !== this.head_1lr44l$_0);
       return false;
@@ -3734,8 +3518,7 @@
         this.map_97q5dv$_0.put_xwzc9p$(key, newEntry);
         this.addToEnd_ufg2hg$_0(newEntry);
         return null;
-      }
-       else {
+      } else {
         return old.setValue_11rc$(value);
       }
     };
@@ -3744,8 +3527,7 @@
       if (entry != null) {
         this.remove_aul5td$_0(entry);
         return entry.value;
-      }
-      return null;
+      }return null;
     };
     Object.defineProperty(LinkedHashMap.prototype, 'size', {get: function () {
       return this.map_97q5dv$_0.size;
@@ -3849,13 +3631,12 @@
     }
     BufferedOutputToConsoleLog.prototype.print_s8jyv4$ = function (message) {
       var s = String(message);
-      var i = lastIndexOf_15(s, 10);
+      var i = s.lastIndexOf('\n', 0);
       if (i >= 0) {
         this.buffer = this.buffer + s.substring(0, i);
         this.flush();
         s = s.substring(i + 1 | 0);
-      }
-      this.buffer = this.buffer + s;
+      }this.buffer = this.buffer + s;
     };
     BufferedOutputToConsoleLog.prototype.flush = function () {
       console.log(this.buffer);
@@ -3877,8 +3658,7 @@
       else if (cur === get_COROUTINE_SUSPENDED()) {
         this.result_0 = CoroutineSingletons$RESUMED_getInstance();
         this.delegate_0.resumeWith_tl1gpc$(result);
-      }
-       else
+      } else
         throw IllegalStateException_init_0('Already resumed');
     };
     SafeContinuation.prototype.getOrThrow = function () {
@@ -3886,8 +3666,7 @@
       if (this.result_0 === CoroutineSingletons$UNDECIDED_getInstance()) {
         this.result_0 = get_COROUTINE_SUSPENDED();
         return get_COROUTINE_SUSPENDED();
-      }
-      var result = this.result_0;
+      }var result = this.result_0;
       if (result === CoroutineSingletons$RESUMED_getInstance())
         tmp$ = get_COROUTINE_SUSPENDED();
       else if (Kotlin.isType(result, Result$Failure))
@@ -3930,8 +3709,7 @@
     asList$ObjectLiteral_4.prototype.get_za3lpa$ = function (index) {
       if (index >= 0 && index <= get_lastIndex_12(this)) {
         return this.this$asList.item(index);
-      }
-       else
+      } else
         throw new IndexOutOfBoundsException('index ' + index + ' is not in range [0..' + get_lastIndex_12(this) + ']');
     };
     asList$ObjectLiteral_4.$metadata$ = {kind: Kind_CLASS, interfaces: [AbstractList]};
@@ -4254,8 +4032,7 @@
     function NothingKClassImpl_getInstance() {
       if (NothingKClassImpl_instance === null) {
         new NothingKClassImpl();
-      }
-      return NothingKClassImpl_instance;
+      }return NothingKClassImpl_instance;
     }
     var DynamicKType_instance = null;
     function PrimitiveClasses() {
@@ -4360,8 +4137,7 @@
     function PrimitiveClasses_getInstance() {
       if (PrimitiveClasses_instance === null) {
         new PrimitiveClasses();
-      }
-      return PrimitiveClasses_instance;
+      }return PrimitiveClasses_instance;
     }
     var functionClasses;
     function getKClass(jClass) {
@@ -4422,25 +4198,252 @@
       var tmp$;
       if (jClass === String) {
         return PrimitiveClasses_getInstance().stringClass;
-      }
-      var metadata = jClass.$metadata$;
+      }var metadata = jClass.$metadata$;
       if (metadata != null) {
         if (metadata.$kClass$ == null) {
           var kClass = new SimpleKClassImpl(jClass);
           metadata.$kClass$ = kClass;
           tmp$ = kClass;
-        }
-         else {
+        } else {
           tmp$ = metadata.$kClass$;
         }
-      }
-       else {
+      } else {
         tmp$ = new SimpleKClassImpl(jClass);
       }
       return tmp$;
     }
     function reset($receiver) {
       $receiver.lastIndex = 0;
+    }
+    function Appendable() {
+    }
+    Appendable.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'Appendable', interfaces: []};
+    function StringBuilder(content) {
+      this.string_0 = content !== undefined ? content : '';
+    }
+    Object.defineProperty(StringBuilder.prototype, 'length', {get: function () {
+      return this.string_0.length;
+    }});
+    StringBuilder.prototype.charCodeAt = function (index) {
+      var $receiver = this.string_0;
+      var tmp$;
+      if (index >= 0 && index <= get_lastIndex_13($receiver))
+        tmp$ = $receiver.charCodeAt(index);
+      else {
+        throw new IndexOutOfBoundsException('index: ' + index + ', length: ' + this.length + '}');
+      }
+      return tmp$;
+    };
+    StringBuilder.prototype.subSequence_vux9f0$ = function (startIndex, endIndex) {
+      return this.string_0.substring(startIndex, endIndex);
+    };
+    StringBuilder.prototype.append_s8itvh$ = function (value) {
+      this.string_0 += String.fromCharCode(value);
+      return this;
+    };
+    StringBuilder.prototype.append_gw00v9$ = function (value) {
+      this.string_0 += toString(value);
+      return this;
+    };
+    StringBuilder.prototype.append_ezbsdh$ = function (value, startIndex, endIndex) {
+      return this.appendRange_ezbsdh$(value, startIndex, endIndex);
+    };
+    StringBuilder.prototype.reverse = function () {
+      var tmp$, tmp$_0;
+      var reversed = '';
+      var index = this.string_0.length - 1 | 0;
+      while (index >= 0) {
+        var low = this.string_0.charCodeAt((tmp$ = index, index = tmp$ - 1 | 0, tmp$));
+        if (isLowSurrogate(low) && index >= 0) {
+          var high = this.string_0.charCodeAt((tmp$_0 = index, index = tmp$_0 - 1 | 0, tmp$_0));
+          if (isHighSurrogate(high)) {
+            reversed = reversed + String.fromCharCode(toBoxedChar(high)) + String.fromCharCode(toBoxedChar(low));
+          } else {
+            reversed = reversed + String.fromCharCode(toBoxedChar(low)) + String.fromCharCode(toBoxedChar(high));
+          }
+        } else {
+          reversed += String.fromCharCode(low);
+        }
+      }
+      this.string_0 = reversed;
+      return this;
+    };
+    StringBuilder.prototype.append_s8jyv4$ = function (value) {
+      this.string_0 += toString(value);
+      return this;
+    };
+    StringBuilder.prototype.append_6taknv$ = function (value) {
+      this.string_0 += value;
+      return this;
+    };
+    StringBuilder.prototype.append_4hbowm$ = function (value) {
+      this.string_0 += concatToString(value);
+      return this;
+    };
+    StringBuilder.prototype.append_61zpoe$ = function (value) {
+      this.string_0 = this.string_0 + value;
+      return this;
+    };
+    StringBuilder.prototype.capacity = function () {
+      return this._capacity !== undefined ? Math_0.max(this._capacity, this.length) : this.length;
+    };
+    StringBuilder.prototype.ensureCapacity_za3lpa$ = function (minimumCapacity) {
+      if (minimumCapacity > this.capacity()) {
+        this._capacity = minimumCapacity;
+      }};
+    StringBuilder.prototype.indexOf_61zpoe$ = function (string) {
+      return this.string_0.indexOf(string);
+    };
+    StringBuilder.prototype.indexOf_bm4lxs$ = function (string, startIndex) {
+      return this.string_0.indexOf(string, startIndex);
+    };
+    StringBuilder.prototype.lastIndexOf_61zpoe$ = function (string) {
+      return this.string_0.lastIndexOf(string);
+    };
+    StringBuilder.prototype.lastIndexOf_bm4lxs$ = function (string, startIndex) {
+      if (string.length === 0 && startIndex < 0)
+        return -1;
+      return this.string_0.lastIndexOf(string, startIndex);
+    };
+    StringBuilder.prototype.insert_fzusl$ = function (index, value) {
+      AbstractList$Companion_getInstance().checkPositionIndex_6xvm5r$(index, this.length);
+      this.string_0 = this.string_0.substring(0, index) + toString(value) + this.string_0.substring(index);
+      return this;
+    };
+    StringBuilder.prototype.insert_6t1mh3$ = function (index, value) {
+      AbstractList$Companion_getInstance().checkPositionIndex_6xvm5r$(index, this.length);
+      this.string_0 = this.string_0.substring(0, index) + String.fromCharCode(toBoxedChar(value)) + this.string_0.substring(index);
+      return this;
+    };
+    StringBuilder.prototype.insert_7u455s$ = function (index, value) {
+      AbstractList$Companion_getInstance().checkPositionIndex_6xvm5r$(index, this.length);
+      this.string_0 = this.string_0.substring(0, index) + concatToString(value) + this.string_0.substring(index);
+      return this;
+    };
+    StringBuilder.prototype.insert_1u9bqd$ = function (index, value) {
+      AbstractList$Companion_getInstance().checkPositionIndex_6xvm5r$(index, this.length);
+      this.string_0 = this.string_0.substring(0, index) + toString(value) + this.string_0.substring(index);
+      return this;
+    };
+    StringBuilder.prototype.insert_6t2rgq$ = function (index, value) {
+      AbstractList$Companion_getInstance().checkPositionIndex_6xvm5r$(index, this.length);
+      this.string_0 = this.string_0.substring(0, index) + toString(value) + this.string_0.substring(index);
+      return this;
+    };
+    StringBuilder.prototype.insert_19mbxw$ = function (index, value) {
+      AbstractList$Companion_getInstance().checkPositionIndex_6xvm5r$(index, this.length);
+      this.string_0 = this.string_0.substring(0, index) + value + this.string_0.substring(index);
+      return this;
+    };
+    StringBuilder.prototype.setLength_za3lpa$ = function (newLength) {
+      if (newLength < 0) {
+        throw IllegalArgumentException_init_0('Negative new length: ' + newLength + '.');
+      }if (newLength <= this.length) {
+        this.string_0 = this.string_0.substring(0, newLength);
+      } else {
+        for (var i = this.length; i < newLength; i++) {
+          this.string_0 += String.fromCharCode(0);
+        }
+      }
+    };
+    StringBuilder.prototype.substring_za3lpa$ = function (startIndex) {
+      AbstractList$Companion_getInstance().checkPositionIndex_6xvm5r$(startIndex, this.length);
+      return this.string_0.substring(startIndex);
+    };
+    StringBuilder.prototype.substring_vux9f0$ = function (startIndex, endIndex) {
+      AbstractList$Companion_getInstance().checkBoundsIndexes_cub51b$(startIndex, endIndex, this.length);
+      return this.string_0.substring(startIndex, endIndex);
+    };
+    StringBuilder.prototype.trimToSize = function () {
+      if (this._capacity !== undefined) {
+        this._capacity = this.length;
+      }};
+    StringBuilder.prototype.toString = function () {
+      return this.string_0;
+    };
+    StringBuilder.prototype.clear = function () {
+      this.string_0 = '';
+      return this;
+    };
+    StringBuilder.prototype.set_6t1mh3$ = function (index, value) {
+      AbstractList$Companion_getInstance().checkElementIndex_6xvm5r$(index, this.length);
+      this.string_0 = this.string_0.substring(0, index) + String.fromCharCode(toBoxedChar(value)) + this.string_0.substring(index + 1 | 0);
+    };
+    StringBuilder.prototype.setRange_98i29q$ = function (startIndex, endIndex, value) {
+      this.checkReplaceRange_0(startIndex, endIndex, this.length);
+      this.string_0 = this.string_0.substring(0, startIndex) + value + this.string_0.substring(endIndex);
+      return this;
+    };
+    StringBuilder.prototype.checkReplaceRange_0 = function (startIndex, endIndex, length) {
+      if (startIndex < 0 || startIndex > length) {
+        throw new IndexOutOfBoundsException('startIndex: ' + startIndex + ', length: ' + length);
+      }if (startIndex > endIndex) {
+        throw IllegalArgumentException_init_0('startIndex(' + startIndex + ') > endIndex(' + endIndex + ')');
+      }};
+    StringBuilder.prototype.deleteAt_za3lpa$ = function (index) {
+      AbstractList$Companion_getInstance().checkElementIndex_6xvm5r$(index, this.length);
+      this.string_0 = this.string_0.substring(0, index) + this.string_0.substring(index + 1 | 0);
+      return this;
+    };
+    StringBuilder.prototype.deleteRange_vux9f0$ = function (startIndex, endIndex) {
+      this.checkReplaceRange_0(startIndex, endIndex, this.length);
+      this.string_0 = this.string_0.substring(0, startIndex) + this.string_0.substring(endIndex);
+      return this;
+    };
+    StringBuilder.prototype.toCharArray_pqkatk$ = function (destination, destinationOffset, startIndex, endIndex) {
+      if (destinationOffset === void 0)
+        destinationOffset = 0;
+      if (startIndex === void 0)
+        startIndex = 0;
+      if (endIndex === void 0)
+        endIndex = this.length;
+      var tmp$;
+      AbstractList$Companion_getInstance().checkBoundsIndexes_cub51b$(startIndex, endIndex, this.length);
+      AbstractList$Companion_getInstance().checkBoundsIndexes_cub51b$(destinationOffset, destinationOffset + endIndex - startIndex | 0, destination.length);
+      var dstIndex = destinationOffset;
+      for (var index = startIndex; index < endIndex; index++) {
+        destination[tmp$ = dstIndex, dstIndex = tmp$ + 1 | 0, tmp$] = this.string_0.charCodeAt(index);
+      }
+    };
+    StringBuilder.prototype.appendRange_8chfmy$ = function (value, startIndex, endIndex) {
+      this.string_0 += concatToString_0(value, startIndex, endIndex);
+      return this;
+    };
+    StringBuilder.prototype.appendRange_ezbsdh$ = function (value, startIndex, endIndex) {
+      var stringCsq = toString(value);
+      AbstractList$Companion_getInstance().checkBoundsIndexes_cub51b$(startIndex, endIndex, stringCsq.length);
+      this.string_0 += stringCsq.substring(startIndex, endIndex);
+      return this;
+    };
+    StringBuilder.prototype.insertRange_ar8yzk$ = function (index, value, startIndex, endIndex) {
+      AbstractList$Companion_getInstance().checkPositionIndex_6xvm5r$(index, this.length);
+      this.string_0 = this.string_0.substring(0, index) + concatToString_0(value, startIndex, endIndex) + this.string_0.substring(index);
+      return this;
+    };
+    StringBuilder.prototype.insertRange_4ge339$ = function (index, value, startIndex, endIndex) {
+      AbstractList$Companion_getInstance().checkPositionIndex_6xvm5r$(index, this.length);
+      var stringCsq = toString(value);
+      AbstractList$Companion_getInstance().checkBoundsIndexes_cub51b$(startIndex, endIndex, stringCsq.length);
+      this.string_0 = this.string_0.substring(0, index) + stringCsq.substring(startIndex, endIndex) + this.string_0.substring(index);
+      return this;
+    };
+    StringBuilder.$metadata$ = {kind: Kind_CLASS, simpleName: 'StringBuilder', interfaces: [CharSequence, Appendable]};
+    function StringBuilder_init(capacity, $this) {
+      $this = $this || Object.create(StringBuilder.prototype);
+      StringBuilder_init_1($this);
+      $this._capacity = capacity;
+      return $this;
+    }
+    function StringBuilder_init_1($this) {
+      $this = $this || Object.create(StringBuilder.prototype);
+      StringBuilder.call($this, '');
+      return $this;
+    }
+    function isHighSurrogate($receiver) {
+      return (new CharRange(kotlin_js_internal_CharCompanionObject.MIN_HIGH_SURROGATE, kotlin_js_internal_CharCompanionObject.MAX_HIGH_SURROGATE)).contains_mef7kx$($receiver);
+    }
+    function isLowSurrogate($receiver) {
+      return (new CharRange(kotlin_js_internal_CharCompanionObject.MIN_LOW_SURROGATE, kotlin_js_internal_CharCompanionObject.MAX_LOW_SURROGATE)).contains_mef7kx$($receiver);
     }
     var RegexOption$IGNORE_CASE_instance;
     var RegexOption$MULTILINE_instance;
@@ -4534,8 +4537,7 @@
          while (lastStart < length && match != null);
         if (lastStart < length) {
           sb.append_ezbsdh$(input, lastStart, length);
-        }
-        return sb.toString();
+        }return sb.toString();
       };
     }));
     Regex.prototype.replaceFirst_x2uqeu$ = function (input, replacement) {
@@ -4557,8 +4559,7 @@
       if (!(limit >= 0)) {
         var message = 'Limit must be non-negative, but was ' + limit;
         throw IllegalArgumentException_init_0(message.toString());
-      }
-      var it = this.findAll_905azu$(input);
+      }var it = this.findAll_905azu$(input);
       var matches = limit === 0 ? it : take_9(it, limit - 1 | 0);
       var result = ArrayList_init();
       var lastStart = 0;
@@ -4593,8 +4594,7 @@
     function Regex$Companion_getInstance() {
       if (Regex$Companion_instance === null) {
         new Regex$Companion();
-      }
-      return Regex$Companion_instance;
+      }return Regex$Companion_instance;
     }
     Regex.$metadata$ = {kind: Kind_CLASS, simpleName: 'Regex', interfaces: []};
     function Regex_init_0(pattern, $this) {
@@ -4635,8 +4635,7 @@
     Object.defineProperty(findNext$ObjectLiteral.prototype, 'groupValues', {get: function () {
       if (this.groupValues__0 == null) {
         this.groupValues__0 = new findNext$ObjectLiteral$get_findNext$ObjectLiteral$groupValues$ObjectLiteral(this.closure$match);
-      }
-      return ensureNotNull(this.groupValues__0);
+      }return ensureNotNull(this.groupValues__0);
     }});
     findNext$ObjectLiteral.prototype.next = function () {
       return findNext(this.this$findNext, this.closure$input, this.closure$range.isEmpty() ? this.closure$range.start + 1 | 0 : this.closure$range.endInclusive + 1 | 0);
@@ -4677,6 +4676,27 @@
       return this.closure$comparison(a, b);
     };
     Comparator$ObjectLiteral_0.$metadata$ = {kind: Kind_CLASS, interfaces: [Comparator]};
+    function concatToString($receiver) {
+      var tmp$;
+      var result = '';
+      for (tmp$ = 0; tmp$ !== $receiver.length; ++tmp$) {
+        var char = unboxChar($receiver[tmp$]);
+        result += String.fromCharCode(char);
+      }
+      return result;
+    }
+    function concatToString_0($receiver, startIndex, endIndex) {
+      if (startIndex === void 0)
+        startIndex = 0;
+      if (endIndex === void 0)
+        endIndex = $receiver.length;
+      AbstractList$Companion_getInstance().checkBoundsIndexes_cub51b$(startIndex, endIndex, $receiver.length);
+      var result = '';
+      for (var index = startIndex; index < endIndex; index++) {
+        result += String.fromCharCode($receiver[index]);
+      }
+      return result;
+    }
     function compareTo($receiver, other, ignoreCase) {
       if (ignoreCase === void 0)
         ignoreCase = false;
@@ -4699,16 +4719,12 @@
               s2 = s2.toLowerCase();
               if (!equals(s1, s2)) {
                 return Kotlin.compareTo(s1, s2);
-              }
-            }
-          }
-          if (end === min)
+              }}}if (end === min)
             break;
           start = end;
         }
         return n1 - n2 | 0;
-      }
-       else {
+      } else {
         return Kotlin.compareTo($receiver, other);
       }
     }
@@ -4716,68 +4732,6 @@
       return compareTo(a, b, true);
     }
     var STRING_CASE_INSENSITIVE_ORDER;
-    function Appendable() {
-    }
-    Appendable.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'Appendable', interfaces: []};
-    function StringBuilder(content) {
-      if (content === void 0)
-        content = '';
-      this.string_0 = content;
-    }
-    Object.defineProperty(StringBuilder.prototype, 'length', {get: function () {
-      return this.string_0.length;
-    }});
-    StringBuilder.prototype.charCodeAt = function (index) {
-      var $receiver = this.string_0;
-      var tmp$;
-      if (index >= 0 && index <= get_lastIndex_13($receiver))
-        tmp$ = $receiver.charCodeAt(index);
-      else {
-        throw new IndexOutOfBoundsException('index: ' + index + ', length: ' + this.length + '}');
-      }
-      return tmp$;
-    };
-    StringBuilder.prototype.subSequence_vux9f0$ = function (startIndex, endIndex) {
-      return this.string_0.substring(startIndex, endIndex);
-    };
-    StringBuilder.prototype.append_s8itvh$ = function (c) {
-      this.string_0 += String.fromCharCode(c);
-      return this;
-    };
-    StringBuilder.prototype.append_gw00v9$ = function (csq) {
-      this.string_0 += toString(csq);
-      return this;
-    };
-    StringBuilder.prototype.append_ezbsdh$ = function (csq, start, end) {
-      this.string_0 += toString(csq).substring(start, end);
-      return this;
-    };
-    StringBuilder.prototype.append_s8jyv4$ = function (obj) {
-      this.string_0 += toString(obj);
-      return this;
-    };
-    StringBuilder.prototype.reverse = function () {
-      this.string_0 = this.string_0.split('').reverse().join('');
-      return this;
-    };
-    StringBuilder.prototype.clear = function () {
-      this.string_0 = '';
-      return this;
-    };
-    StringBuilder.prototype.toString = function () {
-      return this.string_0;
-    };
-    StringBuilder.$metadata$ = {kind: Kind_CLASS, simpleName: 'StringBuilder', interfaces: [CharSequence, Appendable]};
-    function StringBuilder_init(capacity, $this) {
-      $this = $this || Object.create(StringBuilder.prototype);
-      StringBuilder_init_1($this);
-      return $this;
-    }
-    function StringBuilder_init_1($this) {
-      $this = $this || Object.create(StringBuilder.prototype);
-      StringBuilder.call($this, '');
-      return $this;
-    }
     var MAX_BYTES_PER_CHAR;
     var REPLACEMENT_BYTE_SEQUENCE;
     var REPLACEMENT_CHAR;
@@ -4869,14 +4823,13 @@
         tmp$ = value;
       return tmp$;
     }
-    var MonoClock_instance = null;
-    var DateNowClock_instance = null;
+    var MonotonicTimeSource_instance = null;
+    var DateNowTimeSource_instance = null;
     function formatToExactDecimals(value, decimals) {
       var tmp$;
       if (decimals === 0) {
         tmp$ = value;
-      }
-       else {
+      } else {
         var pow = Math_0.pow(10.0, decimals);
         tmp$ = Math.round(Math_0.abs(value) * pow) / pow * Math_0.sign(value);
       }
@@ -4891,6 +4844,8 @@
     }
     var Experimental$Level$WARNING_instance;
     var Experimental$Level$ERROR_instance;
+    var RequiresOptIn$Level$WARNING_instance;
+    var RequiresOptIn$Level$ERROR_instance;
     function AbstractCollection() {
     }
     AbstractCollection.prototype.contains_11rb$ = function (element) {
@@ -4900,15 +4855,13 @@
         if (Kotlin.isType(this, Collection) && this.isEmpty()) {
           any$result = false;
           break any$break;
-        }
-        tmp$ = this.iterator();
+        }tmp$ = this.iterator();
         while (tmp$.hasNext()) {
           var element_0 = tmp$.next();
           if (equals(element_0, element)) {
             any$result = true;
             break any$break;
-          }
-        }
+          }}
         any$result = false;
       }
        while (false);
@@ -4921,15 +4874,13 @@
         if (Kotlin.isType(elements, Collection) && elements.isEmpty()) {
           all$result = true;
           break all$break;
-        }
-        tmp$ = elements.iterator();
+        }tmp$ = elements.iterator();
         while (tmp$.hasNext()) {
           var element = tmp$.next();
           if (!this.contains_11rb$(element)) {
             all$result = false;
             break all$break;
-          }
-        }
+          }}
         all$result = true;
       }
        while (false);
@@ -4975,8 +4926,7 @@
           if (equals(item, element)) {
             indexOfFirst$result = index;
             break indexOfFirst$break;
-          }
-          index = index + 1 | 0;
+          }index = index + 1 | 0;
         }
         indexOfFirst$result = -1;
       }
@@ -4991,8 +4941,7 @@
           if (equals(iterator.previous(), element)) {
             indexOfLast$result = iterator.nextIndex();
             break indexOfLast$break;
-          }
-        }
+          }}
         indexOfLast$result = -1;
       }
        while (false);
@@ -5075,29 +5024,23 @@
     AbstractList$Companion.prototype.checkElementIndex_6xvm5r$ = function (index, size) {
       if (index < 0 || index >= size) {
         throw new IndexOutOfBoundsException('index: ' + index + ', size: ' + size);
-      }
-    };
+      }};
     AbstractList$Companion.prototype.checkPositionIndex_6xvm5r$ = function (index, size) {
       if (index < 0 || index > size) {
         throw new IndexOutOfBoundsException('index: ' + index + ', size: ' + size);
-      }
-    };
+      }};
     AbstractList$Companion.prototype.checkRangeIndexes_cub51b$ = function (fromIndex, toIndex, size) {
       if (fromIndex < 0 || toIndex > size) {
         throw new IndexOutOfBoundsException('fromIndex: ' + fromIndex + ', toIndex: ' + toIndex + ', size: ' + size);
-      }
-      if (fromIndex > toIndex) {
+      }if (fromIndex > toIndex) {
         throw IllegalArgumentException_init_0('fromIndex: ' + fromIndex + ' > toIndex: ' + toIndex);
-      }
-    };
+      }};
     AbstractList$Companion.prototype.checkBoundsIndexes_cub51b$ = function (startIndex, endIndex, size) {
       if (startIndex < 0 || endIndex > size) {
         throw new IndexOutOfBoundsException('startIndex: ' + startIndex + ', endIndex: ' + endIndex + ', size: ' + size);
-      }
-      if (startIndex > endIndex) {
+      }if (startIndex > endIndex) {
         throw IllegalArgumentException_init_0('startIndex: ' + startIndex + ' > endIndex: ' + endIndex);
-      }
-    };
+      }};
     AbstractList$Companion.prototype.orderedHashCode_nykoif$ = function (c) {
       var tmp$, tmp$_0;
       var hashCode_0 = 1;
@@ -5119,8 +5062,7 @@
         var elemOther = otherIterator.next();
         if (!equals(elem, elemOther)) {
           return false;
-        }
-      }
+        }}
       return true;
     };
     AbstractList$Companion.$metadata$ = {kind: Kind_OBJECT, simpleName: 'Companion', interfaces: []};
@@ -5128,8 +5070,7 @@
     function AbstractList$Companion_getInstance() {
       if (AbstractList$Companion_instance === null) {
         new AbstractList$Companion();
-      }
-      return AbstractList$Companion_instance;
+      }return AbstractList$Companion_instance;
     }
     AbstractList.$metadata$ = {kind: Kind_CLASS, simpleName: 'AbstractList', interfaces: [List, AbstractCollection]};
     function AbstractMap() {
@@ -5148,15 +5089,13 @@
         if (Kotlin.isType($receiver, Collection) && $receiver.isEmpty()) {
           any$result = false;
           break any$break;
-        }
-        tmp$ = $receiver.iterator();
+        }tmp$ = $receiver.iterator();
         while (tmp$.hasNext()) {
           var element = tmp$.next();
           if (equals(element.value, value)) {
             any$result = true;
             break any$break;
-          }
-        }
+          }}
         any$result = false;
       }
        while (false);
@@ -5171,16 +5110,13 @@
       var ourValue = (Kotlin.isType(tmp$ = this, Map) ? tmp$ : throwCCE()).get_11rb$(key);
       if (!equals(value, ourValue)) {
         return false;
-      }
-      var tmp$_0 = ourValue == null;
+      }var tmp$_0 = ourValue == null;
       if (tmp$_0) {
         var tmp$_1;
         tmp$_0 = !(Kotlin.isType(tmp$_1 = this, Map) ? tmp$_1 : throwCCE()).containsKey_11rb$(key);
-      }
-      if (tmp$_0) {
+      }if (tmp$_0) {
         return false;
-      }
-      return true;
+      }return true;
     };
     AbstractMap.prototype.equals = function (other) {
       if (other === this)
@@ -5196,15 +5132,13 @@
         if (Kotlin.isType($receiver, Collection) && $receiver.isEmpty()) {
           all$result = true;
           break all$break;
-        }
-        tmp$ = $receiver.iterator();
+        }tmp$ = $receiver.iterator();
         while (tmp$.hasNext()) {
           var element = tmp$.next();
           if (!this.containsEntry_8hxqw4$(element)) {
             all$result = false;
             break all$break;
-          }
-        }
+          }}
         all$result = true;
       }
        while (false);
@@ -5251,8 +5185,7 @@
     Object.defineProperty(AbstractMap.prototype, 'keys', {get: function () {
       if (this._keys_up5z3z$_0 == null) {
         this._keys_up5z3z$_0 = new AbstractMap$get_AbstractMap$keys$ObjectLiteral(this);
-      }
-      return ensureNotNull(this._keys_up5z3z$_0);
+      }return ensureNotNull(this._keys_up5z3z$_0);
     }});
     function AbstractMap$toString$lambda(this$AbstractMap) {
       return function (it) {
@@ -5296,8 +5229,7 @@
     Object.defineProperty(AbstractMap.prototype, 'values', {get: function () {
       if (this._values_6nw1f1$_0 == null) {
         this._values_6nw1f1$_0 = new AbstractMap$get_AbstractMap$values$ObjectLiteral(this);
-      }
-      return ensureNotNull(this._values_6nw1f1$_0);
+      }return ensureNotNull(this._values_6nw1f1$_0);
     }});
     AbstractMap.prototype.implFindEntry_8k1i24$_0 = function (key) {
       var $receiver = this.entries;
@@ -5310,8 +5242,7 @@
           if (equals(element.key, key)) {
             firstOrNull$result = element;
             break firstOrNull$break;
-          }
-        }
+          }}
         firstOrNull$result = null;
       }
        while (false);
@@ -5337,8 +5268,7 @@
     function AbstractMap$Companion_getInstance() {
       if (AbstractMap$Companion_instance === null) {
         new AbstractMap$Companion();
-      }
-      return AbstractMap$Companion_instance;
+      }return AbstractMap$Companion_instance;
     }
     AbstractMap.$metadata$ = {kind: Kind_CLASS, simpleName: 'AbstractMap', interfaces: [Map]};
     function AbstractSet() {
@@ -5379,10 +5309,12 @@
     function AbstractSet$Companion_getInstance() {
       if (AbstractSet$Companion_instance === null) {
         new AbstractSet$Companion();
-      }
-      return AbstractSet$Companion_instance;
+      }return AbstractSet$Companion_instance;
     }
     AbstractSet.$metadata$ = {kind: Kind_CLASS, simpleName: 'AbstractSet', interfaces: [Set, AbstractCollection]};
+    var emptyElementData;
+    var maxArraySize;
+    var defaultMinCapacity;
     function EmptyIterator() {
       EmptyIterator_instance = this;
     }
@@ -5409,8 +5341,7 @@
     function EmptyIterator_getInstance() {
       if (EmptyIterator_instance === null) {
         new EmptyIterator();
-      }
-      return EmptyIterator_instance;
+      }return EmptyIterator_instance;
     }
     function EmptyList() {
       EmptyList_instance = this;
@@ -5470,8 +5401,7 @@
     function EmptyList_getInstance() {
       if (EmptyList_instance === null) {
         new EmptyList();
-      }
-      return EmptyList_instance;
+      }return EmptyList_instance;
     }
     function ArrayAsCollection(values, isVarargs) {
       this.values = values;
@@ -5493,15 +5423,13 @@
         if (Kotlin.isType(elements, Collection) && elements.isEmpty()) {
           all$result = true;
           break all$break;
-        }
-        tmp$ = elements.iterator();
+        }tmp$ = elements.iterator();
         while (tmp$.hasNext()) {
           var element = tmp$.next();
           if (!this.contains_11rb$(element)) {
             all$result = false;
             break all$break;
-          }
-        }
+          }}
         all$result = true;
       }
        while (false);
@@ -5564,8 +5492,7 @@
       var value = $receiver.get_11rb$(key);
       if (value == null && !$receiver.containsKey_11rb$(key)) {
         throw new NoSuchElementException('Key ' + key + ' is missing in the map.');
-      }
-       else {
+      } else {
         getOrElseNullable$result = (tmp$ = value) == null || Kotlin.isType(tmp$, Any) ? tmp$ : throwCCE();
       }
       return getOrElseNullable$result;
@@ -5628,8 +5555,7 @@
     function EmptyMap_getInstance() {
       if (EmptyMap_instance === null) {
         new EmptyMap();
-      }
-      return EmptyMap_instance;
+      }return EmptyMap_instance;
     }
     function emptyMap() {
       var tmp$;
@@ -5643,16 +5569,6 @@
       putAll($receiver, pairs);
       return $receiver;
     }
-    function mapCapacity(expectedSize) {
-      if (expectedSize < 3) {
-        return expectedSize + 1 | 0;
-      }
-      if (expectedSize < 1073741824) {
-        return expectedSize + (expectedSize / 3 | 0) | 0;
-      }
-      return 2147483647;
-    }
-    var INT_MAX_POWER_OF_TWO;
     function getValue_2($receiver, key) {
       return getOrImplicitDefault($receiver, key);
     }
@@ -5686,7 +5602,12 @@
     function addAll_1($receiver, elements) {
       return $receiver.addAll_brywnq$(asList(elements));
     }
-    function removeAll_0($receiver, predicate) {
+    function removeAll_0($receiver, elements) {
+      var elements_0 = convertToSetForSetOperationWith(elements, $receiver);
+      var tmp$;
+      return (Kotlin.isType(tmp$ = $receiver, MutableCollection) ? tmp$ : throwCCE()).removeAll_brywnq$(elements_0);
+    }
+    function removeAll_3($receiver, predicate) {
       return filterInPlace($receiver, predicate, true);
     }
     function filterInPlace($receiver, predicate, predicateResultToRemove) {
@@ -5696,10 +5617,9 @@
         if (predicate($receiver_0.next()) === predicateResultToRemove) {
           $receiver_0.remove();
           result.v = true;
-        }
-      return result.v;
+        }return result.v;
     }
-    function removeAll_1($receiver, predicate) {
+    function removeAll_4($receiver, predicate) {
       return filterInPlace_0($receiver, predicate, true);
     }
     function filterInPlace_0($receiver, predicate, predicateResultToRemove) {
@@ -5722,15 +5642,9 @@
         for (var removeIndex = tmp$_1; removeIndex >= tmp$_2; removeIndex--)
           $receiver.removeAt_za3lpa$(removeIndex);
         return true;
-      }
-       else {
+      } else {
         return false;
       }
-    }
-    function removeAll_2($receiver, elements) {
-      var elements_0 = convertToSetForSetOperationWith(elements, $receiver);
-      var tmp$;
-      return (Kotlin.isType(tmp$ = $receiver, MutableCollection) ? tmp$ : throwCCE()).removeAll_brywnq$(elements_0);
     }
     function shuffle_0($receiver, random) {
       for (var i = get_lastIndex_12($receiver); i >= 1; i--) {
@@ -5769,8 +5683,7 @@
     function EmptySequence_getInstance() {
       if (EmptySequence_instance === null) {
         new EmptySequence();
-      }
-      return EmptySequence_instance;
+      }return EmptySequence_instance;
     }
     function TransformingSequence(sequence, transformer) {
       this.sequence_0 = sequence;
@@ -5819,15 +5732,13 @@
       while (this.itemIterator == null) {
         if (!this.iterator.hasNext()) {
           return false;
-        }
-         else {
+        } else {
           var element = this.iterator.next();
           var nextItemIterator = this.this$FlatteningSequence.iterator_0(this.this$FlatteningSequence.transformer_0(element));
           if (nextItemIterator.hasNext()) {
             this.itemIterator = nextItemIterator;
             return true;
-          }
-        }
+          }}
       }
       return true;
     };
@@ -5846,16 +5757,13 @@
       if (!(this.startIndex_0 >= 0)) {
         var message = 'startIndex should be non-negative, but is ' + this.startIndex_0;
         throw IllegalArgumentException_init_0(message.toString());
-      }
-      if (!(this.endIndex_0 >= 0)) {
+      }if (!(this.endIndex_0 >= 0)) {
         var message_0 = 'endIndex should be non-negative, but is ' + this.endIndex_0;
         throw IllegalArgumentException_init_0(message_0.toString());
-      }
-      if (!(this.endIndex_0 >= this.startIndex_0)) {
+      }if (!(this.endIndex_0 >= this.startIndex_0)) {
         var message_1 = 'endIndex should be not less than startIndex, but was ' + this.endIndex_0 + ' < ' + this.startIndex_0;
         throw IllegalArgumentException_init_0(message_1.toString());
-      }
-    }
+      }}
     Object.defineProperty(SubSequence.prototype, 'count_0', {get: function () {
       return this.endIndex_0 - this.startIndex_0 | 0;
     }});
@@ -5898,8 +5806,7 @@
       if (!(this.count_0 >= 0)) {
         var message = 'count must be non-negative, but was ' + this.count_0 + '.';
         throw IllegalArgumentException_init_0(message.toString());
-      }
-    }
+      }}
     TakeSequence.prototype.drop_za3lpa$ = function (n) {
       return n >= this.count_0 ? emptySequence() : new SubSequence(this.sequence_0, n, this.count_0);
     };
@@ -5996,8 +5903,7 @@
     function EmptySet_getInstance() {
       if (EmptySet_instance === null) {
         new EmptySet();
-      }
-      return EmptySet_instance;
+      }return EmptySet_instance;
     }
     function emptySet() {
       return EmptySet_getInstance();
@@ -6035,8 +5941,7 @@
     function NaturalOrderComparator_getInstance() {
       if (NaturalOrderComparator_instance === null) {
         new NaturalOrderComparator();
-      }
-      return NaturalOrderComparator_instance;
+      }return NaturalOrderComparator_instance;
     }
     function ReverseOrderComparator() {
       ReverseOrderComparator_instance = this;
@@ -6052,8 +5957,7 @@
     function ReverseOrderComparator_getInstance() {
       if (ReverseOrderComparator_instance === null) {
         new ReverseOrderComparator();
-      }
-      return ReverseOrderComparator_instance;
+      }return ReverseOrderComparator_instance;
     }
     var InvocationKind$AT_MOST_ONCE_instance;
     var InvocationKind$AT_LEAST_ONCE_instance;
@@ -6088,8 +5992,7 @@
     function ContinuationInterceptor$Key_getInstance() {
       if (ContinuationInterceptor$Key_instance === null) {
         new ContinuationInterceptor$Key();
-      }
-      return ContinuationInterceptor$Key_instance;
+      }return ContinuationInterceptor$Key_instance;
     }
     function CoroutineContext() {
     }
@@ -6160,8 +6063,7 @@
     function EmptyCoroutineContext_getInstance() {
       if (EmptyCoroutineContext_instance === null) {
         new EmptyCoroutineContext();
-      }
-      return EmptyCoroutineContext_instance;
+      }return EmptyCoroutineContext_instance;
     }
     function CombinedContext(left, element) {
       this.left_0 = left;
@@ -6173,12 +6075,10 @@
       while (true) {
         if ((tmp$ = cur.element_0.get_j3r2sn$(key)) != null) {
           return tmp$;
-        }
-        var next = cur.left_0;
+        }var next = cur.left_0;
         if (Kotlin.isType(next, CombinedContext)) {
           cur = next;
-        }
-         else {
+        } else {
           return next.get_j3r2sn$(key);
         }
       }
@@ -6190,8 +6090,7 @@
       var tmp$;
       if (this.element_0.get_j3r2sn$(key) != null) {
         return this.left_0;
-      }
-      var newLeft = this.left_0.minusKey_yeqjby$(key);
+      }var newLeft = this.left_0.minusKey_yeqjby$(key);
       if (newLeft === this.left_0)
         tmp$ = this;
       else if (newLeft === EmptyCoroutineContext_getInstance())
@@ -6208,8 +6107,7 @@
         tmp$_0 = Kotlin.isType(tmp$ = cur.left_0, CombinedContext) ? tmp$ : null;
         if (tmp$_0 == null) {
           return size;
-        }
-        cur = tmp$_0;
+        }cur = tmp$_0;
         size = size + 1 | 0;
       }
     };
@@ -6225,8 +6123,7 @@
         var next = cur.left_0;
         if (Kotlin.isType(next, CombinedContext)) {
           cur = next;
-        }
-         else {
+        } else {
           return this.contains_0(Kotlin.isType(tmp$ = next, CoroutineContext$Element) ? tmp$ : throwCCE_0());
         }
       }
@@ -6259,8 +6156,7 @@
       if (!(index.v === n)) {
         var message = 'Check failed.';
         throw IllegalStateException_init_0(message.toString());
-      }
-      return new CombinedContext$Serialized(Kotlin.isArray(tmp$ = elements) ? tmp$ : throwCCE_0());
+      }return new CombinedContext$Serialized(Kotlin.isArray(tmp$ = elements) ? tmp$ : throwCCE_0());
     };
     function CombinedContext$Serialized(elements) {
       CombinedContext$Serialized$Companion_getInstance();
@@ -6275,8 +6171,7 @@
     function CombinedContext$Serialized$Companion_getInstance() {
       if (CombinedContext$Serialized$Companion_instance === null) {
         new CombinedContext$Serialized$Companion();
-      }
-      return CombinedContext$Serialized$Companion_instance;
+      }return CombinedContext$Serialized$Companion_instance;
     }
     CombinedContext$Serialized.prototype.readResolve_0 = function () {
       var $receiver = this.elements;
@@ -6391,8 +6286,7 @@
     function Delegates_getInstance() {
       if (Delegates_instance === null) {
         new Delegates();
-      }
-      return Delegates_instance;
+      }return Delegates_instance;
     }
     function NotNullVar() {
       this.value_0 = null;
@@ -6402,8 +6296,7 @@
       tmp$ = this.value_0;
       if (tmp$ == null) {
         throw IllegalStateException_init_0('Property ' + property.callableName + ' should be initialized before get.');
-      }
-      return tmp$;
+      }return tmp$;
     };
     NotNullVar.prototype.setValue_9rddgb$ = function (thisRef, property, value) {
       this.value_0 = value;
@@ -6427,8 +6320,7 @@
       var oldValue = this.value_kuqkmn$_0;
       if (!this.beforeChange_jxtfl0$(property, oldValue, value)) {
         return;
-      }
-      this.value_kuqkmn$_0 = value;
+      }this.value_kuqkmn$_0 = value;
       this.afterChange_jxtfl0$(property, oldValue, value);
     };
     ObservableProperty.$metadata$ = {kind: Kind_CLASS, simpleName: 'ObservableProperty', interfaces: [ReadWriteProperty]};
@@ -6449,8 +6341,7 @@
         if ((n & (-n | 0)) === n) {
           var bitCount = fastLog2(n);
           tmp$ = this.nextBits_za3lpa$(bitCount);
-        }
-         else {
+        } else {
           var v;
           do {
             var bits = this.nextInt() >>> 1;
@@ -6461,8 +6352,7 @@
         }
         var rnd = tmp$;
         return from + rnd | 0;
-      }
-       else {
+      } else {
         while (true) {
           var rnd_0 = this.nextInt();
           if (from <= rnd_0 && rnd_0 < until)
@@ -6488,16 +6378,14 @@
           if (nLow !== 0) {
             var bitCount = fastLog2(nLow);
             tmp$ = Kotlin.Long.fromInt(this.nextBits_za3lpa$(bitCount)).and(L4294967295);
-          }
-           else if (nHigh === 1)
+          } else if (nHigh === 1)
             tmp$ = Kotlin.Long.fromInt(this.nextInt()).and(L4294967295);
           else {
             var bitCount_0 = fastLog2(nHigh);
             tmp$ = Kotlin.Long.fromInt(this.nextBits_za3lpa$(bitCount_0)).shiftLeft(32).add(Kotlin.Long.fromInt(this.nextInt()));
           }
           rnd = tmp$;
-        }
-         else {
+        } else {
           var v;
           do {
             var bits = this.nextLong().shiftRightUnsigned(1);
@@ -6507,8 +6395,7 @@
           rnd = v;
         }
         return from.add(rnd);
-      }
-       else {
+      } else {
         while (true) {
           var rnd_0 = this.nextLong();
           if (from.lessThanOrEqual(rnd_0) && rnd_0.lessThan(until))
@@ -6532,8 +6419,7 @@
       if (isInfinite(size) && isFinite(from) && isFinite(until)) {
         var r1 = this.nextDouble() * (until / 2 - from / 2);
         tmp$ = from + r1 + r1;
-      }
-       else {
+      } else {
         tmp$ = from + this.nextDouble() * size;
       }
       var r = tmp$;
@@ -6551,12 +6437,10 @@
       if (!(0 <= fromIndex && fromIndex <= array.length ? 0 <= toIndex && toIndex <= array.length : false)) {
         var message = Random$nextBytes$lambda(fromIndex, toIndex, array)();
         throw IllegalArgumentException_init_0(message.toString());
-      }
-      if (!(fromIndex <= toIndex)) {
+      }if (!(fromIndex <= toIndex)) {
         var message_0 = 'fromIndex (' + fromIndex + ') must be not greater than toIndex (' + toIndex + ').';
         throw IllegalArgumentException_init_0(message_0.toString());
-      }
-      var steps = (toIndex - fromIndex | 0) / 4 | 0;
+      }var steps = (toIndex - fromIndex | 0) / 4 | 0;
       var position = {v: fromIndex};
       for (var index = 0; index < steps; index++) {
         var v = this.nextInt();
@@ -6642,8 +6526,7 @@
     function Random$Default_getInstance() {
       if (Random$Default_instance === null) {
         new Random$Default();
-      }
-      return Random$Default_instance;
+      }return Random$Default_instance;
     }
     function Random$Companion() {
       Random$Companion_instance = this;
@@ -6657,8 +6540,7 @@
     function Random$Companion_getInstance() {
       if (Random$Companion_instance === null) {
         new Random$Companion();
-      }
-      return Random$Companion_instance;
+      }return Random$Companion_instance;
     }
     Random.$metadata$ = {kind: Kind_CLASS, simpleName: 'Random', interfaces: []};
     function Random_0(seed) {
@@ -6674,20 +6556,17 @@
       if (!(until > from)) {
         var message = boundsErrorMessage(from, until);
         throw IllegalArgumentException_init_0(message.toString());
-      }
-    }
+      }}
     function checkRangeBounds_0(from, until) {
       if (!(until.compareTo_11rb$(from) > 0)) {
         var message = boundsErrorMessage(from, until);
         throw IllegalArgumentException_init_0(message.toString());
-      }
-    }
+      }}
     function checkRangeBounds_1(from, until) {
       if (!(until > from)) {
         var message = boundsErrorMessage(from, until);
         throw IllegalArgumentException_init_0(message.toString());
-      }
-    }
+      }}
     function boundsErrorMessage(from, until) {
       return 'Random range is empty: [' + from.toString() + ', ' + until.toString() + ').';
     }
@@ -6702,8 +6581,7 @@
       if (!((this.x_0 | this.y_0 | this.z_0 | this.w_0 | this.v_0) !== 0)) {
         var message = 'Initial state must have at least one non-zero element.';
         throw IllegalArgumentException_init_0(message.toString());
-      }
-      for (var index = 0; index < 64; index++) {
+      }for (var index = 0; index < 64; index++) {
         this.nextInt();
       }
     }
@@ -6733,6 +6611,16 @@
       this.start_p1gsmm$_0 = start;
       this.endInclusive_jj4lf7$_0 = endInclusive;
     }
+    function appendElement_0($receiver, element, transform) {
+      if (transform != null)
+        $receiver.append_gw00v9$(transform(element));
+      else if (element == null || Kotlin.isCharSequence(element))
+        $receiver.append_gw00v9$(element);
+      else if (Kotlin.isChar(element))
+        $receiver.append_s8itvh$(unboxChar(element));
+      else
+        $receiver.append_gw00v9$(toString(element));
+    }
     function equals_1($receiver, other, ignoreCase) {
       if (ignoreCase === void 0)
         ignoreCase = false;
@@ -6745,16 +6633,6 @@
       if (toChar(String.fromCharCode($receiver | 0).toLowerCase().charCodeAt(0)) === toChar(String.fromCharCode(other | 0).toLowerCase().charCodeAt(0)))
         return true;
       return false;
-    }
-    function appendElement_0($receiver, element, transform) {
-      if (transform != null)
-        $receiver.append_gw00v9$(transform(element));
-      else if (element == null || Kotlin.isCharSequence(element))
-        $receiver.append_gw00v9$(element);
-      else if (Kotlin.isChar(element))
-        $receiver.append_s8itvh$(unboxChar(element));
-      else
-        $receiver.append_gw00v9$(toString(element));
     }
     function trimStart_2($receiver, chars) {
       var tmp$;
@@ -6770,8 +6648,7 @@
           if (!contains_7(chars, unboxChar(toBoxedChar($receiver_0.charCodeAt(index))))) {
             trimStart$result = Kotlin.subSequence($receiver_0, index, $receiver_0.length);
             break trimStart$break;
-          }
-        }
+          }}
         trimStart$result = '';
       }
        while (false);
@@ -6789,8 +6666,7 @@
           if (!contains_7(chars, unboxChar(toBoxedChar($receiver_0.charCodeAt(index))))) {
             trimEnd$result = Kotlin.subSequence($receiver_0, 0, index + 1 | 0);
             break trimEnd$break;
-          }
-        }
+          }}
         trimEnd$result = '';
       }
        while (false);
@@ -6832,42 +6708,6 @@
       if (ignoreCase === void 0)
         ignoreCase = false;
       return $receiver.length > 0 && equals_1($receiver.charCodeAt(get_lastIndex_13($receiver)), char, ignoreCase);
-    }
-    function lastIndexOfAny($receiver, chars, startIndex, ignoreCase) {
-      if (startIndex === void 0)
-        startIndex = get_lastIndex_13($receiver);
-      if (ignoreCase === void 0)
-        ignoreCase = false;
-      if (!ignoreCase && chars.length === 1 && typeof $receiver === 'string') {
-        var char = single_7(chars);
-        return $receiver.lastIndexOf(String.fromCharCode(char), startIndex);
-      }
-      loop_label: for (var index = coerceAtMost_2(startIndex, get_lastIndex_13($receiver)); index >= 0; index--) {
-        var charAtIndex = $receiver.charCodeAt(index);
-        var any$result;
-        any$break: do {
-          var tmp$;
-          for (tmp$ = 0; tmp$ !== chars.length; ++tmp$) {
-            var element = unboxChar(chars[tmp$]);
-            if (equals_1(unboxChar(toBoxedChar(element)), charAtIndex, ignoreCase)) {
-              any$result = true;
-              break any$break;
-            }
-          }
-          any$result = false;
-        }
-         while (false);
-        if (any$result)
-          return index;
-      }
-      return -1;
-    }
-    function lastIndexOf_15($receiver, char, startIndex, ignoreCase) {
-      if (startIndex === void 0)
-        startIndex = get_lastIndex_13($receiver);
-      if (ignoreCase === void 0)
-        ignoreCase = false;
-      return ignoreCase || !(typeof $receiver === 'string') ? lastIndexOfAny($receiver, Kotlin.charArrayOf(char), startIndex, ignoreCase) : $receiver.lastIndexOf(String.fromCharCode(char), startIndex);
     }
     var Typography_instance = null;
     function MatchGroupCollection() {
@@ -6933,8 +6773,7 @@
     function Duration$Companion_getInstance() {
       if (Duration$Companion_instance === null) {
         new Duration$Companion();
-      }
-      return Duration$Companion_instance;
+      }return Duration$Companion_instance;
     }
     Duration.prototype.unaryMinus = function () {
       return new Duration(-this.value_8be2vx$);
@@ -7061,13 +6900,11 @@
           var $receiver = DurationUnit$SECONDS_getInstance();
           scientific.v = true;
           tmp$ = $receiver;
-        }
-         else if (absNs < 1) {
+        } else if (absNs < 1) {
           var $receiver_0 = DurationUnit$NANOSECONDS_getInstance();
           maxDecimals.v = 7;
           tmp$ = $receiver_0;
-        }
-         else if (absNs < 1000.0)
+        } else if (absNs < 1000.0)
           tmp$ = DurationUnit$NANOSECONDS_getInstance();
         else if (absNs < 1000000.0)
           tmp$ = DurationUnit$MICROSECONDS_getInstance();
@@ -7115,8 +6952,7 @@
       if (!(decimals >= 0)) {
         var message = 'decimals must be not negative, but was ' + decimals;
         throw IllegalArgumentException_init_0(message.toString());
-      }
-      if (this.isInfinite())
+      }if (this.isInfinite())
         return this.value_8be2vx$.toString();
       var number = this.toDouble_p6uejw$(unit);
       if (Math_0.abs(number) < 1.0E14)
@@ -7129,7 +6965,7 @@
       var $receiver = StringBuilder_init_1();
       if (this.isNegative())
         $receiver.append_s8itvh$(45);
-      $receiver.append_gw00v9$('PT');
+      $receiver.append_61zpoe$('PT');
       var $this = this.absoluteValue;
       var hours = numberToInt($this.inHours);
       var minutes = $this.minutesComponent;
@@ -7140,25 +6976,21 @@
       var hasMinutes = minutes !== 0 || (hasSeconds && hasHours);
       if (hasHours) {
         $receiver.append_s8jyv4$(hours).append_s8itvh$(72);
-      }
-      if (hasMinutes) {
+      }if (hasMinutes) {
         $receiver.append_s8jyv4$(minutes).append_s8itvh$(77);
-      }
-      if (hasSeconds || (!hasHours && !hasMinutes)) {
+      }if (hasSeconds || (!hasHours && !hasMinutes)) {
         $receiver.append_s8jyv4$(seconds);
         if (nanoseconds !== 0) {
           $receiver.append_s8itvh$(46);
           var nss = padStart_0(nanoseconds.toString(), 9, 48);
           if (nanoseconds % 1000000 === 0)
-            $receiver.append_ezbsdh$(nss, 0, 3);
+            $receiver.appendRange_ezbsdh$(nss, 0, 3);
           else if (nanoseconds % 1000 === 0)
-            $receiver.append_ezbsdh$(nss, 0, 6);
+            $receiver.appendRange_ezbsdh$(nss, 0, 6);
           else
-            $receiver.append_gw00v9$(nss);
-        }
-        $receiver.append_s8itvh$(83);
-      }
-      return $receiver.toString();
+            $receiver.append_61zpoe$(nss);
+        }$receiver.append_s8itvh$(83);
+      }return $receiver.toString();
     };
     Duration.$metadata$ = {kind: Kind_CLASS, simpleName: 'Duration', interfaces: [Comparable]};
     Duration.prototype.unbox = function () {
@@ -7203,6 +7035,8 @@
         default:return Kotlin.noWhenBranchMatched();
       }
     }
+    var TimeSource$Monotonic_instance = null;
+    var TimeSource$Companion_instance = null;
     var KotlinVersion$Companion_instance = null;
     var LazyThreadSafetyMode$SYNCHRONIZED_instance;
     var LazyThreadSafetyMode$PUBLICATION_instance;
@@ -7262,8 +7096,7 @@
     function Result$Companion_getInstance() {
       if (Result$Companion_instance === null) {
         new Result$Companion();
-      }
-      return Result$Companion_instance;
+      }return Result$Companion_instance;
     }
     function Result$Failure(exception) {
       this.exception = exception;
@@ -7354,7 +7187,6 @@
     package$collections.lastIndexOf_mjy6jw$ = lastIndexOf;
     var package$random = package$kotlin.random || (package$kotlin.random = {});
     package$random.Random = Random;
-    package$collections.single_355ntz$ = single_7;
     package$kotlin.IllegalArgumentException_init_pdl1vj$ = IllegalArgumentException_init_0;
     package$collections.emptyList_287e2$ = emptyList;
     package$collections.ArrayList_init_287e2$ = ArrayList_init;
@@ -7367,6 +7199,7 @@
     package$collections.LinkedHashMap_init_q3lmfv$ = LinkedHashMap_init;
     package$collections.ArrayList_init_ww73n8$ = ArrayList_init_0;
     package$kotlin.UnsupportedOperationException_init_pdl1vj$ = UnsupportedOperationException_init_0;
+    package$collections.listOf_mh5how$ = listOf;
     package$collections.collectionSizeOrDefault_ba2ldo$ = collectionSizeOrDefault;
     package$collections.get_lastIndex_55thoc$ = get_lastIndex_12;
     package$collections.first_2p1efm$ = first_18;
@@ -7490,7 +7323,6 @@
     package$collections.copyToArray = copyToArray;
     package$collections.copyToArrayImpl = copyToArrayImpl;
     package$collections.copyToExistingArrayImpl = copyToArrayImpl_0;
-    package$collections.listOf_mh5how$ = listOf;
     package$collections.setOf_mh5how$ = setOf;
     package$collections.shuffle_vvxzk3$ = shuffle;
     package$collections.shuffled_7wnvza$ = shuffled;
@@ -7583,14 +7415,18 @@
     _.getKClass = getKClass;
     _.getKClassFromExpression = getKClassFromExpression;
     package$js.reset_xjqeni$ = reset;
-    package$text.MatchGroup = MatchGroup;
+    package$text.Appendable = Appendable;
     package$text.StringBuilder_init_za3lpa$ = StringBuilder_init;
+    package$text.StringBuilder = StringBuilder;
+    package$text.isHighSurrogate_myv2d0$ = isHighSurrogate;
+    package$text.isLowSurrogate_myv2d0$ = isLowSurrogate;
+    package$text.MatchGroup = MatchGroup;
     Object.defineProperty(Regex, 'Companion', {get: Regex$Companion_getInstance});
     package$text.Regex_init_61zpoe$ = Regex_init_0;
     package$text.Regex = Regex;
+    package$text.concatToString_355ntz$ = concatToString;
+    package$text.concatToString_wlitf7$ = concatToString_0;
     package$text.compareTo_7epoxm$ = compareTo;
-    package$text.Appendable = Appendable;
-    package$text.StringBuilder = StringBuilder;
     Object.defineProperty(DurationUnit, 'NANOSECONDS', {get: DurationUnit$NANOSECONDS_getInstance});
     Object.defineProperty(DurationUnit, 'MICROSECONDS', {get: DurationUnit$MICROSECONDS_getInstance});
     Object.defineProperty(DurationUnit, 'MILLISECONDS', {get: DurationUnit$MILLISECONDS_getInstance});
@@ -7625,10 +7461,10 @@
     package$collections.getValue_t9ocha$ = getValue_2;
     package$collections.putAll_5gv49o$ = putAll;
     package$collections.toMap_ujwnei$ = toMap_2;
-    package$collections.removeAll_ipc267$ = removeAll_2;
+    package$collections.removeAll_ipc267$ = removeAll_0;
     package$collections.addAll_ye1y7v$ = addAll_1;
-    package$collections.removeAll_uhyeqt$ = removeAll_0;
-    package$collections.removeAll_qafx1e$ = removeAll_1;
+    package$collections.removeAll_uhyeqt$ = removeAll_3;
+    package$collections.removeAll_qafx1e$ = removeAll_4;
     package$collections.shuffle_9jeydg$ = shuffle_0;
     package$sequences.emptySequence_287e2$ = emptySequence;
     package$sequences.TransformingSequence = TransformingSequence;
@@ -7674,16 +7510,14 @@
     package$random.boundsErrorMessage_dgzutr$ = boundsErrorMessage;
     package$random.XorWowRandom_init_6xvm5r$ = XorWowRandom_init;
     package$random.XorWowRandom = XorWowRandom;
-    package$text.equals_4lte5s$ = equals_1;
     package$text.appendElement_k2zgzt$ = appendElement_0;
+    package$text.equals_4lte5s$ = equals_1;
     package$text.trimStart_wqw3xr$ = trimStart_2;
     package$text.trimEnd_wqw3xr$ = trimEnd_2;
     package$text.padStart_yk9sg4$ = padStart;
     package$text.padStart_vrc1nu$ = padStart_0;
     package$text.startsWith_sgbm27$ = startsWith_1;
     package$text.endsWith_sgbm27$ = endsWith_0;
-    package$text.lastIndexOfAny_junqau$ = lastIndexOfAny;
-    package$text.lastIndexOf_8eortd$ = lastIndexOf_15;
     package$text.MatchGroupCollection = MatchGroupCollection;
     MatchResult.Destructured = MatchResult$Destructured;
     package$text.MatchResult = MatchResult;
@@ -7737,7 +7571,9 @@
     MAX_BYTES_PER_CHAR = 3;
     REPLACEMENT_BYTE_SEQUENCE = new Int8Array([toByte(239), toByte(191), toByte(189)]);
     REPLACEMENT_CHAR = 65533;
-    INT_MAX_POWER_OF_TWO = 1073741824;
+    emptyElementData = [];
+    maxArraySize = 2147483639;
+    defaultMinCapacity = 10;
     State_NotReady = 0;
     State_ManyNotReady = 1;
     State_ManyReady = 2;
@@ -7785,8 +7621,7 @@
       else if (this.result_0 === COROUTINE_SUSPENDED) {
         this.result_0 = RESUMED;
         this.delegate_0.resume_11rb$(value);
-      }
-       else {
+      } else {
         throw IllegalStateException_init('Already resumed');
       }
     };
@@ -7796,8 +7631,7 @@
       else if (this.result_0 === COROUTINE_SUSPENDED) {
         this.result_0 = RESUMED;
         this.delegate_0.resumeWithException_tcv7n7$(exception);
-      }
-       else {
+      } else {
         throw IllegalStateException_init('Already resumed');
       }
     };
@@ -7805,8 +7639,7 @@
       var tmp$;
       if (this.result_0 === UNDECIDED) {
         this.result_0 = COROUTINE_SUSPENDED;
-      }
-      var result = this.result_0;
+      }var result = this.result_0;
       if (result === RESUMED)
         tmp$ = COROUTINE_SUSPENDED;
       else if (Kotlin.isType(result, Fail))
@@ -7831,8 +7664,7 @@
     function CoroutineSuspendedMarker_getInstance() {
       if (CoroutineSuspendedMarker_instance === null) {
         new CoroutineSuspendedMarker();
-      }
-      return CoroutineSuspendedMarker_instance;
+      }return CoroutineSuspendedMarker_instance;
     }
     var ContinuationInterceptor$Key_instance = null;
     var EmptyCoroutineContext_instance = null;
