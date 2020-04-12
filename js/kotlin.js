@@ -5564,11 +5564,6 @@
     function mapOf_0(pairs) {
       return pairs.length > 0 ? toMap_2(pairs, LinkedHashMap_init_2(mapCapacity(pairs.length))) : emptyMap();
     }
-    function mutableMapOf_0(pairs) {
-      var $receiver = LinkedHashMap_init_2(mapCapacity(pairs.length));
-      putAll($receiver, pairs);
-      return $receiver;
-    }
     function getValue_2($receiver, key) {
       return getOrImplicitDefault($receiver, key);
     }
@@ -7457,7 +7452,6 @@
     package$collections.getOrImplicitDefault_t9ocha$ = getOrImplicitDefault;
     package$collections.emptyMap_q3lmfv$ = emptyMap;
     package$collections.mapOf_qfcya0$ = mapOf_0;
-    package$collections.mutableMapOf_qfcya0$ = mutableMapOf_0;
     package$collections.getValue_t9ocha$ = getValue_2;
     package$collections.putAll_5gv49o$ = putAll;
     package$collections.toMap_ujwnei$ = toMap_2;

@@ -25,6 +25,7 @@
   var BoardImpl = $module$core.model.board.BoardImpl;
   var GameConfiguration = $module$core.model.game.config.GameConfiguration;
   var BaseGame = $module$core.model.game.BaseGame;
+  var Command = $module$core.model.game.Command;
   var equals = Kotlin.equals;
   var throwCCE = Kotlin.throwCCE;
   var attributesMapOf = $module$kotlinx_html_js.kotlinx.html.attributesMapOf_jyasbz$;
@@ -161,18 +162,20 @@
   function loadGame$lambda_0(key) {
     switch (key) {
       case 'arrowleft':
-        return 'left';
+        return Command.LEFT;
       case 'arrowright':
-        return 'right';
+        return Command.RIGHT;
       case 'arrowup':
-        return 'up';
+        return Command.ROTATE_CW;
       case 'arrowdown':
-        return 'down';
+        return Command.SOFT_DROP;
+      case 'z':
+        return Command.ROTATE_CCW;
       case ' ':
-        return 'space';
+        return Command.HARD_DROP;
       case 'shift':
-        return 'shift';
-      default:return key;
+        return Command.HOLD;
+      default:return Command.DO_NOTHING;
     }
   }
   function loadGame$lambda_1(closure$restartGame, closure$controller, closure$keysToCommand) {
@@ -181,7 +184,7 @@
       if (equals(key, 'r')) {
         closure$restartGame();
       } else {
-        closure$controller.handleKeyPress_61zpoe$(closure$keysToCommand(key));
+        closure$controller.handleCmdPress_mzjd4c$(closure$keysToCommand(key));
       }
       return Unit;
     };
@@ -189,7 +192,7 @@
   function loadGame$lambda_2(closure$controller, closure$keysToCommand) {
     return function (it) {
       var key = it.key.toLowerCase();
-      closure$controller.handleKeyRelease_61zpoe$(closure$keysToCommand(key));
+      closure$controller.handleCmdRelease_mzjd4c$(closure$keysToCommand(key));
       return Unit;
     };
   }

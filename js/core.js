@@ -15,8 +15,6 @@
   var Unit = Kotlin.kotlin.Unit;
   var L1000 = Kotlin.Long.fromInt(1000);
   var toSet = Kotlin.kotlin.collections.toSet_7wnvza$;
-  var to = Kotlin.kotlin.to_ujzrz7$;
-  var mutableMapOf = Kotlin.kotlin.collections.mutableMapOf_qfcya0$;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
@@ -48,6 +46,7 @@
   var getValue = Kotlin.kotlin.collections.getValue_t9ocha$;
   var Pair = Kotlin.kotlin.Pair;
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
+  var to = Kotlin.kotlin.to_ujzrz7$;
   var mapOf = Kotlin.kotlin.collections.mapOf_qfcya0$;
   var shuffled = Kotlin.kotlin.collections.shuffled_7wnvza$;
   var toMutableList = Kotlin.kotlin.collections.toMutableList_4c7yge$;
@@ -81,7 +80,6 @@
     this.fps = 60;
     this.game_w3xoh4$_0 = this.game_w3xoh4$_0;
     this.view_wcbjrp$_0 = this.view_wcbjrp$_0;
-    this.keyToCommand_0 = mutableMapOf([to('z', Command$ROTATE_CCW_getInstance()), to('up', Command$ROTATE_CW_getInstance()), to('left', Command$LEFT_getInstance()), to('right', Command$RIGHT_getInstance()), to('down', Command$SOFT_DROP_getInstance()), to('space', Command$HARD_DROP_getInstance()), to('shift', Command$HOLD_getInstance())]);
   }
   Object.defineProperty(ControllerImpl.prototype, 'game', {get: function () {
     if (this.game_w3xoh4$_0 == null)
@@ -141,17 +139,15 @@
   ControllerImpl.prototype.stop = function () {
     this.game.finished = true;
   };
-  ControllerImpl.prototype.handleKeyPress_61zpoe$ = function (key) {
+  ControllerImpl.prototype.handleCmdPress_mzjd4c$ = function (cmd) {
     if (this.game.finished)
       return;
-    var tmp$;
-    this.game.commandInitiated_mzjd4c$((tmp$ = this.keyToCommand_0.get_11rb$(key)) != null ? tmp$ : Command$DO_NOTHING_getInstance());
+    this.game.commandInitiated_mzjd4c$(cmd);
   };
-  ControllerImpl.prototype.handleKeyRelease_61zpoe$ = function (key) {
+  ControllerImpl.prototype.handleCmdRelease_mzjd4c$ = function (cmd) {
     if (this.game.finished)
       return;
-    var tmp$;
-    this.game.commandStopped_mzjd4c$((tmp$ = this.keyToCommand_0.get_11rb$(key)) != null ? tmp$ : Command$DO_NOTHING_getInstance());
+    this.game.commandStopped_mzjd4c$(cmd);
   };
   ControllerImpl.prototype.standardize_0 = function ($receiver) {
     var destination = ArrayList_init(collectionSizeOrDefault($receiver, 10));
