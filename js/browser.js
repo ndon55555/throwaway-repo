@@ -17,9 +17,9 @@
   'use strict';
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var ensureNotNull = Kotlin.ensureNotNull;
-  var Unit = Kotlin.kotlin.Unit;
   var set_style = $module$kotlinx_html_js.kotlinx.html.set_style_ueiko3$;
   var set_id = $module$kotlinx_html_js.kotlinx.html.set_id_ueiko3$;
+  var Unit = Kotlin.kotlin.Unit;
   var append = $module$kotlinx_html_js.kotlinx.html.dom.append_k9bwru$;
   var ControllerImpl = $module$core.controller.ControllerImpl;
   var BoardImpl = $module$core.model.board.BoardImpl;
@@ -146,16 +146,12 @@
     return Unit;
   }
   function loadHTML() {
-    var $receiver = ensureNotNull(document.body).style;
-    $receiver.backgroundImage = "url('https://media.giphy.com/media/5PjafLZFxMWc/giphy.gif')";
-    $receiver.backgroundRepeat = 'no-repeat';
-    $receiver.backgroundSize = '100% 100%';
     append(ensureNotNull(document.body), loadHTML$lambda);
   }
   function loadGame$lambda(closure$controller, closure$view) {
     return function () {
       closure$controller.stop();
-      closure$controller.run_smlric$(new BaseGame(new BoardImpl(), new GameConfiguration()), closure$view);
+      closure$controller.run_7vmjsd$(new BaseGame(new BoardImpl(), new GameConfiguration()), closure$view);
       return Unit;
     };
   }
@@ -196,9 +192,10 @@
       return Unit;
     };
   }
-  function loadGame$lambda_3(closure$restartGame) {
+  function loadGame$lambda_3(closure$restartGame, closure$restartButton) {
     return function (it) {
       closure$restartGame();
+      closure$restartButton.blur();
       return Unit;
     };
   }
@@ -210,8 +207,9 @@
     var keysToCommand = loadGame$lambda_0;
     (tmp$ = document.body) != null ? (tmp$.onkeydown = loadGame$lambda_1(restartGame, controller, keysToCommand)) : null;
     (tmp$_0 = document.body) != null ? (tmp$_0.onkeyup = loadGame$lambda_2(controller, keysToCommand)) : null;
-    (Kotlin.isType(tmp$_1 = document.getElementById(RESTART_ID), HTMLButtonElement) ? tmp$_1 : throwCCE()).onclick = loadGame$lambda_3(restartGame);
-    controller.run_smlric$(new BaseGame(new BoardImpl(), new GameConfiguration()), view);
+    var restartButton = Kotlin.isType(tmp$_1 = document.getElementById(RESTART_ID), HTMLButtonElement) ? tmp$_1 : throwCCE();
+    restartButton.onclick = loadGame$lambda_3(restartGame, restartButton);
+    controller.run_7vmjsd$(new BaseGame(new BoardImpl(), new GameConfiguration()), view);
   }
   function TetrisWeb() {
   }

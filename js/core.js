@@ -115,7 +115,7 @@
   }
   function ControllerImpl$run$lambda_2(closure$game) {
     return function () {
-      return !closure$game.finished;
+      return !closure$game.finished();
     };
   }
   function ControllerImpl$run$lambda_3(closure$game) {
@@ -124,7 +124,7 @@
       return Unit;
     };
   }
-  ControllerImpl.prototype.run_smlric$ = function (game, view) {
+  ControllerImpl.prototype.run_7vmjsd$ = function (game, view) {
     this.game = game;
     this.view = view;
     game.onBoardChange_o14v8n$(ControllerImpl$run$lambda(view, game, this));
@@ -137,15 +137,15 @@
     runAtFixedRate(L1000.div(Kotlin.Long.fromInt(this.fps)), ControllerImpl$run$lambda_2(game), ControllerImpl$run$lambda_3(game));
   };
   ControllerImpl.prototype.stop = function () {
-    this.game.finished = true;
+    this.game.stop();
   };
   ControllerImpl.prototype.handleCmdPress_mzjd4c$ = function (cmd) {
-    if (this.game.finished)
+    if (this.game.finished())
       return;
     this.game.commandInitiated_mzjd4c$(cmd);
   };
   ControllerImpl.prototype.handleCmdRelease_mzjd4c$ = function (cmd) {
-    if (this.game.finished)
+    if (this.game.finished())
       return;
     this.game.commandStopped_mzjd4c$(cmd);
   };
@@ -439,7 +439,7 @@
   };
   function BaseGame(board, config) {
     this.config = config;
-    this.finished = false;
+    this.gameOver = false;
     this.board_665yfc$_0 = new BaseGame$board$ObjectLiteral(board, this);
     this.repeatableCmds_awwpko$_0 = setOf([Command$LEFT_getInstance(), Command$RIGHT_getInstance(), Command$SOFT_DROP_getInstance()]);
     this.alreadyStarted_szcpy5$_0 = false;
@@ -515,6 +515,9 @@
       this.upcomingPiecesQueue_8uxv1e$_0.add_11rb$(this.config.generator.generate());
     }
   };
+  BaseGame.prototype.stop = function () {
+    this.gameOver = true;
+  };
   BaseGame.prototype.frame = function () {
     var tmp$;
     var curTime = timeStamp();
@@ -540,6 +543,9 @@
           this.initialPress_mw33k7$_0.remove_11rb$(cmd);
           this.timeOfPrevAction_mokgl5$_0.put_xwzc9p$(cmd, curTime);
         }}}
+  };
+  BaseGame.prototype.finished = function () {
+    return this.gameOver;
   };
   BaseGame.prototype.allCells = function () {
     var $receiver = toMutableSet(this.board_665yfc$_0.getPlacedCells());
@@ -644,11 +650,11 @@
     }
      while (false);
     if (all$result) {
-      this.finished = true;
+      this.stop();
     }this.clearCompletedLines_k96xj2$_0(t);
     var newPiece = this.nextPiece_3tkztf$_0();
     if (!this.isValid_butbg3$_0(newPiece)) {
-      this.finished = true;
+      this.stop();
     }if (this.isValid_butbg3$_0(newPiece.moveDown())) {
       newPiece = newPiece.moveDown();
     }this.alreadyHolding_1bbr1h$_0 = false;
@@ -851,7 +857,7 @@
     return this.closure$board.getPlacedCells();
   };
   BaseGame$board$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Board]};
-  BaseGame.$metadata$ = {kind: Kind_CLASS, simpleName: 'BaseGame', interfaces: []};
+  BaseGame.$metadata$ = {kind: Kind_CLASS, simpleName: 'BaseGame', interfaces: [Game]};
   function Command(name, ordinal) {
     Enum.call(this);
     this.name$ = name;
@@ -936,6 +942,9 @@
     }
   }
   Command.valueOf_61zpoe$ = Command$valueOf;
+  function Game() {
+  }
+  Game.$metadata$ = {kind: Kind_INTERFACE, simpleName: 'Game', interfaces: []};
   function GameConfiguration() {
     this.showGhost = true;
     this.autoRepeatRate_76xv75$_0 = 30;
@@ -1408,6 +1417,7 @@
   Object.defineProperty(Command, 'HOLD', {get: Command$HOLD_getInstance});
   Object.defineProperty(Command, 'DO_NOTHING', {get: Command$DO_NOTHING_getInstance});
   package$game.Command = Command;
+  package$game.Game = Game;
   var package$config = package$game.config || (package$game.config = {});
   package$config.GameConfiguration = GameConfiguration;
   package$config.RotationSystem = RotationSystem;
