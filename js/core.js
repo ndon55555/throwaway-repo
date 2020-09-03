@@ -20,7 +20,6 @@
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
   var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
-  var Any = Object;
   var IllegalArgumentException_init = Kotlin.kotlin.IllegalArgumentException_init_pdl1vj$;
   var removeAll = Kotlin.kotlin.collections.removeAll_uhyeqt$;
   var LinkedHashSet_init = Kotlin.kotlin.collections.LinkedHashSet_init_287e2$;
@@ -592,37 +591,30 @@
   BaseGame.prototype.onUpcomingPiecesChange_o14v8n$ = function (action) {
     this.upcomingPiecesHandlers_mk451g$_0.add_11rb$(action);
   };
-  function BaseGame$forActivePiece$lambda(closure$op, this$BaseGame) {
-    return function () {
-      var tmp$;
-      var candidate = closure$op(this$BaseGame.activePiece_tptnae$_0);
-      var next = this$BaseGame.isValid_butbg3$_0(candidate) ? candidate : this$BaseGame.activePiece_tptnae$_0;
-      var canMoveDown = this$BaseGame.isValid_butbg3$_0(next.moveDown());
-      var pieceMoved = !(next != null ? next.equals(this$BaseGame.activePiece_tptnae$_0) : null);
-      this$BaseGame.activePiece_tptnae$_0 = next;
-      if (canMoveDown || pieceMoved) {
-        this$BaseGame.autoLockStartTime_hl1607$_0 = null;
-      }if (!canMoveDown) {
-        if (this$BaseGame.autoLockStartTime_hl1607$_0 == null) {
-          this$BaseGame.autoLockStartTime_hl1607$_0 = timeStamp();
-        }}if (this$BaseGame.autoLockStartTime_hl1607$_0 != null) {
-        var lockDelayPassed = timeStamp().minus_cgako$(ensureNotNull(this$BaseGame.autoLockStartTime_hl1607$_0)).compareTo_11rb$(get_milliseconds(this$BaseGame.config.lockDelay)) >= 0;
-        if (lockDelayPassed) {
-          this$BaseGame.activePiece_tptnae$_0 = this$BaseGame.hardDrop_tkg8nx$_0(this$BaseGame.activePiece_tptnae$_0);
-          this$BaseGame.autoLockStartTime_hl1607$_0 = null;
-        }}tmp$ = this$BaseGame.boardChangeHandlers_kt4o4x$_0.iterator();
-      while (tmp$.hasNext()) {
-        var handler = tmp$.next();
-        handler();
-      }
-      return Unit;
-    };
-  }
   BaseGame.prototype.forActivePiece_laby93$_0 = function (op) {
-    var tmp$;
+    var tmp$, tmp$_0;
     var prevActivePiece = this.activePiece_tptnae$_0;
-    sync(this.activePiece_tptnae$_0, BaseGame$forActivePiece$lambda(op, this));
-    return !((tmp$ = this.activePiece_tptnae$_0) != null ? tmp$.equals(prevActivePiece) : null);
+    var candidate = op(this.activePiece_tptnae$_0);
+    var next = this.isValid_butbg3$_0(candidate) ? candidate : this.activePiece_tptnae$_0;
+    var canMoveDown = this.isValid_butbg3$_0(next.moveDown());
+    var pieceMoved = !(next != null ? next.equals(this.activePiece_tptnae$_0) : null);
+    this.activePiece_tptnae$_0 = next;
+    if (canMoveDown || pieceMoved) {
+      this.autoLockStartTime_hl1607$_0 = null;
+    }if (!canMoveDown) {
+      if (this.autoLockStartTime_hl1607$_0 == null) {
+        this.autoLockStartTime_hl1607$_0 = timeStamp();
+      }}if (this.autoLockStartTime_hl1607$_0 != null) {
+      var lockDelayPassed = timeStamp().minus_cgako$(ensureNotNull(this.autoLockStartTime_hl1607$_0)).compareTo_11rb$(get_milliseconds(this.config.lockDelay)) >= 0;
+      if (lockDelayPassed) {
+        this.activePiece_tptnae$_0 = this.hardDrop_tkg8nx$_0(this.activePiece_tptnae$_0);
+        this.autoLockStartTime_hl1607$_0 = null;
+      }}tmp$ = this.boardChangeHandlers_kt4o4x$_0.iterator();
+    while (tmp$.hasNext()) {
+      var handler = tmp$.next();
+      handler();
+    }
+    return !((tmp$_0 = this.activePiece_tptnae$_0) != null ? tmp$_0.equals(prevActivePiece) : null);
   };
   BaseGame.prototype.isValid_butbg3$_0 = function ($receiver) {
     return this.board_665yfc$_0.areValidCells_xyy4xm$(copyToArray($receiver.cells()).slice());
@@ -1379,9 +1371,6 @@
     var intervalId = {v: null};
     intervalId.v = window.setInterval(runAtFixedRate$lambda(shouldContinue, event, intervalId), period.toInt());
   }
-  function sync(lock, f) {
-    return f();
-  }
   function timeStamp() {
     return get_milliseconds_0(window.performance.now());
   }
@@ -1450,7 +1439,6 @@
   var package$view = _.view || (_.view = {});
   package$view.TetrisUI = TetrisUI;
   package$controller.runAtFixedRate_ld8oi5$ = runAtFixedRate;
-  package$model.sync_eocq09$ = sync;
   package$game.timeStamp = timeStamp;
   BOARD_WIDTH = 10;
   BOARD_HEIGHT = 40;
