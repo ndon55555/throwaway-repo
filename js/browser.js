@@ -150,12 +150,18 @@
   }
   function loadGame$lambda(closure$controller, closure$view) {
     return function () {
-      closure$controller.stop();
       closure$controller.run_7vmjsd$(new BaseGame(new BoardImpl(), new GameConfiguration()), closure$view);
       return Unit;
     };
   }
-  function loadGame$lambda_0(key) {
+  function loadGame$lambda_0(closure$controller, closure$startGame) {
+    return function () {
+      closure$controller.stop();
+      closure$startGame();
+      return Unit;
+    };
+  }
+  function loadGame$lambda_1(key) {
     switch (key) {
       case 'arrowleft':
         return Command.LEFT;
@@ -174,7 +180,7 @@
       default:return Command.DO_NOTHING;
     }
   }
-  function loadGame$lambda_1(closure$restartGame, closure$controller, closure$keysToCommand) {
+  function loadGame$lambda_2(closure$restartGame, closure$controller, closure$keysToCommand) {
     return function (it) {
       var key = it.key.toLowerCase();
       if (equals(key, 'r')) {
@@ -185,14 +191,14 @@
       return Unit;
     };
   }
-  function loadGame$lambda_2(closure$controller, closure$keysToCommand) {
+  function loadGame$lambda_3(closure$controller, closure$keysToCommand) {
     return function (it) {
       var key = it.key.toLowerCase();
       closure$controller.handleCmdRelease_mzjd4c$(closure$keysToCommand(key));
       return Unit;
     };
   }
-  function loadGame$lambda_3(closure$restartGame, closure$restartButton) {
+  function loadGame$lambda_4(closure$restartGame, closure$restartButton) {
     return function (it) {
       closure$restartGame();
       closure$restartButton.blur();
@@ -203,13 +209,14 @@
     var tmp$, tmp$_0, tmp$_1;
     var controller = new ControllerImpl();
     var view = new TetrisWeb();
-    var restartGame = loadGame$lambda(controller, view);
-    var keysToCommand = loadGame$lambda_0;
-    (tmp$ = document.body) != null ? (tmp$.onkeydown = loadGame$lambda_1(restartGame, controller, keysToCommand)) : null;
-    (tmp$_0 = document.body) != null ? (tmp$_0.onkeyup = loadGame$lambda_2(controller, keysToCommand)) : null;
+    var startGame = loadGame$lambda(controller, view);
+    var restartGame = loadGame$lambda_0(controller, startGame);
+    var keysToCommand = loadGame$lambda_1;
+    (tmp$ = document.body) != null ? (tmp$.onkeydown = loadGame$lambda_2(restartGame, controller, keysToCommand)) : null;
+    (tmp$_0 = document.body) != null ? (tmp$_0.onkeyup = loadGame$lambda_3(controller, keysToCommand)) : null;
     var restartButton = Kotlin.isType(tmp$_1 = document.getElementById(RESTART_ID), HTMLButtonElement) ? tmp$_1 : throwCCE();
-    restartButton.onclick = loadGame$lambda_3(restartGame, restartButton);
-    controller.run_7vmjsd$(new BaseGame(new BoardImpl(), new GameConfiguration()), view);
+    restartButton.onclick = loadGame$lambda_4(restartGame, restartButton);
+    startGame();
   }
   function TetrisWeb() {
   }
